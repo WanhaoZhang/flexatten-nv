@@ -1,0 +1,386 @@
+{
+  "exp2_document_packing": [
+    {
+      "S": 1024,
+      "num_docs": 2,
+      "dense": {
+        "time": {
+          "mean_ms": 0.759,
+          "min_ms": 0.699,
+          "max_ms": 0.806
+        },
+        "mem": 0.091
+      },
+      "flex": {
+        "time": {
+          "mean_ms": 6.622,
+          "min_ms": 6.578,
+          "max_ms": 6.668
+        },
+        "mem": 0.115
+      },
+      "sparsity": 0.875,
+      "max_diff": 0.0
+    },
+    {
+      "S": 1024,
+      "num_docs": 4,
+      "dense": {
+        "time": {
+          "mean_ms": 0.679,
+          "min_ms": 0.672,
+          "max_ms": 0.687
+        },
+        "mem": 0.094
+      },
+      "flex": {
+        "time": {
+          "mean_ms": 6.612,
+          "min_ms": 6.517,
+          "max_ms": 6.662
+        },
+        "mem": 0.117
+      },
+      "sparsity": 0.875,
+      "max_diff": 0.0
+    },
+    {
+      "S": 1024,
+      "num_docs": 8,
+      "dense": {
+        "time": {
+          "mean_ms": 0.692,
+          "min_ms": 0.683,
+          "max_ms": 0.708
+        },
+        "mem": 0.094
+      },
+      "flex": {
+        "time": {
+          "mean_ms": 6.57,
+          "min_ms": 6.537,
+          "max_ms": 6.611
+        },
+        "mem": 0.117
+      },
+      "sparsity": 0.875,
+      "max_diff": 0.0
+    },
+    {
+      "S": 2048,
+      "num_docs": 2,
+      "dense": {
+        "time": {
+          "mean_ms": 5.187,
+          "min_ms": 5.166,
+          "max_ms": 5.201
+        },
+        "mem": 0.337
+      },
+      "flex": {
+        "time": {
+          "mean_ms": 14.354,
+          "min_ms": 14.241,
+          "max_ms": 14.452
+        },
+        "mem": 0.428
+      },
+      "sparsity": 0.9375,
+      "max_diff": 0.0
+    },
+    {
+      "S": 2048,
+      "num_docs": 4,
+      "dense": {
+        "time": {
+          "mean_ms": 5.163,
+          "min_ms": 5.15,
+          "max_ms": 5.171
+        },
+        "mem": 0.34
+      },
+      "flex": {
+        "time": {
+          "mean_ms": 14.243,
+          "min_ms": 14.152,
+          "max_ms": 14.348
+        },
+        "mem": 0.43
+      },
+      "sparsity": 0.9375,
+      "max_diff": 0.0
+    },
+    {
+      "S": 2048,
+      "num_docs": 8,
+      "dense": {
+        "time": {
+          "mean_ms": 5.169,
+          "min_ms": 5.158,
+          "max_ms": 5.177
+        },
+        "mem": 0.34
+      },
+      "flex": {
+        "time": {
+          "mean_ms": 14.23,
+          "min_ms": 14.099,
+          "max_ms": 14.346
+        },
+        "mem": 0.43
+      },
+      "sparsity": 0.9375,
+      "max_diff": 0.0
+    },
+    {
+      "S": 2048,
+      "num_docs": 16,
+      "dense": {
+        "time": {
+          "mean_ms": 5.171,
+          "min_ms": 5.164,
+          "max_ms": 5.183
+        },
+        "mem": 0.34
+      },
+      "flex": {
+        "time": {
+          "mean_ms": 14.221,
+          "min_ms": 14.096,
+          "max_ms": 14.316
+        },
+        "mem": 0.43
+      },
+      "sparsity": 0.9375,
+      "max_diff": 0.0
+    },
+    {
+      "S": 4096,
+      "num_docs": 2,
+      "dense": {
+        "time": {
+          "mean_ms": 21.177,
+          "min_ms": 21.137,
+          "max_ms": 21.213
+        },
+        "mem": 1.307
+      },
+      "flex": {
+        "time": {
+          "mean_ms": 47.505,
+          "min_ms": 47.378,
+          "max_ms": 47.814
+        },
+        "mem": 1.661
+      },
+      "sparsity": 0.9688,
+      "max_diff": 0.0
+    },
+    {
+      "S": 4096,
+      "num_docs": 4,
+      "dense": {
+        "time": {
+          "mean_ms": 21.216,
+          "min_ms": 21.16,
+          "max_ms": 21.3
+        },
+        "mem": 1.313
+      },
+      "flex": {
+        "time": {
+          "mean_ms": 47.096,
+          "min_ms": 46.989,
+          "max_ms": 47.172
+        },
+        "mem": 1.664
+      },
+      "sparsity": 0.9688,
+      "max_diff": 0.0
+    },
+    {
+      "S": 4096,
+      "num_docs": 8,
+      "dense": {
+        "time": {
+          "mean_ms": 21.16,
+          "min_ms": 21.086,
+          "max_ms": 21.253
+        },
+        "mem": 1.313
+      },
+      "flex": {
+        "time": {
+          "mean_ms": 47.094,
+          "min_ms": 46.975,
+          "max_ms": 47.259
+        },
+        "mem": 1.664
+      },
+      "sparsity": 0.9688,
+      "max_diff": 0.0
+    },
+    {
+      "S": 4096,
+      "num_docs": 16,
+      "dense": {
+        "time": {
+          "mean_ms": 21.166,
+          "min_ms": 21.152,
+          "max_ms": 21.175
+        },
+        "mem": 1.313
+      },
+      "flex": {
+        "time": {
+          "mean_ms": 46.899,
+          "min_ms": 46.846,
+          "max_ms": 46.995
+        },
+        "mem": 1.664
+      },
+      "sparsity": 0.9688,
+      "max_diff": 0.0
+    },
+    {
+      "S": 8192,
+      "num_docs": 2,
+      "dense": {
+        "time": {
+          "mean_ms": 85.575,
+          "min_ms": 85.504,
+          "max_ms": 85.623
+        },
+        "mem": 5.168
+      },
+      "flex": {
+        "time": {
+          "mean_ms": 185.293,
+          "min_ms": 185.144,
+          "max_ms": 185.439
+        },
+        "mem": 6.563
+      },
+      "sparsity": 0.9844,
+      "max_diff": 0.0
+    },
+    {
+      "S": 8192,
+      "num_docs": 4,
+      "dense": {
+        "time": {
+          "mean_ms": 85.583,
+          "min_ms": 85.51,
+          "max_ms": 85.652
+        },
+        "mem": 5.18
+      },
+      "flex": {
+        "time": {
+          "mean_ms": 184.003,
+          "min_ms": 183.98,
+          "max_ms": 184.053
+        },
+        "mem": 6.571
+      },
+      "sparsity": 0.9844,
+      "max_diff": 0.0
+    },
+    {
+      "S": 8192,
+      "num_docs": 8,
+      "dense": {
+        "time": {
+          "mean_ms": 85.435,
+          "min_ms": 85.376,
+          "max_ms": 85.493
+        },
+        "mem": 5.18
+      },
+      "flex": {
+        "time": {
+          "mean_ms": 183.709,
+          "min_ms": 183.609,
+          "max_ms": 183.894
+        },
+        "mem": 6.571
+      },
+      "sparsity": 0.9844,
+      "max_diff": 2e-06
+    },
+    {
+      "S": 8192,
+      "num_docs": 16,
+      "dense": {
+        "time": {
+          "mean_ms": 85.372,
+          "min_ms": 85.345,
+          "max_ms": 85.387
+        },
+        "mem": 5.18
+      },
+      "flex": {
+        "time": {
+          "mean_ms": 183.367,
+          "min_ms": 183.269,
+          "max_ms": 183.539
+        },
+        "mem": 6.571
+      },
+      "sparsity": 0.9844,
+      "max_diff": 0.0
+    }
+  ],
+  "exp4_sparsity_analysis": [
+    {
+      "mask": "Causal",
+      "sparsity": 0.9375,
+      "time_ms": 12.507
+    },
+    {
+      "mask": "SlidingWindow(128)",
+      "sparsity": 0.8789,
+      "time_ms": 12.303
+    },
+    {
+      "mask": "SlidingWindow(256)",
+      "sparsity": 0.8828,
+      "time_ms": 12.378
+    },
+    {
+      "mask": "SlidingWindow(512)",
+      "sparsity": 0.8906,
+      "time_ms": 12.401
+    },
+    {
+      "mask": "Document(4)",
+      "sparsity": 0.9375,
+      "time_ms": 14.564
+    },
+    {
+      "mask": "Document(8)",
+      "sparsity": 0.9375,
+      "time_ms": 14.494
+    },
+    {
+      "mask": "Document(16)",
+      "sparsity": 0.9375,
+      "time_ms": 14.548
+    },
+    {
+      "mask": "PrefixLM(25%)",
+      "sparsity": 0.9531,
+      "time_ms": 12.543
+    },
+    {
+      "mask": "PrefixLM(50%)",
+      "sparsity": 0.9688,
+      "time_ms": 12.622
+    },
+    {
+      "mask": "SDPA_Causal_Baseline",
+      "sparsity": 0.5,
+      "time_ms": 0.113
+    }
+  ]
+}

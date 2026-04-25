@@ -1,0 +1,331 @@
+{
+  "exp1_attention_evolution": [
+    {
+      "S": 512,
+      "standard": {
+        "time": {
+          "mean_ms": 0.289,
+          "min_ms": 0.272,
+          "max_ms": 0.299
+        },
+        "mem": 0.029
+      },
+      "sdpa": {
+        "time": {
+          "mean_ms": 0.042,
+          "min_ms": 0.039,
+          "max_ms": 0.055
+        },
+        "mem": 0.01
+      },
+      "flex": {
+        "time": {
+          "mean_ms": 2.134,
+          "min_ms": 2.057,
+          "max_ms": 2.245
+        },
+        "mem": 0.036
+      },
+      "diff_sdpa_flex": 0.001953
+    },
+    {
+      "S": 1024,
+      "standard": {
+        "time": {
+          "mean_ms": 0.647,
+          "min_ms": 0.641,
+          "max_ms": 0.655
+        },
+        "mem": 0.091
+      },
+      "sdpa": {
+        "time": {
+          "mean_ms": 0.068,
+          "min_ms": 0.067,
+          "max_ms": 0.071
+        },
+        "mem": 0.013
+      },
+      "flex": {
+        "time": {
+          "mean_ms": 3.176,
+          "min_ms": 3.137,
+          "max_ms": 3.265
+        },
+        "mem": 0.116
+      },
+      "diff_sdpa_flex": 0.001953
+    },
+    {
+      "S": 2048,
+      "standard": {
+        "time": {
+          "mean_ms": 5.166,
+          "min_ms": 5.152,
+          "max_ms": 5.179
+        },
+        "mem": 0.333
+      },
+      "sdpa": {
+        "time": {
+          "mean_ms": 0.115,
+          "min_ms": 0.112,
+          "max_ms": 0.125
+        },
+        "mem": 0.019
+      },
+      "flex": {
+        "time": {
+          "mean_ms": 12.494,
+          "min_ms": 12.471,
+          "max_ms": 12.515
+        },
+        "mem": 0.428
+      },
+      "diff_sdpa_flex": 0.001953
+    },
+    {
+      "S": 4096,
+      "standard": {
+        "time": {
+          "mean_ms": 21.094,
+          "min_ms": 21.035,
+          "max_ms": 21.158
+        },
+        "mem": 1.291
+      },
+      "sdpa": {
+        "time": {
+          "mean_ms": 0.337,
+          "min_ms": 0.324,
+          "max_ms": 0.353
+        },
+        "mem": 0.03
+      },
+      "flex": {
+        "time": {
+          "mean_ms": 47.801,
+          "min_ms": 47.673,
+          "max_ms": 47.901
+        },
+        "mem": 1.66
+      },
+      "diff_sdpa_flex": 0.001953
+    },
+    {
+      "S": 8192,
+      "standard": {
+        "time": {
+          "mean_ms": 84.661,
+          "min_ms": 84.603,
+          "max_ms": 84.719
+        },
+        "mem": 5.106
+      },
+      "sdpa": {
+        "time": {
+          "mean_ms": 1.1,
+          "min_ms": 1.065,
+          "max_ms": 1.163
+        },
+        "mem": 0.051
+      },
+      "flex": {
+        "time": {
+          "mean_ms": 186.768,
+          "min_ms": 186.51,
+          "max_ms": 186.95
+        },
+        "mem": 6.563
+      },
+      "diff_sdpa_flex": 0.001953
+    }
+  ],
+  "exp2_document_packing": {
+    "error": "create-block_mask requires a mask_mod function! Got <function exp2_document_packing.<locals>.packed_mod at 0x7fd5c75e0ae0>"
+  },
+  "exp3_score_mods": [
+    {
+      "name": "ALiBi",
+      "ref": {
+        "time": {
+          "mean_ms": 4.659,
+          "min_ms": 4.648,
+          "max_ms": 4.674
+        },
+        "mem": 0.334
+      },
+      "flex": {
+        "time": {
+          "mean_ms": 15.929,
+          "min_ms": 15.776,
+          "max_ms": 15.98
+        },
+        "mem": 0.426
+      },
+      "diff": 0.000488
+    },
+    {
+      "name": "Softcapping",
+      "ref": {
+        "time": {
+          "mean_ms": 5.741,
+          "min_ms": 5.727,
+          "max_ms": 5.759
+        },
+        "mem": 0.332
+      },
+      "flex": {
+        "time": {
+          "mean_ms": 16.925,
+          "min_ms": 16.892,
+          "max_ms": 16.944
+        },
+        "mem": 0.43
+      },
+      "diff": 0.000488
+    },
+    {
+      "name": "RelativePositionBias",
+      "ref": {
+        "time": {
+          "mean_ms": 5.779,
+          "min_ms": 5.768,
+          "max_ms": 5.791
+        },
+        "mem": 0.344
+      },
+      "flex": {
+        "time": {
+          "mean_ms": 14.113,
+          "min_ms": 14.1,
+          "max_ms": 14.124
+        },
+        "mem": 0.43
+      },
+      "diff": 0.568909
+    }
+  ],
+  "exp4_sparsity_analysis": {
+    "error": "create-block_mask requires a mask_mod function! Got <function exp4_sparsity.<locals>.<lambda>.<locals>.<lambda> at 0x7fd568313420>"
+  },
+  "exp5_stress_test": [
+    {
+      "S": 4096,
+      "sdpa": {
+        "time": {
+          "mean_ms": 0.323,
+          "min_ms": 0.315,
+          "max_ms": 0.327
+        },
+        "mem": 0.024
+      },
+      "flex": {
+        "time": {
+          "mean_ms": 47.769,
+          "min_ms": 47.741,
+          "max_ms": 47.82
+        },
+        "mem": 1.657
+      }
+    },
+    {
+      "S": 8192,
+      "sdpa": {
+        "time": {
+          "mean_ms": 1.041,
+          "min_ms": 1.029,
+          "max_ms": 1.052
+        },
+        "mem": 0.043
+      },
+      "flex": {
+        "time": {
+          "mean_ms": 186.393,
+          "min_ms": 186.328,
+          "max_ms": 186.441
+        },
+        "mem": 6.555
+      }
+    },
+    {
+      "S": 12288,
+      "sdpa": {
+        "time": {
+          "mean_ms": 2.33,
+          "min_ms": 2.311,
+          "max_ms": 2.357
+        },
+        "mem": 0.063
+      },
+      "flex": {
+        "time": {
+          "mean_ms": 419.604,
+          "min_ms": 419.292,
+          "max_ms": 419.78
+        },
+        "mem": 14.704
+      }
+    },
+    {
+      "S": 16384,
+      "sdpa": {
+        "time": {
+          "mean_ms": 4.039,
+          "min_ms": 3.989,
+          "max_ms": 4.079
+        },
+        "mem": 0.083
+      },
+      "flex": null
+    },
+    {
+      "S": 20480,
+      "sdpa": {
+        "time": {
+          "mean_ms": 6.35,
+          "min_ms": 6.144,
+          "max_ms": 6.484
+        },
+        "mem": 0.103
+      },
+      "flex": null
+    },
+    {
+      "S": 24576,
+      "sdpa": {
+        "time": {
+          "mean_ms": 9.526,
+          "min_ms": 8.858,
+          "max_ms": 10.857
+        },
+        "mem": 0.122
+      },
+      "flex": null
+    },
+    {
+      "S": 28672,
+      "sdpa": {
+        "time": {
+          "mean_ms": 13.759,
+          "min_ms": 12.019,
+          "max_ms": 15.246
+        },
+        "mem": 0.142
+      },
+      "flex": null
+    },
+    {
+      "S": 32768,
+      "sdpa": {
+        "time": {
+          "mean_ms": 19.464,
+          "min_ms": 18.162,
+          "max_ms": 20.324
+        },
+        "mem": 0.162
+      },
+      "flex": null
+    }
+  ]
+}
