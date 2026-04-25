@@ -33,48 +33,48 @@
   },
   "A2": {
     "std": {
-      "256": 0.297,
-      "512": 0.28,
-      "1024": 0.655,
-      "2048": 5.173,
-      "4096": 21.089,
-      "8192": 84.601
+      "256": 0.291,
+      "512": 0.289,
+      "1024": 0.647,
+      "2048": 5.182,
+      "4096": 21.107,
+      "8192": 84.684
     },
     "sdpa": {
-      "256": 0.041,
-      "512": 0.04,
-      "1024": 0.067,
-      "2048": 0.118,
-      "4096": 0.326,
-      "8192": 1.066
+      "256": 0.039,
+      "512": 0.041,
+      "1024": 0.07,
+      "2048": 0.114,
+      "4096": 0.32,
+      "8192": 1.074
     },
     "flex": {
-      "256": 2.263,
-      "512": 2.254,
-      "1024": 3.151,
-      "2048": 12.539,
-      "4096": 47.833,
-      "8192": 186.688
+      "256": 2.257,
+      "512": 2.229,
+      "1024": 3.154,
+      "2048": 12.526,
+      "4096": 47.835,
+      "8192": 186.695
     }
   },
   "A3": {
     "vanilla": {
-      "time": 6.465,
+      "time": 6.462,
       "mem": 0.3498
     },
     "flex": {
-      "time": 18.354,
+      "time": 18.224,
       "mem": 0.426
     },
     "diff": 0.001953
   },
   "B1": {
     "std": {
-      "time": 5.726,
+      "time": 5.736,
       "mem": 0.34
     },
     "flex": {
-      "time": 14.871,
+      "time": 14.843,
       "mem": 0.426
     },
     "diff": 0.001953
@@ -94,7 +94,7 @@
       "vanilla_complexity": "\u4e2d",
       "flex_complexity": "\u4f4e",
       "vanilla_ms": 0.115,
-      "flex_ms": 12.534,
+      "flex_ms": 12.519,
       "speedup": 0.01
     },
     {
@@ -102,8 +102,8 @@
       "flex_lines": "def mask(b,h,q,k): return (q >= k) & (q - k <= 256)",
       "vanilla_complexity": "\u4e2d",
       "flex_complexity": "\u4f4e",
-      "vanilla_ms": 5.493,
-      "flex_ms": 12.429,
+      "vanilla_ms": 5.509,
+      "flex_ms": 12.442,
       "speedup": 0.44
     },
     {
@@ -111,8 +111,8 @@
       "flex_lines": "def mask(b,h,q,k): return (q>=k) & (doc[q]==doc[k])",
       "vanilla_complexity": "\u9ad8",
       "flex_complexity": "\u4f4e",
-      "vanilla_ms": 5.165,
-      "flex_ms": 14.371,
+      "vanilla_ms": 5.17,
+      "flex_ms": 14.383,
       "speedup": 0.36
     },
     {
@@ -120,43 +120,43 @@
       "flex_lines": "def mask(b,h,q,k): return (k<512) | (q>=k)",
       "vanilla_complexity": "\u9ad8",
       "flex_complexity": "\u4f4e",
-      "vanilla_ms": 5.216,
-      "flex_ms": 12.573,
-      "speedup": 0.41
+      "vanilla_ms": 5.224,
+      "flex_ms": 12.551,
+      "speedup": 0.42
     },
     {
       "vanilla_steps": "matmul \u2192 build_dist_matrix \u2192 loop over H \u2192 add_bias \u2192 tril \u2192 masked_fill \u2192 softmax \u2192 matmul",
       "flex_lines": "def mod(s,b,h,q,k): return s - slope[h]*|q-k|",
       "vanilla_complexity": "\u6781\u9ad8",
       "flex_complexity": "\u4f4e",
-      "vanilla_ms": 5.761,
-      "flex_ms": 14.923,
+      "vanilla_ms": 5.747,
+      "flex_ms": 14.899,
       "speedup": 0.39
     }
   ],
   "C2": [
     {
       "pattern": "Document+SlidingWindow",
-      "flex_ms": 14.516,
+      "flex_ms": 14.476,
       "flex_mem": 0.426,
       "sparsity": 0.9062,
       "sdpa": "\u4e0d\u652f\u6301"
     },
     {
       "pattern": "Document+ALiBi",
-      "flex_ms": 18.531,
+      "flex_ms": 18.263,
       "flex_mem": 0.426,
       "sdpa": "\u4e0d\u652f\u6301"
     },
     {
       "pattern": "PrefixLM+Softcapping",
-      "flex_ms": 16.238,
+      "flex_ms": 16.104,
       "flex_mem": 0.426,
       "sdpa": "\u4e0d\u652f\u6301"
     },
     {
-      "pattern": "Doc+SW+ALiBi+Softcap (\u7ec8\u6781)",
-      "flex_ms": 22.03,
+      "pattern": "Doc+SW+ALiBi+Softcap",
+      "flex_ms": 21.765,
       "flex_mem": 0.426,
       "sdpa": "\u4e0d\u652f\u6301"
     }
@@ -164,12 +164,12 @@
   "C3": {
     "vanilla": {
       "time": {
-        "256": 0.333,
-        "512": 0.33,
-        "1024": 0.688,
-        "2048": 5.165,
-        "4096": 21.156,
-        "8192": 85.507
+        "256": 0.359,
+        "512": 0.345,
+        "1024": 0.679,
+        "2048": 5.166,
+        "4096": 21.208,
+        "8192": 85.463
       },
       "mem": {
         "256": 0.0137,
@@ -182,12 +182,12 @@
     },
     "flex": {
       "time": {
-        "256": 6.059,
-        "512": 6.005,
-        "1024": 6.86,
-        "2048": 14.554,
-        "4096": 47.108,
-        "8192": 184.175
+        "256": 6.037,
+        "512": 6.15,
+        "1024": 6.901,
+        "2048": 14.547,
+        "4096": 47.145,
+        "8192": 184.17
       },
       "mem": {
         "256": 0.0158,
