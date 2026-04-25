@@ -33,48 +33,48 @@
   },
   "A2": {
     "std": {
-      "256": 0.291,
-      "512": 0.289,
-      "1024": 0.647,
-      "2048": 5.182,
-      "4096": 21.107,
-      "8192": 84.684
+      "256": 0.282,
+      "512": 0.285,
+      "1024": 0.645,
+      "2048": 5.172,
+      "4096": 21.157,
+      "8192": 84.682
     },
     "sdpa": {
       "256": 0.039,
-      "512": 0.041,
-      "1024": 0.07,
+      "512": 0.04,
+      "1024": 0.068,
       "2048": 0.114,
-      "4096": 0.32,
-      "8192": 1.074
+      "4096": 0.321,
+      "8192": 1.055
     },
     "flex": {
-      "256": 2.257,
-      "512": 2.229,
-      "1024": 3.154,
-      "2048": 12.526,
-      "4096": 47.835,
-      "8192": 186.695
+      "256": 2.228,
+      "512": 2.211,
+      "1024": 3.133,
+      "2048": 12.509,
+      "4096": 47.836,
+      "8192": 186.636
     }
   },
   "A3": {
     "vanilla": {
-      "time": 6.462,
+      "time": 6.467,
       "mem": 0.3498
     },
     "flex": {
-      "time": 18.224,
+      "time": 18.21,
       "mem": 0.426
     },
     "diff": 0.001953
   },
   "B1": {
     "std": {
-      "time": 5.736,
+      "time": 5.738,
       "mem": 0.34
     },
     "flex": {
-      "time": 14.843,
+      "time": 14.881,
       "mem": 0.426
     },
     "diff": 0.001953
@@ -89,74 +89,74 @@
   },
   "C1": [
     {
-      "vanilla_steps": "matmul \u2192 tril_mask \u2192 masked_fill \u2192 softmax \u2192 matmul",
+      "vanilla_steps": "matmul -> tril_mask -> masked_fill -> softmax -> matmul",
       "flex_lines": "def mask(b,h,q,k): return q >= k",
       "vanilla_complexity": "\u4e2d",
       "flex_complexity": "\u4f4e",
-      "vanilla_ms": 0.115,
-      "flex_ms": 12.519,
+      "vanilla_ms": 0.114,
+      "flex_ms": 12.532,
       "speedup": 0.01
     },
     {
-      "vanilla_steps": "matmul \u2192 abs_dist \u2192 window_mask \u2192 masked_fill \u2192 softmax \u2192 matmul",
+      "vanilla_steps": "matmul -> abs_dist -> window_mask -> masked_fill -> softmax -> matmul",
       "flex_lines": "def mask(b,h,q,k): return (q >= k) & (q - k <= 256)",
       "vanilla_complexity": "\u4e2d",
       "flex_complexity": "\u4f4e",
-      "vanilla_ms": 5.509,
-      "flex_ms": 12.442,
+      "vanilla_ms": 5.498,
+      "flex_ms": 12.448,
       "speedup": 0.44
     },
     {
-      "vanilla_steps": "matmul \u2192 tril \u2192 doc_eq \u2192 combine \u2192 masked_fill \u2192 softmax \u2192 matmul",
+      "vanilla_steps": "matmul -> tril -> doc_eq -> combine -> masked_fill -> softmax -> matmul",
       "flex_lines": "def mask(b,h,q,k): return (q>=k) & (doc[q]==doc[k])",
       "vanilla_complexity": "\u9ad8",
       "flex_complexity": "\u4f4e",
-      "vanilla_ms": 5.17,
-      "flex_ms": 14.383,
-      "speedup": 0.36
+      "vanilla_ms": 5.178,
+      "flex_ms": 14.756,
+      "speedup": 0.35
     },
     {
-      "vanilla_steps": "matmul \u2192 prefix_mask \u2192 causal \u2192 combine \u2192 masked_fill \u2192 softmax \u2192 matmul",
+      "vanilla_steps": "matmul -> prefix_mask -> causal -> combine -> masked_fill -> softmax -> matmul",
       "flex_lines": "def mask(b,h,q,k): return (k<512) | (q>=k)",
       "vanilla_complexity": "\u9ad8",
       "flex_complexity": "\u4f4e",
-      "vanilla_ms": 5.224,
-      "flex_ms": 12.551,
+      "vanilla_ms": 5.219,
+      "flex_ms": 12.574,
       "speedup": 0.42
     },
     {
-      "vanilla_steps": "matmul \u2192 build_dist_matrix \u2192 loop over H \u2192 add_bias \u2192 tril \u2192 masked_fill \u2192 softmax \u2192 matmul",
+      "vanilla_steps": "matmul -> build_dist_matrix -> loop over H -> add_bias -> tril -> masked_fill -> softmax -> matmul",
       "flex_lines": "def mod(s,b,h,q,k): return s - slope[h]*|q-k|",
       "vanilla_complexity": "\u6781\u9ad8",
       "flex_complexity": "\u4f4e",
-      "vanilla_ms": 5.747,
-      "flex_ms": 14.899,
+      "vanilla_ms": 5.756,
+      "flex_ms": 14.868,
       "speedup": 0.39
     }
   ],
   "C2": [
     {
       "pattern": "Document+SlidingWindow",
-      "flex_ms": 14.476,
+      "flex_ms": 14.389,
       "flex_mem": 0.426,
       "sparsity": 0.9062,
       "sdpa": "\u4e0d\u652f\u6301"
     },
     {
       "pattern": "Document+ALiBi",
-      "flex_ms": 18.263,
+      "flex_ms": 18.29,
       "flex_mem": 0.426,
       "sdpa": "\u4e0d\u652f\u6301"
     },
     {
       "pattern": "PrefixLM+Softcapping",
-      "flex_ms": 16.104,
+      "flex_ms": 16.098,
       "flex_mem": 0.426,
       "sdpa": "\u4e0d\u652f\u6301"
     },
     {
       "pattern": "Doc+SW+ALiBi+Softcap",
-      "flex_ms": 21.765,
+      "flex_ms": 21.816,
       "flex_mem": 0.426,
       "sdpa": "\u4e0d\u652f\u6301"
     }
@@ -164,12 +164,12 @@
   "C3": {
     "vanilla": {
       "time": {
-        "256": 0.359,
-        "512": 0.345,
-        "1024": 0.679,
-        "2048": 5.166,
-        "4096": 21.208,
-        "8192": 85.463
+        "256": 0.327,
+        "512": 0.34,
+        "1024": 0.69,
+        "2048": 5.155,
+        "4096": 21.224,
+        "8192": 85.485
       },
       "mem": {
         "256": 0.0137,
@@ -182,12 +182,12 @@
     },
     "flex": {
       "time": {
-        "256": 6.037,
-        "512": 6.15,
-        "1024": 6.901,
-        "2048": 14.547,
-        "4096": 47.145,
-        "8192": 184.17
+        "256": 6.039,
+        "512": 6.07,
+        "1024": 6.906,
+        "2048": 14.583,
+        "4096": 47.097,
+        "8192": 184.098
       },
       "mem": {
         "256": 0.0158,

@@ -2,7 +2,7 @@
 """
 FlexAttention 深度原理实验与可视化
 ===================================
-板块 A: 没有 FlexAttention 的世界 —— 三大痛点
+板块 A: 没有 FlexAttention 的世界 ---- 三大痛点
 板块 B: FlexAttention 原理拆解
 板块 C: FlexAttention 带来的改变
 """
@@ -59,15 +59,15 @@ def peak_mem(fn):
     return m
 
 # ================================================================
-# A1: 显存爆炸实验 —— S² 中间矩阵的灾难
+# A1: 显存爆炸实验 ---- S^2 中间矩阵的灾难
 # ================================================================
 def exp_A1_memory_explosion():
     print("\n" + "="*70)
-    print("  A1: 显存爆炸 —— Standard Attention 的 O(S²) 灾难")
+    print("  A1: 显存爆炸 ---- Standard Attention 的 O(S^2) 灾难")
     print("="*70)
     H, D, B = 8, 64, 1
 
-    # 理论计算 S×S 矩阵显存
+    # 理论计算 SxS 矩阵显存
     theory = {}
     for S in [512, 1024, 2048, 4096, 8192, 16384, 32768]:
         # 每个中间矩阵: S*S*2bytes(fp16), 共5个(scores, causal_mask, combined, softmax, output)
@@ -156,7 +156,7 @@ def exp_A1_memory_explosion():
     DATA["A1"] = {"theory": theory, "std": actual_std, "sdpa": actual_sdpa, "flex": actual_flex}
 
 # ================================================================
-# A2: 带宽饥饿实验 —— HBM 往返次数对比
+# A2: 带宽饥饿实验 ---- HBM 往返次数对比
 # ================================================================
 def exp_A2_bandwidth_starvation():
     print("\n" + "="*70)
@@ -174,7 +174,7 @@ def exp_A2_bandwidth_starvation():
         k = torch.randn(B, H, S, D, device=device, dtype=dtype)
         v = torch.randn(B, H, S, D, device=device, dtype=dtype)
 
-        # Standard: QK^T → mask → softmax → ×V (4次HBM写入)
+        # Standard: QK^T -> mask -> softmax -> xV (4次HBM写入)
         try:
             def std_fn():
                 sc = torch.matmul(q, k.transpose(-2, -1)) / (D**0.5)
@@ -222,11 +222,11 @@ def exp_A2_bandwidth_starvation():
     DATA["A2"] = {"std": std_times, "sdpa": sdpa_times, "flex": flex_times}
 
 # ================================================================
-# A3: 工程噩梦 —— 组合注意力模式的代码复杂度
+# A3: 工程噩梦 ---- 组合注意力模式的代码复杂度
 # ================================================================
 def exp_A3_engineering_nightmare():
     print("\n" + "="*70)
-    print("  A3: 工程噩梦 —— 实现 Document + SlidingWindow + ALiBi 组合")
+    print("  A3: 工程噩梦 ---- 实现 Document + SlidingWindow + ALiBi 组合")
     print("="*70)
     S, H, D, B = 2048, 8, 64, 1
     WINDOW = 256
@@ -298,7 +298,7 @@ def exp_A3_engineering_nightmare():
     # === 画图 A3: 代码复杂度 vs 性能对比 ===
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
 
-    # 左图：代码步骤数
+    # 左图:代码步骤数
     categories = ['Vanilla\n(手动组合)', 'Flex\n(声明式)']
     steps = [7, 3]
     colors = ['#e74c3c', '#3498db']
@@ -310,7 +310,7 @@ def exp_A3_engineering_nightmare():
     ax1.set_ylim(0, 9)
     ax1.grid(axis='y', alpha=0.3)
 
-    # 右图：性能对比
+    # 右图:性能对比
     metrics = ['Latency (ms)', 'Memory (GB)']
     vanilla_vals = [time_vanilla, mem_vanilla * 1000]  # scale for visibility
     flex_vals = [time_flex, mem_flex * 1000]
@@ -357,19 +357,19 @@ def exp_B1_score_mod_fusion():
 
     from torch.nn.attention.flex_attention import flex_attention, create_block_mask
 
-    # 方式1: 写后改（Standard）—— 先算 QK^T 写HBM, 再加 bias 再写HBM
+    # 方式1: 写后改(Standard)---- 先算 QK^T 写HBM, 再加 bias 再写HBM
     def write_then_modify():
         sc = torch.matmul(q, k.transpose(-2, -1)) / (D**0.5)  # 写HBM
         pos = torch.arange(S, device=device, dtype=dtype)
         dist = (pos.unsqueeze(0) - pos.unsqueeze(1)).abs()
         for h in range(H):
-            sc[:, h] -= alibi_slopes[h] * dist  # 读HBM → 加bias → 写HBM
+            sc[:, h] -= alibi_slopes[h] * dist  # 读HBM -> 加bias -> 写HBM
         cm = torch.ones(S, S, device=device, dtype=torch.bool).tril_()
         sc = sc.masked_fill(~cm, float('-inf'))
         w = F.softmax(sc.float(), dim=-1).to(dtype)
         return torch.matmul(w, v)
 
-    # 方式2: 融合计算（Flex）—— score_mod 在 SRAM 寄存器中一步完成
+    # 方式2: 融合计算(Flex)---- score_mod 在 SRAM 寄存器中一步完成
     def alibi_mod(score, b, h, q_idx, kv_idx):
         return score - alibi_slopes[h] * (q_idx - kv_idx).abs().to(dtype)
     def causal_mod(b, h, q_idx, kv_idx): return q_idx >= kv_idx
@@ -394,14 +394,14 @@ def exp_B1_score_mod_fusion():
     # === 画图 B1: 算子融合对比 ===
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
 
-    # 左图：HBM 访存流程示意
+    # 左图:HBM 访存流程示意
     ax1.set_xlim(0, 10)
     ax1.set_ylim(0, 10)
     ax1.set_title('B1-1: HBM Access Path Comparison')
 
     # Standard flow
     ax1.text(0.5, 9.5, 'Standard (write-then-modify)', fontsize=11, fontweight='bold', color='#e74c3c')
-    steps_std = ['QK^T → HBM', '读HBM +Bias', '写回 HBM', 'Mask → HBM', 'Softmax → HBM', '×V → HBM']
+    steps_std = ['QK^T -> HBM', '读HBM +Bias', '写回 HBM', 'Mask -> HBM', 'Softmax -> HBM', 'xV -> HBM']
     for i, s in enumerate(steps_std):
         y = 8.5 - i * 1.2
         ax1.add_patch(Rectangle((0.2, y-0.3), 4.0, 0.6, facecolor='#ffe0e0', edgecolor='#e74c3c'))
@@ -424,7 +424,7 @@ def exp_B1_score_mod_fusion():
 
     ax1.axis('off')
 
-    # 右图：实测数据
+    # 右图:实测数据
     labels = ['Latency (ms)', 'Memory (GB)']
     std_vals = [time_std, mem_std]
     flex_vals = [time_flex, mem_flex]
@@ -452,7 +452,7 @@ def exp_B1_score_mod_fusion():
     del q, k, v; clear()
 
 # ================================================================
-# B2: BlockMask 块级稀疏原理 —— 可视化
+# B2: BlockMask 块级稀疏原理 ---- 可视化
 # ================================================================
 def exp_B2_block_mask_visualization():
     print("\n" + "="*70)
@@ -489,14 +489,14 @@ def exp_B2_block_mask_visualization():
     fig.suptitle('B2: BlockMask Sparsity - Pixel vs Block (128x128)', fontsize=14)
 
     for col, (name, mask) in enumerate(masks_data.items()):
-        # 上行：像素级 mask
+        # 上行:像素级 mask
         ax = axes[0, col]
         ax.imshow(mask, cmap='RdYlGn', interpolation='nearest', aspect='equal')
         ax.set_title(f'{name}\n(pixel-level)', fontsize=10)
         ax.set_xlabel('KV Position')
         ax.set_ylabel('Q Position')
 
-        # 下行：块级 mask
+        # 下行:块级 mask
         ax2 = axes[1, col]
         num_blocks = S // BS
         block_mask = np.zeros((num_blocks, num_blocks))
@@ -539,7 +539,7 @@ def exp_B2_block_mask_visualization():
     DATA["B2"] = {"sparsity": sparsity_data}
 
 # ================================================================
-# C1: 代码对比 —— Vanilla vs Flex 完整示例
+# C1: 代码对比 ---- Vanilla vs Flex 完整示例
 # ================================================================
 def exp_C1_code_comparison():
     print("\n" + "="*70)
@@ -557,31 +557,31 @@ def exp_C1_code_comparison():
 
     patterns = {
         "Causal": {
-            "vanilla_steps": "matmul → tril_mask → masked_fill → softmax → matmul",
+            "vanilla_steps": "matmul -> tril_mask -> masked_fill -> softmax -> matmul",
             "flex_lines": "def mask(b,h,q,k): return q >= k",
             "vanilla_complexity": "中",
             "flex_complexity": "低",
         },
         "SlidingWindow(256)": {
-            "vanilla_steps": "matmul → abs_dist → window_mask → masked_fill → softmax → matmul",
+            "vanilla_steps": "matmul -> abs_dist -> window_mask -> masked_fill -> softmax -> matmul",
             "flex_lines": "def mask(b,h,q,k): return (q >= k) & (q - k <= 256)",
             "vanilla_complexity": "中",
             "flex_complexity": "低",
         },
         "Document(4)+Causal": {
-            "vanilla_steps": "matmul → tril → doc_eq → combine → masked_fill → softmax → matmul",
+            "vanilla_steps": "matmul -> tril -> doc_eq -> combine -> masked_fill -> softmax -> matmul",
             "flex_lines": "def mask(b,h,q,k): return (q>=k) & (doc[q]==doc[k])",
             "vanilla_complexity": "高",
             "flex_complexity": "低",
         },
         "PrefixLM(25%)": {
-            "vanilla_steps": "matmul → prefix_mask → causal → combine → masked_fill → softmax → matmul",
+            "vanilla_steps": "matmul -> prefix_mask -> causal -> combine -> masked_fill -> softmax -> matmul",
             "flex_lines": "def mask(b,h,q,k): return (k<512) | (q>=k)",
             "vanilla_complexity": "高",
             "flex_complexity": "低",
         },
         "ALiBi+Causal": {
-            "vanilla_steps": "matmul → build_dist_matrix → loop over H → add_bias → tril → masked_fill → softmax → matmul",
+            "vanilla_steps": "matmul -> build_dist_matrix -> loop over H -> add_bias -> tril -> masked_fill -> softmax -> matmul",
             "flex_lines": "def mod(s,b,h,q,k): return s - slope[h]*|q-k|",
             "vanilla_complexity": "极高",
             "flex_complexity": "低",
@@ -700,7 +700,7 @@ def exp_C1_code_comparison():
     del q, k, v; clear()
 
 # ================================================================
-# C2: SDPA 做不了 vs Flex 轻松实现 —— 组合模式
+# C2: SDPA 做不了 vs Flex 轻松实现 ---- 组合模式
 # ================================================================
 def exp_C2_impossible_for_sdpa():
     print("\n" + "="*70)
@@ -760,7 +760,7 @@ def exp_C2_impossible_for_sdpa():
     combos.append({"pattern": "PrefixLM+Softcapping", "flex_ms": t3, "flex_mem": mem3, "sdpa": "不支持"})
 
     # 4. Full combo: Document + SW + ALiBi + Softcapping
-    print("  [Document + SW + ALiBi + Softcapping —— 终极组合]")
+    print("  [Document + SW + ALiBi + Softcapping ---- 终极组合]")
     def ultimate_mask(b,h,qi,ki):
         return (qi >= ki) & ((qi - ki) <= 256) & (doc_ids[qi] == doc_ids[ki])
     def ultimate_score(s,b,h,qi,ki):
