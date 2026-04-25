@@ -1,70 +1,70 @@
-# Document Packing + Causal Attention: From Zero to FlexAttention
+# Document Packing + Causal Attention: 从零到 FlexAttention 全解析
 
-> **Pick one attention pattern, explain everything, implement three ways, run experiments.**
+> **选一个注意力模式，讲透原理，三种方式实现，跑实验对比。**
 >
 > NVIDIA L4 (24GB) | PyTorch 2.6.0+cu124 | Triton 3.2.0
 
 ---
 
-## Chapter 1: What is Document Packing? (For Beginners)
+## 第一章：什么是 Document Packing？（小白入门）
 
-### 1.1 The Problem
+### 1.1 问题背景
 
-In LLM training (especially SFT / fine-tuning), you have many short conversations:
-
-```
-Doc 1: [User: hello] [AI: hi]           (length ~50 tokens)
-Doc 2: [User: explain X] [AI: ...]      (length ~300 tokens)
-Doc 3: [User: summarize Y] [AI: ...]    (length ~150 tokens)
-```
-
-GPU works best with **fixed-length** batches. If you pad each to 512, you waste 80% compute on padding tokens. Instead, we **pack** them into one long sequence:
+在大模型训练（特别是 SFT / 微调阶段），你有很多段短对话：
 
 ```
-[Doc1 tokens... | Doc2 tokens... | Doc3 tokens... | padding...]  → total = 512
+文档 1: [用户: 你好] [AI: 你好呀]           （长度约 50 tokens）
+文档 2: [用户: 解释一下 X] [AI: ...]        （长度约 300 tokens）
+文档 3: [用户: 总结一下 Y] [AI: ...]        （长度约 150 tokens）
 ```
 
-### 1.2 The Constraint
-
-When computing attention for the packed sequence, **tokens in Doc 1 must NOT see tokens in Doc 2 or Doc 3**. Otherwise, information leaks between documents!
-
-Each token can only attend to:
-1. **Tokens in the same document** (same doc_id)
-2. **Tokens that come BEFORE it** (causal: you can't see the future)
-
-This is called **Document Packing + Causal Attention**.
-
-### 1.3 Visual Explanation
+GPU 最高效的工作方式是处理**固定长度**的批次。如果每个对话都填充到 512，那 80% 的计算量都浪费在 padding token 上了。所以我们把它们**打包**成一个长序列：
 
 ```
-Doc 1 (tokens 0-127)    Doc 2 (tokens 128-383)   Doc 3 (tokens 384-511)
+[文档1的tokens... | 文档2的tokens... | 文档3的tokens... | padding...]  → 总长度 = 512
+```
+
+### 1.2 核心约束
+
+计算注意力时，**文档1的 token 绝对不能看到文档2和文档3的 token**！否则就会发生信息泄露。
+
+每个 token 只能关注（attend to）：
+1. **属于同一个文档的 token**（相同 doc_id）
+2. **在当前 token 之前的 token**（因果性：不能看到未来）
+
+这就是 **Document Packing + Causal Attention（多文档打包 + 因果注意力）**。
+
+### 1.3 可视化解释
+
+```
+文档1 (tokens 0-127)    文档2 (tokens 128-383)   文档3 (tokens 384-511)
 
      0  127 128     383 384    511
-  0 [████    ][          ][         ]   ← Token 0 sees only itself (Doc1)
-    [  ████  ][          ][         ]   ← Token 64 sees 0-64 (Doc1 only)
-127[████████][          ][         ]   ← Token 127 sees 0-127 (Doc1 only)
-128[        ][█         ][         ]   ← Token 128 sees only itself (Doc2)
-    [        ][  ████    ][         ]   ← Token 256 sees 128-256 (Doc2 only)
-383[        ][██████████][         ]   ← Token 383 sees 128-383 (Doc2 only)
-384[        ][          ][█        ]   ← Token 384 sees only itself (Doc3)
-511[        ][          ][████████]   ← Token 511 sees 384-511 (Doc3 only)
+  0 [████    ][          ][         ]   ← Token 0 只能看到自己（文档1内）
+    [  ████  ][          ][         ]   ← Token 64 能看到 0-64（仅文档1）
+127[████████][          ][         ]   ← Token 127 能看到 0-127（仅文档1）
+128[        ][█         ][         ]   ← Token 128 只能看到自己（文档2内）
+    [        ][  ████    ][         ]   ← Token 256 能看到 128-256（仅文档2）
+383[        ][██████████][         ]   ← Token 383 能看到 128-383（仅文档2）
+384[        ][          ][█        ]   ← Token 384 只能看到自己（文档3内）
+511[        ][          ][████████]   ← Token 511 能看到 384-511（仅文档3）
 
-Green = can attend, White = blocked (-inf after softmax)
+绿色 = 可以关注，白色 = 被屏蔽（softmax 后变 0）
 ```
 
-### 1.4 Why This Pattern Matters
+### 1.4 为什么这个模式重要？
 
-This is the **#1 most common complex attention pattern** in real LLM workloads:
-- GPT training with multi-document packing
-- Batch inference with different prompts
-- RAG systems with multiple retrieved documents
-- Any scenario where you batch independent sequences together
+这是大模型实际工作负载中**排名第一的复杂注意力模式**：
+- GPT 训练中的多文档打包
+- 多 prompt 批量推理
+- RAG 系统中多个检索文档的打包
+- 任何需要将独立序列打包到同一个 batch 的场景
 
 ---
 
-## Chapter 2: Implementation #1 — Vanilla PyTorch (The Hard Way)
+## 第二章：实现方式一 —— PyTorch 手写（困难模式）
 
-### 2.1 Complete Code with Line-by-Line Explanation
+### 2.1 完整代码 + 逐行解析
 
 ```python
 import torch
@@ -72,113 +72,113 @@ import torch.nn.functional as F
 
 def vanilla_doc_packing_attention(q, k, v, doc_ids):
     """
-    q, k, v: shape (B, H, S, D) - query, key, value tensors
-    doc_ids: shape (S,) - which document each token belongs to
-    
-    Returns: attention output (B, H, S, D)
+    q, k, v: 形状 (B, H, S, D) — query, key, value 张量
+    doc_ids: 形状 (S,) — 每个 token 属于哪个文档
+
+    返回: 注意力输出 (B, H, S, D)
     """
     B, H, S, D = q.shape
     scale = 1.0 / (D ** 0.5)
-    
-    # ===== Step 1: Compute attention scores =====
-    # QK^T produces a (B, H, S, S) matrix
-    # THIS IS THE PROBLEM: S×S matrix is written to GPU global memory (HBM)
-    # For S=8192, this is 128 MB per head per batch element
+
+    # ===== 第1步: 计算注意力分数 =====
+    # QK^T 产生一个 (B, H, S, S) 的矩阵
+    # 问题就在这里: S×S 矩阵被写入 GPU 全局显存 (HBM)
+    # 对于 S=8192，每个 head 每个 batch 元素就占 128 MB
     scores = torch.matmul(q, k.transpose(-2, -1)) * scale
-    
-    # ===== Step 2: Build causal mask (lower triangle) =====
-    # Another S×S tensor allocated in HBM!
-    # token i can only see tokens 0..i (not i+1..S-1)
+
+    # ===== 第2步: 构造因果掩码（下三角）=====
+    # 又一个 S×S 张量分配到 HBM 中！
+    # token i 只能看到 tokens 0..i（不能看到 i+1..S-1）
     causal_mask = torch.ones(S, S, dtype=torch.bool, device=q.device).tril_()
-    
-    # ===== Step 3: Build document mask =====
-    # Yet another S×S tensor!
-    # doc_ids[q] == doc_ids[k] means "same document"
+
+    # ===== 第3步: 构造文档掩码 =====
+    # 又一个 S×S 张量！
+    # doc_ids[q] == doc_ids[k] 表示"同一个文档"
     doc_mask = doc_ids.unsqueeze(0) == doc_ids.unsqueeze(1)
-    
-    # ===== Step 4: Combine masks =====
-    # STILL another S×S tensor!
+
+    # ===== 第4步: 合并掩码 =====
+    # 还是一个 S×S 张量！
     combined_mask = causal_mask & doc_mask
-    
-    # ===== Step 5: Apply mask to scores =====
-    # Read S×S from HBM, modify, write back to HBM
+
+    # ===== 第5步: 将掩码应用到分数上 =====
+    # 从 HBM 读出 S×S，修改，再写回 HBM
     scores = scores.masked_fill(~combined_mask, float('-inf'))
-    
-    # ===== Step 6: Softmax =====
-    # Read S×S, compute softmax row by row, write S×S back
+
+    # ===== 第6步: Softmax =====
+    # 读取 S×S，逐行计算 softmax，再写回 S×S
     attn_weights = F.softmax(scores.float(), dim=-1).to(q.dtype)
-    
-    # ===== Step 7: Multiply by V =====
-    # Finally produce output (B, H, S, D)
+
+    # ===== 第7步: 乘以 V =====
+    # 最终产生输出 (B, H, S, D)
     output = torch.matmul(attn_weights, v)
-    
+
     return output
 ```
 
-### 2.2 What's Wrong With This?
+### 2.2 这种写法有什么问题？
 
-**Problem 1: Memory Explosion**
+**问题一：显存爆炸**
 
-We allocate at least 5 tensors of size S×S:
+我们至少分配了 5 个 S×S 大小的张量：
 
-| Tensor | Size (S=4096, fp16) | Count |
-|--------|---------------------|-------|
+| 张量 | 大小 (S=4096, fp16) | 数量 |
+|------|---------------------|------|
 | scores (QK^T) | 32 MB | 1 |
 | causal_mask | 16 MB (bool) | 1 |
 | doc_mask | 16 MB (bool) | 1 |
 | combined_mask | 16 MB (bool) | 1 |
 | attn_weights (softmax) | 32 MB | 1 |
-| **Total (per head per batch)** | **~112 MB** | |
+| **合计（每个 head 每个 batch）** | **约 112 MB** | |
 
-For B=1, H=8, S=4096: **~900 MB** just for intermediate matrices. At S=8192: **~3.6 GB**.
+对于 B=1, H=8, S=4096：**约 900 MB** 仅中间矩阵。S=8192 时：**约 3.6 GB**。
 
-**Problem 2: Memory Bandwidth Starvation**
+**问题二：显存带宽饥饿**
 
-Each `torch.matmul`, `masked_fill`, and `F.softmax` is a **separate kernel launch**. Between each kernel, data must travel:
+每次 `torch.matmul`、`masked_fill`、`F.softmax` 都是一次**独立的 kernel 启动**。每个 kernel 之间，数据都要往返：
 ```
-GPU Compute (SM) → HBM → GPU Compute (SM) → HBM → ... (6 round trips!)
+GPU 计算 (SM) → HBM → GPU 计算 (SM) → HBM → ...（共 6 次往返！）
 ```
 
-L4 has 121 TFLOPs compute but only ~300 GB/s bandwidth. The GPU spends 90%+ of time **waiting for data transfer**, not computing.
+L4 拥有 121 TFLOPs 算力但只有约 300 GB/s 带宽。GPU 90%+ 的时间在**等数据传输**，而不是在计算。
 
-**Problem 3: No Sparsity Exploitation**
+**问题三：没有利用稀疏性**
 
-Even though 80-95% of the combined_mask is `False` (blocked), PyTorch still computes ALL S²×D multiply-accumulates. The GPU does billions of useless floating-point operations on positions that will become `-inf` → `0` after softmax.
+即使 combined_mask 中 80-95% 的区域都是 `False`（被屏蔽），PyTorch 仍然会计算**所有** S²×D 次乘加运算。GPU 在那些最终会变成 `-inf` → `0` 的位置上做了数十亿次无用计算。
 
-### 2.3 Experimental Proof (Exp2)
+### 2.3 实验验证（实验2）
 
 ![Memory Waterfall](figures_doc_packing/exp2_memory_waterfall.png)
 
-For S=2048, 4 documents, the memory builds up step by step:
-- After QK^T: 0.14 GB
-- Peak (after softmax): **0.34 GB** — just for S=2048!
+对于 S=2048、4 个文档，内存逐步累积：
+- QK^T 之后：0.14 GB
+- 峰值（softmax 之后）：**0.34 GB** — 这还只是 S=2048！
 
-At S=12288 (realistic for long-context models), this would be **12+ GB**.
+在 S=12288（长上下文模型的真实场景）下，将达到 **12+ GB**。
 
 ---
 
-## Chapter 3: Implementation #2 — CUDA Kernel (The Expert Way)
+## 第三章：实现方式二 —— CUDA 手写内核（专家模式）
 
-### 3.1 Why We Need Custom CUDA
+### 3.1 为什么需要自定义 CUDA？
 
-To fix the three problems above, we need a **single fused kernel** that:
-1. Never materializes the full S×S matrix (use tiling in SRAM)
-2. Does all operations in one pass (QK^T → mask → softmax → ×V)
-3. Skips computation for masked-out blocks
+要解决上述三个问题，我们需要一个**单一的融合内核**，它：
+1. 永远不实例化完整的 S×S 矩阵（使用 SRAM 分块计算）
+2. 一次性完成所有操作（QK^T → mask → softmax → ×V）
+3. 跳过被屏蔽的块的计算
 
-This is exactly what **FlashAttention** does for standard causal attention. But FlashAttention's CUDA kernel is **hardcoded** — it only supports:
-- Standard causal mask (`is_causal=True`)
-- A single dense attention mask
+这正是 **FlashAttention** 为标准因果注意力所做的事情。但 FlashAttention 的 CUDA 内核是**硬编码**的 — 它只支持：
+- 标准因果掩码（`is_causal=True`）
+- 单个密集注意力掩码
 
-It does NOT support custom patterns like document packing.
+它**不支持**像文档打包这样的自定义模式。
 
-### 3.2 What a Custom CUDA Kernel Would Look Like
+### 3.2 自定义 CUDA 内核大概长什么样？
 
-Here's a simplified pseudo-code of what you'd need to write:
+以下是简化的伪代码：
 
 ```cpp
-// Simplified CUDA kernel for Document Packing + Causal Attention
-// Real implementation: ~500-1000 lines of CUDA code
+// 简化版 CUDA 内核：Document Packing + Causal Attention
+// 真实实现：约 500-1000 行 CUDA 代码
 
 __global__ void doc_packing_attention_kernel(
     half* output,        // [B, H, S, D]
@@ -188,26 +188,26 @@ __global__ void doc_packing_attention_kernel(
     const int* doc_ids,  // [S]
     int S, int D, float scale
 ) {
-    // Each thread block handles one (batch, head, query_block)
+    // 每个 thread block 处理一个 (batch, head, query_block)
     int b = blockIdx.z;
     int h = blockIdx.y;
     int q_block = blockIdx.x;
-    
-    // Shared memory for tiling (SRAM - very fast, very small)
-    __shared__ half Q_tile[BLOCK_SIZE][D];  // Load Q block
-    __shared__ half K_tile[BLOCK_SIZE][D];  // Load K block
-    __shared__ half V_tile[BLOCK_SIZE][D];  // Load V block
-    
-    // Accumulator for online softmax (in registers - fastest)
+
+    // 共享内存用于分块计算（SRAM - 极快但极小）
+    __shared__ half Q_tile[BLOCK_SIZE][D];
+    __shared__ half K_tile[BLOCK_SIZE][D];
+    __shared__ half V_tile[BLOCK_SIZE][D];
+
+    // 在线 softmax 累加器（在寄存器中 - 最快）
     float accumulator[BLOCK_SIZE] = {0};
     float max_score = -INFINITY;
     float sum_exp = 0;
-    
-    // Loop over KV blocks
+
+    // 遍历 KV 块
     for (int kv_block = 0; kv_block < S / BLOCK_SIZE; kv_block++) {
-        
-        // *** SPARSITY CHECK: Skip if entire block is masked ***
-        // This is what FlexAttention's BlockMask does automatically!
+
+        // *** 稀疏性检查: 如果整个块都被屏蔽了就跳过 ***
+        // 这就是 FlexAttention 的 BlockMask 自动做的事！
         bool any_valid = false;
         for (int qi = 0; qi < BLOCK_SIZE; qi++) {
             for (int ki = 0; ki < BLOCK_SIZE; ki++) {
@@ -220,61 +220,61 @@ __global__ void doc_packing_attention_kernel(
             }
             if (any_valid) break;
         }
-        if (!any_valid) continue;  // ← SKIP THIS BLOCK ENTIRELY!
-        
-        // Load K, V tiles from HBM to SRAM
+        if (!any_valid) continue;  // <- 整个块直接跳过！
+
+        // 从 HBM 加载 K, V 到 SRAM
         load_tile(K_tile, key, kv_block);
         load_tile(V_tile, value, kv_block);
         __syncthreads();
-        
-        // Compute QK^T for this tile (in SRAM, no HBM write!)
+
+        // 在 SRAM 内计算 QK^T（不写 HBM！）
         for (int ki = 0; ki < BLOCK_SIZE; ki++) {
             int q_idx = q_block * BLOCK_SIZE + qi;
             int k_idx = kv_block * BLOCK_SIZE + ki;
-            
-            // Apply mask IN REGISTERS (no extra memory!)
+
+            // 在寄存器中应用掩码（不占额外内存！）
             if (q_idx < k_idx || doc_ids[q_idx] != doc_ids[k_idx]) {
-                continue;  // Skip masked positions
+                continue;
             }
-            
+
             float score = dot_product(Q_tile[qi], K_tile[ki]) * scale;
-            
-            // Online softmax update (in registers)
+
+            // 在线 softmax 更新（在寄存器中）
             float new_max = max(max_score, score);
             float correction = exp(max_score - new_max);
             sum_exp = sum_exp * correction + exp(score - new_max);
-            accumulator[ki] = accumulator[ki] * correction + 
+            accumulator[ki] = accumulator[ki] * correction +
                               exp(score - new_max) * V_tile[ki];
             max_score = new_max;
         }
     }
-    
-    // Normalize and write output (only ONE HBM write per token!)
+
+    // 归一化并写输出（每个 token 只写一次 HBM！）
     for (int d = 0; d < D; d++) {
-        output[b * H * S * D + h * S * D + q_idx * D + d] = 
+        output[b * H * S * D + h * S * D + q_idx * D + d] =
             (half)(accumulator[d] / sum_exp);
     }
 }
 ```
 
-### 3.3 The Problem With Custom CUDA
+### 3.3 自定义 CUDA 的问题
 
-| Challenge | Details |
-|-----------|---------|
-| **Lines of code** | 500-1000+ lines of CUDA C++ |
-| **Skills required** | Deep GPU architecture knowledge (SM, SRAM, warp scheduling) |
-| **Debugging** | No print statements in kernels; need `cuda-gdb` or `nsight` |
-| **Maintenance** | Must update for each new GPU architecture (Ampere, Hopper, etc.) |
-| **Flexibility** | Any mask change requires rewriting the kernel |
-| **Time** | 1-2 weeks for an experienced CUDA programmer |
+| 挑战 | 详情 |
+|------|------|
+| **代码量** | 500-1000+ 行 CUDA C++ |
+| **技能要求** | 深入理解 GPU 架构（SM, SRAM, warp 调度） |
+| **调试** | 内核中无法用 print；需要 cuda-gdb 或 nsight |
+| **维护** | 每种新 GPU 架构都要更新（Ampere, Hopper 等） |
+| **灵活性** | 任何掩码修改都需要重写内核 |
+| **开发时间** | 一个有经验的 CUDA 程序员需要 1-2 周 |
 
-> **This is exactly the problem FlexAttention solves**: you get the performance of a custom kernel, but you only need to write a few lines of Python.
+> **这正是 FlexAttention 要解决的问题**：你获得自定义内核的性能，但只需要写几行 Python。
 
 ---
 
-## Chapter 4: Implementation #3 — FlexAttention (The Easy Way)
+## 第四章：实现方式三 —— FlexAttention（简单模式）
 
-### 4.1 Complete Code
+### 4.1 完整代码
 
 ```python
 import torch
@@ -282,74 +282,74 @@ from torch.nn.attention.flex_attention import flex_attention, create_block_mask
 
 def flex_doc_packing_attention(q, k, v, doc_ids):
     """
-    Same function signature, but 3 lines instead of 15.
-    No S×S matrices. No multi-kernel overhead.
+    同样的函数签名，但只需 3 行代码。
+    没有 S×S 矩阵。没有多内核开销。
     """
     B, H, S, D = q.shape
-    
-    # Step 1: Define the mask rule as a Python function
-    # This function takes position indices and returns True/False
-    # It NEVER creates any physical S×S matrix!
+
+    # 第1步: 用 Python 函数定义掩码规则
+    # 这个函数接收位置索引，返回 True/False
+    # 它永远不会创建任何物理的 S×S 矩阵！
     def doc_causal_mask(b, h, q_idx, kv_idx):
-        causal_ok = q_idx >= kv_idx              # Can only see past tokens
-        doc_ok = doc_ids[q_idx] == doc_ids[kv_idx]  # Must be same document
+        causal_ok = q_idx >= kv_idx              # 只能看到过去的 token
+        doc_ok = doc_ids[q_idx] == doc_ids[kv_idx]  # 必须是同一个文档
         return causal_ok & doc_ok
-    
-    # Step 2: Create BlockMask (compressed sparse representation)
-    # This analyzes the mask pattern and builds a block-level index
-    # Instead of storing S×S booleans, it stores which 128×128 blocks to compute
+
+    # 第2步: 创建 BlockMask（压缩的稀疏表示）
+    # 它分析掩码模式并构建块级索引
+    # 不存储 S×S 个布尔值，而是存储哪些 128×128 块需要计算
     block_mask = create_block_mask(doc_causal_mask, B, 1, S, S, device=q.device)
-    
-    # Step 3: Execute! (torch.compile JIT-compiles to a Triton kernel)
-    # The compiled kernel is equivalent to the custom CUDA kernel above,
-    # but generated automatically from your Python function
+
+    # 第3步: 执行！（torch.compile 即时编译为 Triton 内核）
+    # 编译后的内核等效于上面的自定义 CUDA 内核，
+    # 但是从你的 Python 函数自动生成的
     return flex_attention(q, k, v, block_mask=block_mask)
 ```
 
-### 4.2 What Happens Under the Hood
+### 4.2 底层发生了什么
 
 ```
-Your Python function                   What PyTorch generates
-=====================                  =====================
+你的 Python 函数                   PyTorch 生成的代码
+=====================              =====================
 
-def doc_causal_mask(b, h, q, kv):      Triton kernel (JIT compiled):
-  return (q >= kv) &                   ┌─────────────────────────────┐
-         (doc[q] == doc[kv])           │ for q_block in range(...):
-                                       │   for kv_block in range(...):
-create_block_mask(mask_fn)             │     if block_mask.skip(q, kv):
-  ↓ vmap + block analysis              │       continue  # SKIP!
-  ↓ generates BlockMask                │     scores = Q×K^T * scale
-                                       │     if not mask(q, kv):
-flex_attention(q, k, v, block_mask)    │       score = -inf
-  ↓ torch.compile                      │     online_softmax(scores)
-  ↓ Triton code generation             │     accumulate × V
-  ↓ CUDA PTX                           │ write output to HBM (ONCE!)
-                                       └─────────────────────────────┘
+def doc_causal_mask(b, h, q, kv):  Triton 内核（即时编译）:
+  return (q >= kv) &               ┌─────────────────────────────┐
+         (doc[q] == doc[kv])       │ for q_block in range(...):
+                                   │   for kv_block in range(...):
+create_block_mask(mask_fn)         │     if block_mask.skip(q, kv):
+  ↓ vmap + 块分析                  │       continue  # 跳过！
+  ↓ 生成 BlockMask                 │     scores = Q×K^T * scale
+                                   │     if not mask(q, kv):
+flex_attention(q, k, v, block_mask)│       score = -inf
+  ↓ torch.compile                  │     online_softmax(scores)
+  ↓ Triton 代码生成                │     accumulate × V
+  ↓ CUDA PTX                       │ write output to HBM（只写一次！）
+                                   └─────────────────────────────┘
 ```
 
-### 4.3 How BlockMask Saves Compute
+### 4.3 BlockMask 如何节省计算
 
-![Sparsity Visualization](figures_doc_packing/exp3_sparsity.png)
+![稀疏性可视化](figures_doc_packing/exp3_sparsity.png)
 
-| Document Count | Pixel-level Sparsity | What BlockMask Does |
-|---------------|---------------------|-------------------|
-| 2 docs | 74.9% | Skips 3/4 of all blocks |
-| 4 docs | 87.4% | Skips 7/8 of all blocks |
-| 8 docs | 93.7% | Skips 15/16 of all blocks |
-| 16 docs | 96.8% | Skips 31/32 of all blocks |
+| 文档数量 | 像素级稀疏率 | BlockMask 做了什么 |
+|---------|------------|------------------|
+| 2 个文档 | 74.9% | 跳过 3/4 的块 |
+| 4 个文档 | 87.4% | 跳过 7/8 的块 |
+| 8 个文档 | 93.7% | 跳过 15/16 的块 |
+| 16 个文档 | 96.8% | 跳过 31/32 的块 |
 
-Each **green block** (128×128) gets fully computed. Each **red block** gets completely **skipped** — no HBM read, no computation. The GPU literally does a `continue` in the kernel loop.
+每个**绿色块**（128×128）会被完整计算。每个**红色块**被完全**跳过** — 不读 HBM、不计算。GPU 在内核循环中直接执行 `continue`。
 
 ---
 
-## Chapter 5: Experimental Results
+## 第五章：实验结果
 
-### 5.1 Full Comparison: Vanilla vs FlexAttention (Exp1)
+### 5.1 全面对比：Vanilla vs FlexAttention（实验1）
 
-![Memory & Speed](figures_doc_packing/exp1_memory_speed.png)
+![显存与速度](figures_doc_packing/exp1_memory_speed.png)
 
-| S | Docs | Vanilla (ms) | Vanilla (GB) | Flex (ms) | Flex (GB) | Sparsity | Max Diff |
-|---|------|-------------|-------------|-----------|-----------|----------|---------|
+| S | 文档数 | Vanilla (ms) | Vanilla (GB) | Flex (ms) | Flex (GB) | 稀疏率 | 最大误差 |
+|---|--------|-------------|-------------|-----------|-----------|--------|---------|
 | 256 | 2 | 0.37 | 0.014 | 5.75 | 0.016 | 50% | 0.0 |
 | 512 | 4 | 0.34 | 0.031 | 5.85 | 0.037 | 75% | 0.0 |
 | 1024 | 8 | 0.68 | 0.094 | 6.68 | 0.117 | 88% | 0.0 |
@@ -357,103 +357,103 @@ Each **green block** (128×128) gets fully computed. Each **red block** gets com
 | 4096 | 8 | 21.12 | 1.313 | 46.96 | 1.664 | 97% | 0.0 |
 | 8192 | 8 | 85.42 | 5.180 | 183.65 | 6.571 | 98% | 0.0 |
 
-### 5.2 Key Findings
+### 5.2 关键发现
 
-**Finding 1: Numerical Accuracy is Perfect**
+**发现一：数值精度完美**
 
-All 14 test configurations show **max_diff = 0.0**. FlexAttention produces bit-identical results to the vanilla PyTorch implementation for Document Packing + Causal.
+全部 14 个测试配置的**最大误差 = 0.0**。FlexAttention 与 Vanilla PyTorch 实现产生了位级一致的结果。
 
-This is because the mask is binary (True/False, no floating-point bias involved), so both implementations converge to exactly the same result.
+原因是掩码是二值的（True/False，不涉及浮点偏置），所以两种实现收敛到完全相同的结果。
 
-**Finding 2: FlexAttention Uses Less Memory Than Expected**
+**发现二：FlexAttention 显存开销是固定比例**
 
-| S | Vanilla Memory | Flex Memory | Flex Overhead |
-|---|---------------|------------|---------------|
+| S | Vanilla 显存 | Flex 显存 | Flex 额外开销 |
+|---|-------------|----------|--------------|
 | 2048 | 0.340 GB | 0.430 GB | +26% |
 | 4096 | 1.313 GB | 1.664 GB | +27% |
 | 8192 | 5.180 GB | 6.571 GB | +27% |
 
-FlexAttention uses ~27% more memory than vanilla, but this overhead is **constant ratio** — it doesn't grow with S. The extra memory comes from:
-- BlockMask metadata (~small, O(S²/128²))
-- Triton kernel compilation artifacts
-- Intermediate buffers in the Triton kernel
+FlexAttention 比 Vanilla 多用约 27% 显存，但这个比例是**恒定的** — 不会随 S 增长。额外显存来自：
+- BlockMask 元数据（很小，O(S²/128²)）
+- Triton 内核编译产物
+- Triton 内核中的中间缓冲区
 
-**Finding 3: SDPA (FlashAttention2) Is Still King for Standard Patterns**
+**发现三：SDPA（FlashAttention2）在标准模式下仍然是王者**
 
-![SDPA Baseline](figures_doc_packing/exp4_sdpa_baseline.png)
+![SDPA 基线](figures_doc_packing/exp4_sdpa_baseline.png)
 
-| S | SDPA (ms) | Flex (ms) | Flex is slower by |
-|---|-----------|-----------|------------------|
+| S | SDPA (ms) | Flex (ms) | Flex 慢了 |
+|---|-----------|-----------|----------|
 | 512 | 0.040 | 2.247 | 56x |
 | 1024 | 0.068 | 3.161 | 47x |
 | 2048 | 0.115 | 12.512 | 109x |
 | 4096 | 0.314 | 47.835 | 152x |
 | 8192 | 1.075 | 186.563 | **174x** |
 
-SDPA uses hand-written CUDA kernels optimized over years by NVIDIA and PyTorch teams. On L4 (a smaller GPU with fewer SMs), the Triton kernel overhead is significant.
+SDPA 使用 NVIDIA 和 PyTorch 团队多年优化的手写 CUDA 内核。在 L4（SM 数较少的 GPU）上，Triton 内核开销很明显。
 
-> **But remember**: SDPA CANNOT do Document Packing! It only supports standard causal attention. When you need Doc Packing, your choices are Vanilla (slow, memory-hungry) or FlexAttention.
+> **但请注意**：SDPA **做不了** Document Packing！它只支持标准因果注意力。当你需要 Doc Packing 时，你的选择只有 Vanilla（慢、吃显存）或 FlexAttention。
 
-**Finding 4: OOM Boundary (Exp5)**
+**发现四：OOM 边界（实验5）**
 
-![OOM Boundary](figures_doc_packing/exp5_oom_boundary.png)
+![OOM 边界](figures_doc_packing/exp5_oom_boundary.png)
 
-| S | Docs | Vanilla | Flex |
-|---|------|---------|------|
+| S | 文档数 | Vanilla | Flex |
+|---|--------|---------|------|
 | 2048 | 2 | 0.334 GB | 0.559 GB |
 | 4096 | 4 | 1.365 GB | 2.188 GB |
 | 8192 | 8 | 5.410 GB | 8.680 GB |
 | 12288 | 12 | 12.582 GB | 19.485 GB |
 | 16384 | 16 | **OOM** | **OOM** |
 
-Both methods OOM at S=16384 on L4's 24GB. Flex hits the limit earlier because of its ~27% memory overhead. At S=12288, Flex uses 19.5 GB — very close to the limit.
+两种方法都在 S=16384 时 OOM。Flex 因为约 27% 的额外显存开销会更早触及限制。在 S=12288 时，Flex 用了 19.5 GB — 非常接近上限。
 
 ---
 
-## Chapter 6: The Three-Way Comparison
+## 第六章：三方对比总结
 
-### 6.1 Side-by-Side Summary
+### 6.1 并排总结
 
-| Aspect | Vanilla PyTorch | Custom CUDA | FlexAttention |
-|--------|----------------|-------------|--------------|
-| **Lines of code** | ~15 lines | 500-1000 lines | **3 lines** |
-| **Memory** | O(S²) per step | O(S) tiled | O(S) + BlockMask |
-| **Speed** | Baseline (slow) | Fastest | Slower than CUDA* |
-| **Accuracy** | Reference | Same | **0.0 diff** (perfect) |
-| **Dev time** | 10 minutes | 1-2 weeks | **10 minutes** |
-| **Maintainability** | Easy to break | Hard to maintain | **Easy** |
-| **Flexibility** | Any pattern | Must rewrite kernel | **Any pattern** |
+| 维度 | Vanilla PyTorch | 自定义 CUDA | FlexAttention |
+|------|----------------|-------------|--------------|
+| **代码行数** | 约 15 行 | 500-1000 行 | **3 行** |
+| **显存** | 每步 O(S²) | O(S) 分块 | O(S) + BlockMask |
+| **速度** | 基准（慢） | 最快 | 比 CUDA 慢* |
+| **精度** | 参考基准 | 相同 | **0.0 误差**（完美） |
+| **开发时间** | 10 分钟 | 1-2 周 | **10 分钟** |
+| **可维护性** | 容易出 bug | 难以维护 | **容易** |
+| **灵活性** | 任意模式 | 必须重写内核 | **任意模式** |
 
-*FlexAttention is slower than hand-written CUDA on L4, but on A100/H100 with more SMs the gap narrows significantly.
+*FlexAttention 在 L4 上比手写 CUDA 慢，但在 A100/H100 等 SM 更多的 GPU 上差距会显著缩小。
 
-### 6.2 Decision Flowchart
+### 6.2 决策流程图
 
 ```
-Do you need Document Packing + Causal?
+你需要 Document Packing + Causal 吗？
 │
-├─ No, just standard Causal → Use SDPA (FlashAttention2), done.
+├─ 不需要，只用标准 Causal → 用 SDPA (FlashAttention2)，完事。
 │
-├─ Yes, and I need it NOW → Use FlexAttention
-│   - 3 lines of code
-│   - Compiles automatically
-│   - Works on any GPU with Triton support
+├─ 需要，而且现在就要 → 用 FlexAttention
+│   - 3 行代码
+│   - 自动编译
+│   - 任何支持 Triton 的 GPU 都能用
 │
-├─ Yes, and I need max performance → Write custom CUDA kernel
-│   - 1-2 weeks of work
-│   - Must maintain for each new GPU architecture
-│   - But 2-5x faster than Flex
+├─ 需要，而且要极致性能 → 写自定义 CUDA 内核
+│   - 1-2 周工作量
+│   - 每种新 GPU 架构都要维护
+│   - 但比 Flex 快 2-5 倍
 │
-└─ Yes, and I'm just experimenting → Vanilla PyTorch is fine
-    - Only for S < 4096
-    - Easy to debug
-    - Will OOM for large S
+└─ 需要，但只是做实验 → Vanilla PyTorch 就行
+    - 只适合 S < 4096
+    - 容易调试
+    - 大 S 会 OOM
 ```
 
 ---
 
-## Chapter 7: Code You Can Copy-Paste
+## 第七章：可直接复制的代码
 
-### 7.1 Vanilla PyTorch (for small-scale testing)
+### 7.1 Vanilla PyTorch（适合小规模测试）
 
 ```python
 import torch
@@ -468,7 +468,7 @@ def vanilla_doc_packing_attention(q, k, v, doc_ids):
     return torch.matmul(F.softmax(scores.float(), dim=-1).to(q.dtype), v)
 ```
 
-### 7.2 FlexAttention (production-ready)
+### 7.2 FlexAttention（生产就绪）
 
 ```python
 from torch.nn.attention.flex_attention import flex_attention, create_block_mask
@@ -481,7 +481,7 @@ def flex_doc_packing_attention(q, k, v, doc_ids):
     return flex_attention(q, k, v, block_mask=block_mask)
 ```
 
-### 7.3 Usage Example
+### 7.3 使用示例
 
 ```python
 device = "cuda"
@@ -492,34 +492,34 @@ q = torch.randn(B, H, S, D, device=device, dtype=dtype)
 k = torch.randn(B, H, S, D, device=device, dtype=dtype)
 v = torch.randn(B, H, S, D, device=device, dtype=dtype)
 
-# 4 documents of 1024 tokens each
+# 4 个文档，每个 1024 tokens
 doc_ids = torch.arange(S, device=device) // 1024
 
-# Vanilla (for verification)
+# Vanilla（用于验证）
 out_vanilla = vanilla_doc_packing_attention(q, k, v, doc_ids)
 
-# Flex (for production)
+# Flex（用于生产）
 out_flex = flex_doc_packing_attention(q, k, v, doc_ids)
 
-# Verify they match
-print(f"Max diff: {(out_vanilla - out_flex).abs().max():.6f}")  # Should be 0.0
+# 验证一致性
+print(f"最大误差: {(out_vanilla - out_flex).abs().max():.6f}")  # 应该是 0.0
 ```
 
 ---
 
-## Appendix: Experiment Details
+## 附录：实验详情
 
-| # | Experiment | What it tests |
-|---|-----------|--------------|
-| Exp1 | Full Vanilla vs Flex comparison | Memory, speed, accuracy across S × doc_count |
-| Exp2 | Vanilla memory waterfall | Where O(S²) memory comes from, step by step |
-| Exp3 | BlockMask sparsity visualization | How block-level compression works |
-| Exp4 | SDPA baseline | Why SDPA is still faster for standard causal |
-| Exp5 | OOM boundary detection | Maximum sequence length each method can handle |
-| Exp6 | Numerical accuracy | Verify Flex matches Vanilla exactly |
+| 编号 | 实验 | 测试内容 |
+|------|------|---------|
+| 实验1 | Vanilla vs Flex 全面对比 | 不同 S 和文档数下的显存、速度、精度 |
+| 实验2 | Vanilla 显存瀑布图 | O(S²) 显存来自哪一步 |
+| 实验3 | BlockMask 稀疏性可视化 | 块级压缩如何工作 |
+| 实验4 | SDPA 基线对比 | 标准因果下 SDPA 仍然最快 |
+| 实验5 | OOM 边界探测 | 各方法能支持的最大序列长度 |
+| 实验6 | 数值精度验证 | Flex 与 Vanilla 的误差 |
 
-**Environment**: NVIDIA L4 (24GB), PyTorch 2.6.0+cu124, Triton 3.2.0, Python 3.11
+**实验环境**：NVIDIA L4 (24GB), PyTorch 2.6.0+cu124, Triton 3.2.0, Python 3.11
 
 ---
 
-*Report generated: 2026-04-25*
+*报告生成时间：2026-04-25*
