@@ -1,0 +1,652 @@
+{
+  "exp1": [
+    {
+      "S": 256,
+      "ndocs": 2,
+      "vanilla": {
+        "time": {
+          "mean": 0.366,
+          "min": 0.339,
+          "max": 0.414
+        },
+        "mem": 0.0137,
+        "ok": true
+      },
+      "flex": {
+        "time": {
+          "mean": 5.747,
+          "min": 5.68,
+          "max": 5.885
+        },
+        "mem": 0.0158,
+        "ok": true,
+        "sparsity": 0.5
+      },
+      "diff": 0.0
+    },
+    {
+      "S": 256,
+      "ndocs": 4,
+      "vanilla": {
+        "time": {
+          "mean": 0.345,
+          "min": 0.329,
+          "max": 0.355
+        },
+        "mem": 0.0144,
+        "ok": true
+      },
+      "flex": {
+        "time": {
+          "mean": 5.808,
+          "min": 5.721,
+          "max": 5.867
+        },
+        "mem": 0.0163,
+        "ok": true,
+        "sparsity": 0.5
+      },
+      "diff": 0.0
+    },
+    {
+      "S": 512,
+      "ndocs": 2,
+      "vanilla": {
+        "time": {
+          "mean": 0.345,
+          "min": 0.327,
+          "max": 0.361
+        },
+        "mem": 0.0302,
+        "ok": true
+      },
+      "flex": {
+        "time": {
+          "mean": 5.795,
+          "min": 5.688,
+          "max": 5.898
+        },
+        "mem": 0.0368,
+        "ok": true,
+        "sparsity": 0.75
+      },
+      "diff": 0.0
+    },
+    {
+      "S": 512,
+      "ndocs": 4,
+      "vanilla": {
+        "time": {
+          "mean": 0.345,
+          "min": 0.32,
+          "max": 0.369
+        },
+        "mem": 0.0309,
+        "ok": true
+      },
+      "flex": {
+        "time": {
+          "mean": 5.852,
+          "min": 5.726,
+          "max": 5.966
+        },
+        "mem": 0.0373,
+        "ok": true,
+        "sparsity": 0.75
+      },
+      "diff": 0.0
+    },
+    {
+      "S": 512,
+      "ndocs": 8,
+      "vanilla": {
+        "time": {
+          "mean": 0.352,
+          "min": 0.331,
+          "max": 0.371
+        },
+        "mem": 0.0309,
+        "ok": true
+      },
+      "flex": {
+        "time": {
+          "mean": 5.881,
+          "min": 5.793,
+          "max": 5.94
+        },
+        "mem": 0.0373,
+        "ok": true,
+        "sparsity": 0.75
+      },
+      "diff": 0.0
+    },
+    {
+      "S": 1024,
+      "ndocs": 2,
+      "vanilla": {
+        "time": {
+          "mean": 0.671,
+          "min": 0.67,
+          "max": 0.672
+        },
+        "mem": 0.0924,
+        "ok": true
+      },
+      "flex": {
+        "time": {
+          "mean": 6.67,
+          "min": 6.535,
+          "max": 6.762
+        },
+        "mem": 0.1164,
+        "ok": true,
+        "sparsity": 0.875
+      },
+      "diff": 0.0
+    },
+    {
+      "S": 1024,
+      "ndocs": 4,
+      "vanilla": {
+        "time": {
+          "mean": 0.667,
+          "min": 0.659,
+          "max": 0.68
+        },
+        "mem": 0.0939,
+        "ok": true
+      },
+      "flex": {
+        "time": {
+          "mean": 6.767,
+          "min": 6.651,
+          "max": 6.843
+        },
+        "mem": 0.1174,
+        "ok": true,
+        "sparsity": 0.875
+      },
+      "diff": 0.0
+    },
+    {
+      "S": 1024,
+      "ndocs": 8,
+      "vanilla": {
+        "time": {
+          "mean": 0.681,
+          "min": 0.666,
+          "max": 0.704
+        },
+        "mem": 0.0939,
+        "ok": true
+      },
+      "flex": {
+        "time": {
+          "mean": 6.684,
+          "min": 6.623,
+          "max": 6.751
+        },
+        "mem": 0.1174,
+        "ok": true,
+        "sparsity": 0.875
+      },
+      "diff": 0.0
+    },
+    {
+      "S": 2048,
+      "ndocs": 2,
+      "vanilla": {
+        "time": {
+          "mean": 5.172,
+          "min": 5.157,
+          "max": 5.19
+        },
+        "mem": 0.3371,
+        "ok": true
+      },
+      "flex": {
+        "time": {
+          "mean": 14.447,
+          "min": 14.312,
+          "max": 14.729
+        },
+        "mem": 0.428,
+        "ok": true,
+        "sparsity": 0.9375
+      },
+      "diff": 0.0
+    },
+    {
+      "S": 2048,
+      "ndocs": 4,
+      "vanilla": {
+        "time": {
+          "mean": 5.163,
+          "min": 5.148,
+          "max": 5.175
+        },
+        "mem": 0.34,
+        "ok": true
+      },
+      "flex": {
+        "time": {
+          "mean": 14.28,
+          "min": 14.162,
+          "max": 14.333
+        },
+        "mem": 0.4299,
+        "ok": true,
+        "sparsity": 0.9375
+      },
+      "diff": 0.0
+    },
+    {
+      "S": 2048,
+      "ndocs": 8,
+      "vanilla": {
+        "time": {
+          "mean": 5.159,
+          "min": 5.151,
+          "max": 5.172
+        },
+        "mem": 0.34,
+        "ok": true
+      },
+      "flex": {
+        "time": {
+          "mean": 14.197,
+          "min": 14.091,
+          "max": 14.299
+        },
+        "mem": 0.4299,
+        "ok": true,
+        "sparsity": 0.9375
+      },
+      "diff": 0.0
+    },
+    {
+      "S": 4096,
+      "ndocs": 2,
+      "vanilla": {
+        "time": {
+          "mean": 21.265,
+          "min": 21.203,
+          "max": 21.304
+        },
+        "mem": 1.3068,
+        "ok": true
+      },
+      "flex": {
+        "time": {
+          "mean": 47.38,
+          "min": 47.317,
+          "max": 47.473
+        },
+        "mem": 1.6605,
+        "ok": true,
+        "sparsity": 0.9688
+      },
+      "diff": 0.0
+    },
+    {
+      "S": 4096,
+      "ndocs": 4,
+      "vanilla": {
+        "time": {
+          "mean": 21.169,
+          "min": 21.102,
+          "max": 21.267
+        },
+        "mem": 1.3127,
+        "ok": true
+      },
+      "flex": {
+        "time": {
+          "mean": 47.141,
+          "min": 47.061,
+          "max": 47.225
+        },
+        "mem": 1.6644,
+        "ok": true,
+        "sparsity": 0.9688
+      },
+      "diff": 0.0
+    },
+    {
+      "S": 4096,
+      "ndocs": 8,
+      "vanilla": {
+        "time": {
+          "mean": 21.123,
+          "min": 21.088,
+          "max": 21.162
+        },
+        "mem": 1.3127,
+        "ok": true
+      },
+      "flex": {
+        "time": {
+          "mean": 46.961,
+          "min": 46.879,
+          "max": 47.015
+        },
+        "mem": 1.6644,
+        "ok": true,
+        "sparsity": 0.9688
+      },
+      "diff": 0.0
+    },
+    {
+      "S": 8192,
+      "ndocs": 2,
+      "vanilla": {
+        "time": {
+          "mean": 85.617,
+          "min": 85.53,
+          "max": 85.677
+        },
+        "mem": 5.1682,
+        "ok": true
+      },
+      "flex": {
+        "time": {
+          "mean": 185.352,
+          "min": 184.828,
+          "max": 185.602
+        },
+        "mem": 6.5631,
+        "ok": true,
+        "sparsity": 0.9844
+      },
+      "diff": 0.0
+    },
+    {
+      "S": 8192,
+      "ndocs": 4,
+      "vanilla": {
+        "time": {
+          "mean": 85.52,
+          "min": 85.489,
+          "max": 85.551
+        },
+        "mem": 5.1799,
+        "ok": true
+      },
+      "flex": {
+        "time": {
+          "mean": 184.207,
+          "min": 184.071,
+          "max": 184.325
+        },
+        "mem": 6.5709,
+        "ok": true,
+        "sparsity": 0.9844
+      },
+      "diff": 0.0
+    },
+    {
+      "S": 8192,
+      "ndocs": 8,
+      "vanilla": {
+        "time": {
+          "mean": 85.425,
+          "min": 85.377,
+          "max": 85.467
+        },
+        "mem": 5.1799,
+        "ok": true
+      },
+      "flex": {
+        "time": {
+          "mean": 183.653,
+          "min": 183.585,
+          "max": 183.843
+        },
+        "mem": 6.5709,
+        "ok": true,
+        "sparsity": 0.9844
+      },
+      "diff": 0.0
+    }
+  ],
+  "exp2": {
+    "1_QKT": 0.1388,
+    "2_causal_mask": 0.1388,
+    "3_doc_mask": 0.1388,
+    "4_combined_mask": 0.1388,
+    "5_masked_fill": 0.1544,
+    "6_softmax": 0.338,
+    "7_output": 0.338
+  },
+  "exp3": "done",
+  "exp4": [
+    {
+      "S": 512,
+      "sdpa": {
+        "time": {
+          "mean": 0.04,
+          "min": 0.039,
+          "max": 0.042
+        },
+        "mem": 0.0099
+      },
+      "flex": {
+        "time": {
+          "mean": 2.247,
+          "min": 2.204,
+          "max": 2.296
+        },
+        "mem": 0.0363
+      },
+      "ratio": 56.2
+    },
+    {
+      "S": 1024,
+      "sdpa": {
+        "time": {
+          "mean": 0.068,
+          "min": 0.067,
+          "max": 0.071
+        },
+        "mem": 0.0124
+      },
+      "flex": {
+        "time": {
+          "mean": 3.161,
+          "min": 3.122,
+          "max": 3.21
+        },
+        "mem": 0.1154
+      },
+      "ratio": 46.5
+    },
+    {
+      "S": 2048,
+      "sdpa": {
+        "time": {
+          "mean": 0.115,
+          "min": 0.112,
+          "max": 0.118
+        },
+        "mem": 0.0168
+      },
+      "flex": {
+        "time": {
+          "mean": 12.512,
+          "min": 12.483,
+          "max": 12.587
+        },
+        "mem": 0.426
+      },
+      "ratio": 108.8
+    },
+    {
+      "S": 4096,
+      "sdpa": {
+        "time": {
+          "mean": 0.314,
+          "min": 0.294,
+          "max": 0.335
+        },
+        "mem": 0.0256
+      },
+      "flex": {
+        "time": {
+          "mean": 47.835,
+          "min": 47.727,
+          "max": 47.966
+        },
+        "mem": 1.6566
+      },
+      "ratio": 152.3
+    },
+    {
+      "S": 8192,
+      "sdpa": {
+        "time": {
+          "mean": 1.075,
+          "min": 1.043,
+          "max": 1.138
+        },
+        "mem": 0.0434
+      },
+      "flex": {
+        "time": {
+          "mean": 186.563,
+          "min": 186.365,
+          "max": 186.779
+        },
+        "mem": 6.5552
+      },
+      "ratio": 173.5
+    }
+  ],
+  "exp5": [
+    {
+      "S": 2048,
+      "ndocs": 2,
+      "vanilla_mem": 0.334,
+      "flex_mem": 0.559,
+      "vanilla_ok": true,
+      "flex_ok": true
+    },
+    {
+      "S": 4096,
+      "ndocs": 4,
+      "vanilla_mem": 1.365,
+      "flex_mem": 2.188,
+      "vanilla_ok": true,
+      "flex_ok": true
+    },
+    {
+      "S": 8192,
+      "ndocs": 8,
+      "vanilla_mem": 5.41,
+      "flex_mem": 8.68,
+      "vanilla_ok": true,
+      "flex_ok": true
+    },
+    {
+      "S": 12288,
+      "ndocs": 12,
+      "vanilla_mem": 12.582,
+      "flex_mem": 19.485,
+      "vanilla_ok": true,
+      "flex_ok": true
+    },
+    {
+      "S": 16384,
+      "ndocs": 16,
+      "vanilla_mem": null,
+      "flex_mem": null,
+      "vanilla_ok": false,
+      "flex_ok": false
+    }
+  ],
+  "exp6": [
+    {
+      "S": 256,
+      "ndocs": 2,
+      "max_diff": 0.0,
+      "mean_diff": 0.0
+    },
+    {
+      "S": 256,
+      "ndocs": 4,
+      "max_diff": 0.0,
+      "mean_diff": 0.0
+    },
+    {
+      "S": 512,
+      "ndocs": 2,
+      "max_diff": 0.0,
+      "mean_diff": 0.0
+    },
+    {
+      "S": 512,
+      "ndocs": 4,
+      "max_diff": 0.0,
+      "mean_diff": 0.0
+    },
+    {
+      "S": 512,
+      "ndocs": 8,
+      "max_diff": 0.0,
+      "mean_diff": 0.0
+    },
+    {
+      "S": 1024,
+      "ndocs": 2,
+      "max_diff": 0.0,
+      "mean_diff": 0.0
+    },
+    {
+      "S": 1024,
+      "ndocs": 4,
+      "max_diff": 0.0,
+      "mean_diff": 0.0
+    },
+    {
+      "S": 1024,
+      "ndocs": 8,
+      "max_diff": 0.0,
+      "mean_diff": 0.0
+    },
+    {
+      "S": 2048,
+      "ndocs": 2,
+      "max_diff": 0.0,
+      "mean_diff": 0.0
+    },
+    {
+      "S": 2048,
+      "ndocs": 4,
+      "max_diff": 0.0,
+      "mean_diff": 0.0
+    },
+    {
+      "S": 2048,
+      "ndocs": 8,
+      "max_diff": 0.0,
+      "mean_diff": 0.0
+    },
+    {
+      "S": 4096,
+      "ndocs": 2,
+      "max_diff": 0.0,
+      "mean_diff": 0.0
+    },
+    {
+      "S": 4096,
+      "ndocs": 4,
+      "max_diff": 0.0,
+      "mean_diff": 0.0
+    },
+    {
+      "S": 4096,
+      "ndocs": 8,
+      "max_diff": 0.0,
+      "mean_diff": 0.0
+    }
+  ]
+}
