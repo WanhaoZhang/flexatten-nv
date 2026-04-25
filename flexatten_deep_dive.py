@@ -22,6 +22,8 @@ from pathlib import Path
 
 plt.rcParams['font.size'] = 12
 plt.rcParams['figure.dpi'] = 150
+plt.rcParams['font.family'] = ['Noto Sans CJK SC', 'DejaVu Sans']
+plt.rcParams['axes.unicode_minus'] = False
 
 device = "cuda"
 dtype = torch.float16
