@@ -1,0 +1,1418 @@
+{
+  "E1": {
+    "causal": [
+      {
+        "S": 256,
+        "B": 1,
+        "H": 8,
+        "D": 64,
+        "vanilla_fwd_ms": 0.287,
+        "vanilla_bwd_ms": 0.937,
+        "vanilla_mem_gb": 0.015,
+        "flex_fwd_ms": 9.338,
+        "flex_bwd_ms": 12.4,
+        "flex_mem_gb": 0.028,
+        "max_diff": 0.0
+      },
+      {
+        "S": 512,
+        "B": 1,
+        "H": 8,
+        "D": 64,
+        "vanilla_fwd_ms": 0.284,
+        "vanilla_bwd_ms": 0.983,
+        "vanilla_mem_gb": 0.051,
+        "flex_fwd_ms": 9.452,
+        "flex_bwd_ms": 12.588,
+        "flex_mem_gb": 0.059,
+        "max_diff": 0.0
+      },
+      {
+        "S": 1024,
+        "B": 1,
+        "H": 8,
+        "D": 64,
+        "vanilla_fwd_ms": 0.622,
+        "vanilla_bwd_ms": 1.94,
+        "vanilla_mem_gb": 0.134,
+        "flex_fwd_ms": 9.438,
+        "flex_bwd_ms": 13.187,
+        "flex_mem_gb": 0.163,
+        "max_diff": 0.0
+      },
+      {
+        "S": 2048,
+        "B": 1,
+        "H": 8,
+        "D": 64,
+        "vanilla_fwd_ms": 5.109,
+        "vanilla_bwd_ms": 13.026,
+        "vanilla_mem_gb": 0.448,
+        "flex_fwd_ms": 18.784,
+        "flex_bwd_ms": 33.623,
+        "flex_mem_gb": 0.552,
+        "max_diff": 0.0
+      },
+      {
+        "S": 4096,
+        "B": 1,
+        "H": 8,
+        "D": 64,
+        "vanilla_fwd_ms": 21.03,
+        "vanilla_bwd_ms": 52.94,
+        "vanilla_mem_gb": 1.67,
+        "flex_fwd_ms": 55.458,
+        "flex_bwd_ms": 114.825,
+        "flex_mem_gb": 2.062,
+        "max_diff": 0.0
+      }
+    ],
+    "sliding_window": [
+      {
+        "S": 256,
+        "B": 1,
+        "H": 8,
+        "D": 64,
+        "vanilla_fwd_ms": 0.348,
+        "vanilla_bwd_ms": 1.004,
+        "vanilla_mem_gb": 0.939,
+        "flex_fwd_ms": 9.613,
+        "flex_bwd_ms": 13.009,
+        "flex_mem_gb": 0.913,
+        "max_diff": 3.753906
+      },
+      {
+        "S": 512,
+        "B": 1,
+        "H": 8,
+        "D": 64,
+        "vanilla_fwd_ms": 0.351,
+        "vanilla_bwd_ms": 1.005,
+        "vanilla_mem_gb": 0.051,
+        "flex_fwd_ms": 9.617,
+        "flex_bwd_ms": 13.045,
+        "flex_mem_gb": 0.059,
+        "max_diff": 3.503906
+      },
+      {
+        "S": 1024,
+        "B": 1,
+        "H": 8,
+        "D": 64,
+        "vanilla_fwd_ms": 0.665,
+        "vanilla_bwd_ms": 2.102,
+        "vanilla_mem_gb": 0.135,
+        "flex_fwd_ms": 9.529,
+        "flex_bwd_ms": 13.431,
+        "flex_mem_gb": 0.163,
+        "max_diff": 3.181641
+      },
+      {
+        "S": 2048,
+        "B": 1,
+        "H": 8,
+        "D": 64,
+        "vanilla_fwd_ms": 5.245,
+        "vanilla_bwd_ms": 13.142,
+        "vanilla_mem_gb": 0.452,
+        "flex_fwd_ms": 18.818,
+        "flex_bwd_ms": 33.887,
+        "flex_mem_gb": 0.552,
+        "max_diff": 3.675781
+      },
+      {
+        "S": 4096,
+        "B": 1,
+        "H": 8,
+        "D": 64,
+        "vanilla_fwd_ms": 22.183,
+        "vanilla_bwd_ms": 54.024,
+        "vanilla_mem_gb": 1.686,
+        "flex_fwd_ms": 57.308,
+        "flex_bwd_ms": 118.209,
+        "flex_mem_gb": 2.062,
+        "max_diff": 3.978516
+      }
+    ],
+    "prefix_lm": [
+      {
+        "S": 256,
+        "B": 1,
+        "H": 8,
+        "D": 64,
+        "vanilla_fwd_ms": 0.393,
+        "vanilla_bwd_ms": 1.091,
+        "vanilla_mem_gb": 0.939,
+        "flex_fwd_ms": 9.366,
+        "flex_bwd_ms": 13.056,
+        "flex_mem_gb": 0.913,
+        "max_diff": 3.351562
+      },
+      {
+        "S": 512,
+        "B": 1,
+        "H": 8,
+        "D": 64,
+        "vanilla_fwd_ms": 0.386,
+        "vanilla_bwd_ms": 1.135,
+        "vanilla_mem_gb": 0.051,
+        "flex_fwd_ms": 9.446,
+        "flex_bwd_ms": 12.832,
+        "flex_mem_gb": 0.059,
+        "max_diff": 3.033203
+      },
+      {
+        "S": 1024,
+        "B": 1,
+        "H": 8,
+        "D": 64,
+        "vanilla_fwd_ms": 0.627,
+        "vanilla_bwd_ms": 1.994,
+        "vanilla_mem_gb": 0.135,
+        "flex_fwd_ms": 9.643,
+        "flex_bwd_ms": 13.356,
+        "flex_mem_gb": 0.163,
+        "max_diff": 2.765625
+      },
+      {
+        "S": 2048,
+        "B": 1,
+        "H": 8,
+        "D": 64,
+        "vanilla_fwd_ms": 5.126,
+        "vanilla_bwd_ms": 13.072,
+        "vanilla_mem_gb": 0.452,
+        "flex_fwd_ms": 18.849,
+        "flex_bwd_ms": 33.742,
+        "flex_mem_gb": 0.552,
+        "max_diff": 3.587891
+      },
+      {
+        "S": 4096,
+        "B": 1,
+        "H": 8,
+        "D": 64,
+        "vanilla_fwd_ms": 21.219,
+        "vanilla_bwd_ms": 53.278,
+        "vanilla_mem_gb": 1.686,
+        "flex_fwd_ms": 55.723,
+        "flex_bwd_ms": 115.2,
+        "flex_mem_gb": 2.062,
+        "max_diff": 3.794922
+      }
+    ],
+    "alibi": [
+      {
+        "S": 256,
+        "B": 1,
+        "H": 8,
+        "D": 64,
+        "vanilla_fwd_ms": 0.916,
+        "vanilla_bwd_ms": 2.752,
+        "vanilla_mem_gb": 0.939,
+        "flex_fwd_ms": 17.039,
+        "flex_bwd_ms": 23.193,
+        "flex_mem_gb": 0.913,
+        "max_diff": 3.496094
+      },
+      {
+        "S": 512,
+        "B": 1,
+        "H": 8,
+        "D": 64,
+        "vanilla_fwd_ms": 0.916,
+        "vanilla_bwd_ms": 2.746,
+        "vanilla_mem_gb": 0.052,
+        "flex_fwd_ms": 17.094,
+        "flex_bwd_ms": 23.11,
+        "flex_mem_gb": 0.059,
+        "max_diff": 3.716797
+      },
+      {
+        "S": 1024,
+        "B": 1,
+        "H": 8,
+        "D": 64,
+        "vanilla_fwd_ms": 1.253,
+        "vanilla_bwd_ms": 3.504,
+        "vanilla_mem_gb": 0.138,
+        "flex_fwd_ms": 18.24,
+        "flex_bwd_ms": 24.195,
+        "flex_mem_gb": 0.163,
+        "max_diff": 3.748047
+      },
+      {
+        "S": 2048,
+        "B": 1,
+        "H": 8,
+        "D": 64,
+        "vanilla_fwd_ms": 6.398,
+        "vanilla_bwd_ms": 33.941,
+        "vanilla_mem_gb": 0.465,
+        "flex_fwd_ms": 27.648,
+        "flex_bwd_ms": 46.706,
+        "flex_mem_gb": 0.552,
+        "max_diff": 3.613281
+      },
+      {
+        "S": 4096,
+        "B": 1,
+        "H": 8,
+        "D": 64,
+        "vanilla_fwd_ms": 32.784,
+        "vanilla_bwd_ms": 147.555,
+        "vanilla_mem_gb": 1.737,
+        "flex_fwd_ms": 72.352,
+        "flex_bwd_ms": 155.181,
+        "flex_mem_gb": 2.062,
+        "max_diff": 4.515625
+      }
+    ],
+    "softcap": [
+      {
+        "S": 256,
+        "B": 1,
+        "H": 8,
+        "D": 64,
+        "vanilla_fwd_ms": 0.361,
+        "vanilla_bwd_ms": 1.066,
+        "vanilla_mem_gb": 0.94,
+        "flex_fwd_ms": -1,
+        "flex_bwd_ms": -1,
+        "flex_mem_gb": -1,
+        "max_diff": -1
+      },
+      {
+        "S": 512,
+        "B": 1,
+        "H": 8,
+        "D": 64,
+        "vanilla_fwd_ms": 0.349,
+        "vanilla_bwd_ms": 1.104,
+        "vanilla_mem_gb": 0.934,
+        "flex_fwd_ms": -1,
+        "flex_bwd_ms": -1,
+        "flex_mem_gb": -1,
+        "max_diff": -1
+      },
+      {
+        "S": 1024,
+        "B": 1,
+        "H": 8,
+        "D": 64,
+        "vanilla_fwd_ms": 0.802,
+        "vanilla_bwd_ms": 2.431,
+        "vanilla_mem_gb": 1.016,
+        "flex_fwd_ms": -1,
+        "flex_bwd_ms": -1,
+        "flex_mem_gb": -1,
+        "max_diff": -1
+      },
+      {
+        "S": 2048,
+        "B": 1,
+        "H": 8,
+        "D": 64,
+        "vanilla_fwd_ms": 6.853,
+        "vanilla_bwd_ms": 16.797,
+        "vanilla_mem_gb": 1.336,
+        "flex_fwd_ms": -1,
+        "flex_bwd_ms": -1,
+        "flex_mem_gb": -1,
+        "max_diff": -1
+      },
+      {
+        "S": 4096,
+        "B": 1,
+        "H": 8,
+        "D": 64,
+        "vanilla_fwd_ms": 27.792,
+        "vanilla_bwd_ms": 67.327,
+        "vanilla_mem_gb": 2.592,
+        "flex_fwd_ms": -1,
+        "flex_bwd_ms": -1,
+        "flex_mem_gb": -1,
+        "max_diff": -1
+      }
+    ],
+    "doc_packing": [
+      {
+        "S": 256,
+        "B": 1,
+        "H": 8,
+        "D": 64,
+        "vanilla_fwd_ms": 0.33,
+        "vanilla_bwd_ms": 0.993,
+        "vanilla_mem_gb": 0.951,
+        "flex_fwd_ms": 15.64,
+        "flex_bwd_ms": 27.207,
+        "flex_mem_gb": 0.918,
+        "max_diff": 0.0
+      },
+      {
+        "S": 512,
+        "B": 1,
+        "H": 8,
+        "D": 64,
+        "vanilla_fwd_ms": 0.328,
+        "vanilla_bwd_ms": 0.984,
+        "vanilla_mem_gb": 0.051,
+        "flex_fwd_ms": 15.795,
+        "flex_bwd_ms": 27.455,
+        "flex_mem_gb": 0.059,
+        "max_diff": 0.0
+      },
+      {
+        "S": 1024,
+        "B": 1,
+        "H": 8,
+        "D": 64,
+        "vanilla_fwd_ms": 0.634,
+        "vanilla_bwd_ms": 1.956,
+        "vanilla_mem_gb": 0.135,
+        "flex_fwd_ms": 15.888,
+        "flex_bwd_ms": 27.278,
+        "flex_mem_gb": 0.163,
+        "max_diff": 0.0
+      },
+      {
+        "S": 2048,
+        "B": 1,
+        "H": 8,
+        "D": 64,
+        "vanilla_fwd_ms": 5.105,
+        "vanilla_bwd_ms": 13.001,
+        "vanilla_mem_gb": 0.452,
+        "flex_fwd_ms": 20.878,
+        "flex_bwd_ms": 38.354,
+        "flex_mem_gb": 0.552,
+        "max_diff": 0.0
+      },
+      {
+        "S": 4096,
+        "B": 1,
+        "H": 8,
+        "D": 64,
+        "vanilla_fwd_ms": 21.132,
+        "vanilla_bwd_ms": 52.948,
+        "vanilla_mem_gb": 1.686,
+        "flex_fwd_ms": 55.968,
+        "flex_bwd_ms": 113.924,
+        "flex_mem_gb": 2.062,
+        "max_diff": 0.0
+      }
+    ],
+    "dilated_sw": [
+      {
+        "S": 256,
+        "B": 1,
+        "H": 8,
+        "D": 64,
+        "vanilla_fwd_ms": 0.425,
+        "vanilla_bwd_ms": 1.071,
+        "vanilla_mem_gb": 0.939,
+        "flex_fwd_ms": 9.807,
+        "flex_bwd_ms": 13.354,
+        "flex_mem_gb": 0.913,
+        "max_diff": 4.046875
+      },
+      {
+        "S": 512,
+        "B": 1,
+        "H": 8,
+        "D": 64,
+        "vanilla_fwd_ms": 0.417,
+        "vanilla_bwd_ms": 1.072,
+        "vanilla_mem_gb": 0.051,
+        "flex_fwd_ms": 9.628,
+        "flex_bwd_ms": 13.352,
+        "flex_mem_gb": 0.059,
+        "max_diff": 3.826172
+      },
+      {
+        "S": 1024,
+        "B": 1,
+        "H": 8,
+        "D": 64,
+        "vanilla_fwd_ms": 0.676,
+        "vanilla_bwd_ms": 2.162,
+        "vanilla_mem_gb": 0.136,
+        "flex_fwd_ms": 9.762,
+        "flex_bwd_ms": 13.991,
+        "flex_mem_gb": 0.163,
+        "max_diff": 3.546875
+      },
+      {
+        "S": 2048,
+        "B": 1,
+        "H": 8,
+        "D": 64,
+        "vanilla_fwd_ms": 5.511,
+        "vanilla_bwd_ms": 13.422,
+        "vanilla_mem_gb": 0.456,
+        "flex_fwd_ms": 19.35,
+        "flex_bwd_ms": 34.917,
+        "flex_mem_gb": 0.552,
+        "max_diff": 3.9375
+      },
+      {
+        "S": 4096,
+        "B": 1,
+        "H": 8,
+        "D": 64,
+        "vanilla_fwd_ms": 24.554,
+        "vanilla_bwd_ms": 56.404,
+        "vanilla_mem_gb": 1.703,
+        "flex_fwd_ms": 62.049,
+        "flex_bwd_ms": 127.595,
+        "flex_mem_gb": 2.062,
+        "max_diff": 3.6875
+      }
+    ],
+    "combined": [
+      {
+        "S": 256,
+        "B": 1,
+        "H": 8,
+        "D": 64,
+        "vanilla_fwd_ms": 1.001,
+        "vanilla_bwd_ms": 2.825,
+        "vanilla_mem_gb": 0.939,
+        "flex_fwd_ms": 23.223,
+        "flex_bwd_ms": 38.111,
+        "flex_mem_gb": 0.913,
+        "max_diff": 4.066406
+      },
+      {
+        "S": 512,
+        "B": 1,
+        "H": 8,
+        "D": 64,
+        "vanilla_fwd_ms": 0.982,
+        "vanilla_bwd_ms": 2.825,
+        "vanilla_mem_gb": 0.053,
+        "flex_fwd_ms": 23.048,
+        "flex_bwd_ms": 37.697,
+        "flex_mem_gb": 0.059,
+        "max_diff": 4.09375
+      },
+      {
+        "S": 1024,
+        "B": 1,
+        "H": 8,
+        "D": 64,
+        "vanilla_fwd_ms": 1.215,
+        "vanilla_bwd_ms": 3.488,
+        "vanilla_mem_gb": 0.141,
+        "flex_fwd_ms": 24.336,
+        "flex_bwd_ms": 38.496,
+        "flex_mem_gb": 0.163,
+        "max_diff": 4.0
+      },
+      {
+        "S": 2048,
+        "B": 1,
+        "H": 8,
+        "D": 64,
+        "vanilla_fwd_ms": 6.527,
+        "vanilla_bwd_ms": 34.064,
+        "vanilla_mem_gb": 0.477,
+        "flex_fwd_ms": 33.7,
+        "flex_bwd_ms": 52.785,
+        "flex_mem_gb": 0.552,
+        "max_diff": 5.609375
+      },
+      {
+        "S": 4096,
+        "B": 1,
+        "H": 8,
+        "D": 64,
+        "vanilla_fwd_ms": 34.223,
+        "vanilla_bwd_ms": 148.843,
+        "vanilla_mem_gb": 1.787,
+        "flex_fwd_ms": 76.233,
+        "flex_bwd_ms": 159.137,
+        "flex_mem_gb": 2.062,
+        "max_diff": 3.847656
+      }
+    ]
+  },
+  "E2": {
+    "causal": [
+      {
+        "S": 512,
+        "vanilla_ms": 1.365,
+        "vanilla_gb": 0.04,
+        "flex_ms": 5.482,
+        "flex_gb": 0.048
+      },
+      {
+        "S": 1024,
+        "vanilla_ms": 1.567,
+        "vanilla_gb": 0.107,
+        "flex_ms": 5.785,
+        "flex_gb": 0.134
+      },
+      {
+        "S": 2048,
+        "vanilla_ms": 5.632,
+        "vanilla_gb": 0.366,
+        "flex_ms": 15.13,
+        "flex_gb": 0.469
+      },
+      {
+        "S": 4096,
+        "vanilla_ms": 21.44,
+        "vanilla_gb": 1.395,
+        "flex_ms": 51.198,
+        "flex_gb": 1.794
+      },
+      {
+        "S": 8192,
+        "vanilla_ms": 85.567,
+        "vanilla_gb": 5.491,
+        "flex_ms": 194.007,
+        "flex_gb": 7.06
+      },
+      {
+        "S": 12288,
+        "vanilla_ms": 197.14,
+        "vanilla_gb": 12.311,
+        "flex_ms": 434.221,
+        "flex_gb": 15.818
+      },
+      {
+        "S": 16384,
+        "vanilla_ms": -1,
+        "vanilla_gb": -1,
+        "flex_ms": -1,
+        "flex_gb": -1
+      }
+    ],
+    "sliding_window": [
+      {
+        "S": 512,
+        "vanilla_ms": 1.538,
+        "vanilla_gb": 0.078,
+        "flex_ms": 5.34,
+        "flex_gb": 0.073
+      },
+      {
+        "S": 1024,
+        "vanilla_ms": 1.907,
+        "vanilla_gb": 0.108,
+        "flex_ms": 6.018,
+        "flex_gb": 0.134
+      },
+      {
+        "S": 2048,
+        "vanilla_ms": 5.747,
+        "vanilla_gb": 0.37,
+        "flex_ms": 15.081,
+        "flex_gb": 0.469
+      },
+      {
+        "S": 4096,
+        "vanilla_ms": 22.815,
+        "vanilla_gb": 1.412,
+        "flex_ms": 52.668,
+        "flex_gb": 1.794
+      },
+      {
+        "S": 8192,
+        "vanilla_ms": 90.076,
+        "vanilla_gb": 5.558,
+        "flex_ms": 201.12,
+        "flex_gb": 7.06
+      },
+      {
+        "S": 12288,
+        "vanilla_ms": 208.751,
+        "vanilla_gb": 12.462,
+        "flex_ms": 447.802,
+        "flex_gb": 15.818
+      },
+      {
+        "S": 16384,
+        "vanilla_ms": -1,
+        "vanilla_gb": -1,
+        "flex_ms": -1,
+        "flex_gb": -1
+      }
+    ],
+    "doc_packing": [
+      {
+        "S": 512,
+        "vanilla_ms": 2.885,
+        "vanilla_gb": 0.078,
+        "flex_ms": 12.033,
+        "flex_gb": 0.073
+      },
+      {
+        "S": 1024,
+        "vanilla_ms": 1.654,
+        "vanilla_gb": 0.108,
+        "flex_ms": 12.352,
+        "flex_gb": 0.134
+      },
+      {
+        "S": 2048,
+        "vanilla_ms": 5.544,
+        "vanilla_gb": 0.37,
+        "flex_ms": 20.175,
+        "flex_gb": 0.469
+      },
+      {
+        "S": 4096,
+        "vanilla_ms": 21.661,
+        "vanilla_gb": 1.412,
+        "flex_ms": 53.214,
+        "flex_gb": 1.794
+      },
+      {
+        "S": 8192,
+        "vanilla_ms": 86.224,
+        "vanilla_gb": 5.558,
+        "flex_ms": 196.011,
+        "flex_gb": 7.06
+      },
+      {
+        "S": 12288,
+        "vanilla_ms": 198.915,
+        "vanilla_gb": 12.462,
+        "flex_ms": 431.403,
+        "flex_gb": 15.818
+      },
+      {
+        "S": 16384,
+        "vanilla_ms": -1,
+        "vanilla_gb": -1,
+        "flex_ms": -1,
+        "flex_gb": -1
+      }
+    ],
+    "alibi": [
+      {
+        "S": 512,
+        "vanilla_ms": 2.46,
+        "vanilla_gb": 0.079,
+        "flex_ms": 11.831,
+        "flex_gb": 0.073
+      },
+      {
+        "S": 1024,
+        "vanilla_ms": 2.211,
+        "vanilla_gb": 0.111,
+        "flex_ms": 8.075,
+        "flex_gb": 0.134
+      },
+      {
+        "S": 2048,
+        "vanilla_ms": 6.901,
+        "vanilla_gb": 0.383,
+        "flex_ms": 17.856,
+        "flex_gb": 0.469
+      },
+      {
+        "S": 4096,
+        "vanilla_ms": 33.339,
+        "vanilla_gb": 1.462,
+        "flex_ms": 61.847,
+        "flex_gb": 1.794
+      },
+      {
+        "S": 8192,
+        "vanilla_ms": 131.743,
+        "vanilla_gb": 5.759,
+        "flex_ms": 236.031,
+        "flex_gb": 7.06
+      },
+      {
+        "S": 12288,
+        "vanilla_ms": 300.264,
+        "vanilla_gb": 12.915,
+        "flex_ms": 529.163,
+        "flex_gb": 15.818
+      },
+      {
+        "S": 16384,
+        "vanilla_ms": -1,
+        "vanilla_gb": -1,
+        "flex_ms": -1,
+        "flex_gb": -1
+      }
+    ],
+    "combined": [
+      {
+        "S": 512,
+        "vanilla_ms": 3.55,
+        "vanilla_gb": 0.079,
+        "flex_ms": 14.176,
+        "flex_gb": 0.073
+      },
+      {
+        "S": 1024,
+        "vanilla_ms": 2.45,
+        "vanilla_gb": 0.114,
+        "flex_ms": 14.643,
+        "flex_gb": 0.134
+      },
+      {
+        "S": 2048,
+        "vanilla_ms": 7.065,
+        "vanilla_gb": 0.396,
+        "flex_ms": 23.952,
+        "flex_gb": 0.469
+      },
+      {
+        "S": 4096,
+        "vanilla_ms": 34.715,
+        "vanilla_gb": 1.512,
+        "flex_ms": 65.447,
+        "flex_gb": 1.794
+      },
+      {
+        "S": 8192,
+        "vanilla_ms": 137.412,
+        "vanilla_gb": 5.96,
+        "flex_ms": 245.075,
+        "flex_gb": 7.06
+      },
+      {
+        "S": 12288,
+        "vanilla_ms": 313.981,
+        "vanilla_gb": 13.368,
+        "flex_ms": 547.754,
+        "flex_gb": 15.818
+      },
+      {
+        "S": 16384,
+        "vanilla_ms": -1,
+        "vanilla_gb": -1,
+        "flex_ms": -1,
+        "flex_gb": -1
+      }
+    ]
+  },
+  "E3": [
+    {
+      "S": 256,
+      "sdpa_ms": 4.331,
+      "sdpa_gb": 0.018
+    },
+    {
+      "S": 512,
+      "sdpa_ms": 4.382,
+      "sdpa_gb": 0.019
+    },
+    {
+      "S": 1024,
+      "sdpa_ms": 0.447,
+      "sdpa_gb": 0.022
+    },
+    {
+      "S": 2048,
+      "sdpa_ms": 0.265,
+      "sdpa_gb": 0.027
+    },
+    {
+      "S": 4096,
+      "sdpa_ms": 0.772,
+      "sdpa_gb": 0.036
+    },
+    {
+      "S": 8192,
+      "sdpa_ms": 1.405,
+      "sdpa_gb": 0.055
+    },
+    {
+      "S": 16384,
+      "sdpa_ms": 4.353,
+      "sdpa_gb": 0.093
+    },
+    {
+      "S": 32768,
+      "sdpa_ms": 15.195,
+      "sdpa_gb": 0.169
+    }
+  ],
+  "E4": {
+    "head_dim": [
+      {
+        "D": 32,
+        "impl": "vanilla",
+        "time_ms": 5.07,
+        "mem_gb": 0.36
+      },
+      {
+        "D": 32,
+        "impl": "flex",
+        "time_ms": 14.118,
+        "mem_gb": 0.46
+      },
+      {
+        "D": 64,
+        "impl": "vanilla",
+        "time_ms": 5.1,
+        "mem_gb": 0.364
+      },
+      {
+        "D": 64,
+        "impl": "flex",
+        "time_ms": 14.133,
+        "mem_gb": 0.466
+      },
+      {
+        "D": 96,
+        "impl": "vanilla",
+        "time_ms": 5.127,
+        "mem_gb": 0.369
+      },
+      {
+        "D": 128,
+        "impl": "vanilla",
+        "time_ms": 5.139,
+        "mem_gb": 0.372
+      },
+      {
+        "D": 128,
+        "impl": "flex",
+        "time_ms": 14.142,
+        "mem_gb": 0.479
+      }
+    ],
+    "batch_size": [
+      {
+        "B": 1,
+        "impl": "vanilla",
+        "time_ms": 5.093,
+        "mem_gb": 0.367
+      },
+      {
+        "B": 1,
+        "impl": "flex",
+        "time_ms": 14.096,
+        "mem_gb": 0.468
+      },
+      {
+        "B": 2,
+        "impl": "vanilla",
+        "time_ms": 10.124,
+        "mem_gb": 0.707
+      },
+      {
+        "B": 2,
+        "impl": "flex",
+        "time_ms": 26.369,
+        "mem_gb": 0.915
+      },
+      {
+        "B": 4,
+        "impl": "vanilla",
+        "time_ms": 20.072,
+        "mem_gb": 1.393
+      },
+      {
+        "B": 4,
+        "impl": "flex",
+        "time_ms": 50.353,
+        "mem_gb": 1.813
+      },
+      {
+        "B": 8,
+        "impl": "vanilla",
+        "time_ms": 39.981,
+        "mem_gb": 2.764
+      },
+      {
+        "B": 8,
+        "impl": "flex",
+        "time_ms": 97.154,
+        "mem_gb": 3.608
+      }
+    ]
+  },
+  "E5": {
+    "causal": {
+      "pixel_sparsity": 50.0,
+      "block_sparsity": 93.8,
+      "num_true": 2098176,
+      "total": 4194304
+    },
+    "sliding_window_64": {
+      "pixel_sparsity": 96.9,
+      "block_sparsity": 87.9,
+      "num_true": 131040,
+      "total": 4194304
+    },
+    "sliding_window_256": {
+      "pixel_sparsity": 88.2,
+      "block_sparsity": 88.3,
+      "num_true": 493440,
+      "total": 4194304
+    },
+    "prefix_lm_25": {
+      "pixel_sparsity": 46.9,
+      "block_sparsity": 95.3,
+      "num_true": 2228992,
+      "total": 4194304
+    },
+    "prefix_lm_50": {
+      "pixel_sparsity": 37.5,
+      "block_sparsity": 96.9,
+      "num_true": 2621952,
+      "total": 4194304
+    },
+    "doc_2": {
+      "pixel_sparsity": 75.0,
+      "block_sparsity": 93.8,
+      "num_true": 1049600,
+      "total": 4194304
+    },
+    "doc_4": {
+      "pixel_sparsity": 87.5,
+      "block_sparsity": 93.8,
+      "num_true": 525312,
+      "total": 4194304
+    },
+    "doc_8": {
+      "pixel_sparsity": 93.7,
+      "block_sparsity": 93.8,
+      "num_true": 263168,
+      "total": 4194304
+    },
+    "dilated_sw_128_2": {
+      "pixel_sparsity": 96.9,
+      "block_sparsity": 87.9,
+      "num_true": 128960,
+      "total": 4194304
+    },
+    "dilated_sw_256_4": {
+      "pixel_sparsity": 97.0,
+      "block_sparsity": 82.4,
+      "num_true": 124800,
+      "total": 4194304
+    }
+  },
+  "E6": {
+    "causal": {
+      "vanilla": {
+        "fwd_ms": 5.106,
+        "bwd_ms": 13.024,
+        "fwd_mem_gb": 0.367,
+        "bwd_mem_gb": 0.778,
+        "fwd_bwd_ratio": 2.55
+      },
+      "flex": {
+        "fwd_ms": 18.928,
+        "bwd_ms": 33.933,
+        "fwd_mem_gb": 0.686,
+        "bwd_mem_gb": 0.854,
+        "fwd_bwd_ratio": 1.79
+      }
+    },
+    "sliding_window": {
+      "vanilla": {
+        "fwd_ms": 5.234,
+        "bwd_ms": 13.149,
+        "fwd_mem_gb": 0.388,
+        "bwd_mem_gb": 0.793,
+        "fwd_bwd_ratio": 2.51
+      },
+      "flex": {
+        "fwd_ms": 18.988,
+        "bwd_ms": 33.971,
+        "fwd_mem_gb": 0.686,
+        "bwd_mem_gb": 0.854,
+        "fwd_bwd_ratio": 1.79
+      }
+    },
+    "doc_packing": {
+      "vanilla": {
+        "fwd_ms": 5.108,
+        "bwd_ms": 13.004,
+        "fwd_mem_gb": 0.388,
+        "bwd_mem_gb": 0.793,
+        "fwd_bwd_ratio": 2.55
+      },
+      "flex": {
+        "fwd_ms": 21.078,
+        "bwd_ms": 38.245,
+        "fwd_mem_gb": 0.686,
+        "bwd_mem_gb": 0.854,
+        "fwd_bwd_ratio": 1.81
+      }
+    },
+    "alibi": {
+      "vanilla": {
+        "fwd_ms": 6.406,
+        "bwd_ms": 33.869,
+        "fwd_mem_gb": 0.401,
+        "bwd_mem_gb": 0.793,
+        "fwd_bwd_ratio": 5.29
+      },
+      "flex": {
+        "fwd_ms": 27.978,
+        "bwd_ms": 46.908,
+        "fwd_mem_gb": 0.686,
+        "bwd_mem_gb": 0.854,
+        "fwd_bwd_ratio": 1.68
+      }
+    },
+    "combined": {
+      "vanilla": {
+        "fwd_ms": 6.472,
+        "bwd_ms": 34.078,
+        "fwd_mem_gb": 0.414,
+        "bwd_mem_gb": 0.793,
+        "fwd_bwd_ratio": 5.27
+      },
+      "flex": {
+        "fwd_ms": 34.195,
+        "bwd_ms": 53.508,
+        "fwd_mem_gb": 0.686,
+        "bwd_mem_gb": 0.854,
+        "fwd_bwd_ratio": 1.56
+      }
+    }
+  },
+  "E7": [
+    {
+      "S": 2048,
+      "num_docs": 8,
+      "vanilla_ms": 5.095,
+      "vanilla_gb": 0.367,
+      "flex_ms": 16.171,
+      "flex_gb": 0.466,
+      "sdpa_ms": 0.09,
+      "sdpa_gb": 0.028
+    },
+    {
+      "S": 4096,
+      "num_docs": 8,
+      "vanilla_ms": 21.124,
+      "vanilla_gb": 1.407,
+      "flex_ms": 50.138,
+      "flex_gb": 1.787,
+      "sdpa_ms": 0.304,
+      "sdpa_gb": 0.038
+    },
+    {
+      "S": 8192,
+      "num_docs": 8,
+      "vanilla_ms": 85.353,
+      "vanilla_gb": 5.549,
+      "flex_ms": 192.105,
+      "flex_gb": 7.047,
+      "sdpa_ms": 1.073,
+      "sdpa_gb": 0.059
+    },
+    {
+      "S": 12288,
+      "num_docs": 8,
+      "vanilla_ms": 193.152,
+      "vanilla_gb": 12.445,
+      "flex_ms": 429.776,
+      "flex_gb": 15.797,
+      "sdpa_ms": 2.332,
+      "sdpa_gb": 0.08
+    },
+    {
+      "S": 16384,
+      "num_docs": 8,
+      "vanilla_ms": -1,
+      "vanilla_gb": -1,
+      "flex_ms": -1,
+      "flex_gb": -1,
+      "sdpa_ms": 4.627,
+      "sdpa_gb": 0.097
+    }
+  ],
+  "E8": {
+    "causal": {
+      "exists": true,
+      "kv_num_blocks_shape": [
+        1,
+        1,
+        16
+      ],
+      "total_non_empty_blocks": 16,
+      "total_possible_blocks": 256,
+      "block_utilization": 6.2,
+      "kv_indices_shape": [
+        1,
+        1,
+        16,
+        16
+      ],
+      "creation_time_ms": 2.421,
+      "blockmask_memory_mb": 0.001
+    },
+    "sw_64": {
+      "exists": true,
+      "kv_num_blocks_shape": [
+        1,
+        1,
+        16
+      ],
+      "total_non_empty_blocks": 31,
+      "total_possible_blocks": 256,
+      "block_utilization": 12.1,
+      "kv_indices_shape": [
+        1,
+        1,
+        16,
+        16
+      ],
+      "creation_time_ms": 2.522,
+      "blockmask_memory_mb": 0.001
+    },
+    "sw_128": {
+      "exists": true,
+      "kv_num_blocks_shape": [
+        1,
+        1,
+        16
+      ],
+      "total_non_empty_blocks": 31,
+      "total_possible_blocks": 256,
+      "block_utilization": 12.1,
+      "kv_indices_shape": [
+        1,
+        1,
+        16,
+        16
+      ],
+      "creation_time_ms": 2.521,
+      "blockmask_memory_mb": 0.001
+    },
+    "sw_256": {
+      "exists": true,
+      "kv_num_blocks_shape": [
+        1,
+        1,
+        16
+      ],
+      "total_non_empty_blocks": 30,
+      "total_possible_blocks": 256,
+      "block_utilization": 11.7,
+      "kv_indices_shape": [
+        1,
+        1,
+        16,
+        16
+      ],
+      "creation_time_ms": 2.482,
+      "blockmask_memory_mb": 0.001
+    },
+    "sw_512": {
+      "exists": true,
+      "kv_num_blocks_shape": [
+        1,
+        1,
+        16
+      ],
+      "total_non_empty_blocks": 28,
+      "total_possible_blocks": 256,
+      "block_utilization": 10.9,
+      "kv_indices_shape": [
+        1,
+        1,
+        16,
+        16
+      ],
+      "creation_time_ms": 2.458,
+      "blockmask_memory_mb": 0.001
+    },
+    "doc_2": {
+      "exists": true,
+      "kv_num_blocks_shape": [
+        1,
+        1,
+        16
+      ],
+      "total_non_empty_blocks": 16,
+      "total_possible_blocks": 256,
+      "block_utilization": 6.2,
+      "kv_indices_shape": [
+        1,
+        1,
+        16,
+        16
+      ],
+      "creation_time_ms": 5.456,
+      "blockmask_memory_mb": 0.001
+    },
+    "doc_4": {
+      "exists": true,
+      "kv_num_blocks_shape": [
+        1,
+        1,
+        16
+      ],
+      "total_non_empty_blocks": 16,
+      "total_possible_blocks": 256,
+      "block_utilization": 6.2,
+      "kv_indices_shape": [
+        1,
+        1,
+        16,
+        16
+      ],
+      "creation_time_ms": 5.363,
+      "blockmask_memory_mb": 0.001
+    },
+    "doc_8": {
+      "exists": true,
+      "kv_num_blocks_shape": [
+        1,
+        1,
+        16
+      ],
+      "total_non_empty_blocks": 16,
+      "total_possible_blocks": 256,
+      "block_utilization": 6.2,
+      "kv_indices_shape": [
+        1,
+        1,
+        16,
+        16
+      ],
+      "creation_time_ms": 5.268,
+      "blockmask_memory_mb": 0.001
+    },
+    "doc_16": {
+      "exists": true,
+      "kv_num_blocks_shape": [
+        1,
+        1,
+        16
+      ],
+      "total_non_empty_blocks": 16,
+      "total_possible_blocks": 256,
+      "block_utilization": 6.2,
+      "kv_indices_shape": [
+        1,
+        1,
+        16,
+        16
+      ],
+      "creation_time_ms": 5.29,
+      "blockmask_memory_mb": 0.001
+    },
+    "prefix_10": {
+      "exists": true,
+      "kv_num_blocks_shape": [
+        1,
+        1,
+        16
+      ],
+      "total_non_empty_blocks": 16,
+      "total_possible_blocks": 256,
+      "block_utilization": 6.2,
+      "kv_indices_shape": [
+        1,
+        1,
+        16,
+        16
+      ],
+      "creation_time_ms": 2.432,
+      "blockmask_memory_mb": 0.001
+    },
+    "prefix_25": {
+      "exists": true,
+      "kv_num_blocks_shape": [
+        1,
+        1,
+        16
+      ],
+      "total_non_empty_blocks": 12,
+      "total_possible_blocks": 256,
+      "block_utilization": 4.7,
+      "kv_indices_shape": [
+        1,
+        1,
+        16,
+        16
+      ],
+      "creation_time_ms": 2.425,
+      "blockmask_memory_mb": 0.001
+    },
+    "prefix_50": {
+      "exists": true,
+      "kv_num_blocks_shape": [
+        1,
+        1,
+        16
+      ],
+      "total_non_empty_blocks": 8,
+      "total_possible_blocks": 256,
+      "block_utilization": 3.1,
+      "kv_indices_shape": [
+        1,
+        1,
+        16,
+        16
+      ],
+      "creation_time_ms": 2.428,
+      "blockmask_memory_mb": 0.001
+    },
+    "dilated_128_2": {
+      "exists": true,
+      "kv_num_blocks_shape": [
+        1,
+        1,
+        16
+      ],
+      "total_non_empty_blocks": 31,
+      "total_possible_blocks": 256,
+      "block_utilization": 12.1,
+      "kv_indices_shape": [
+        1,
+        1,
+        16,
+        16
+      ],
+      "creation_time_ms": 2.574,
+      "blockmask_memory_mb": 0.001
+    },
+    "dilated_256_4": {
+      "exists": true,
+      "kv_num_blocks_shape": [
+        1,
+        1,
+        16
+      ],
+      "total_non_empty_blocks": 45,
+      "total_possible_blocks": 256,
+      "block_utilization": 17.6,
+      "kv_indices_shape": [
+        1,
+        1,
+        16,
+        16
+      ],
+      "creation_time_ms": 2.596,
+      "blockmask_memory_mb": 0.001
+    },
+    "dilated_512_8": {
+      "exists": true,
+      "kv_num_blocks_shape": [
+        1,
+        1,
+        16
+      ],
+      "total_non_empty_blocks": 70,
+      "total_possible_blocks": 256,
+      "block_utilization": 27.3,
+      "kv_indices_shape": [
+        1,
+        1,
+        16,
+        16
+      ],
+      "creation_time_ms": 2.57,
+      "blockmask_memory_mb": 0.001
+    }
+  }
+}
