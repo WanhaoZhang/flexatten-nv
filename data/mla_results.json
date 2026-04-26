@@ -1,0 +1,376 @@
+{
+  "exp1": [
+    {
+      "seq_len": 512,
+      "mha_mb": 32.0,
+      "mqa_mb": 0.25,
+      "gqa4_mb": 1.0,
+      "gqa8_mb": 2.0,
+      "mla_mb": 0.5625,
+      "mha_per_token": 65536,
+      "mqa_per_token": 512,
+      "gqa8_per_token": 4096,
+      "mla_per_token": 1152,
+      "mla_vs_mha": 1.7578125,
+      "mla_vs_gqa8": 28.125
+    },
+    {
+      "seq_len": 1024,
+      "mha_mb": 64.0,
+      "mqa_mb": 0.5,
+      "gqa4_mb": 2.0,
+      "gqa8_mb": 4.0,
+      "mla_mb": 1.125,
+      "mha_per_token": 65536,
+      "mqa_per_token": 512,
+      "gqa8_per_token": 4096,
+      "mla_per_token": 1152,
+      "mla_vs_mha": 1.7578125,
+      "mla_vs_gqa8": 28.125
+    },
+    {
+      "seq_len": 2048,
+      "mha_mb": 128.0,
+      "mqa_mb": 1.0,
+      "gqa4_mb": 4.0,
+      "gqa8_mb": 8.0,
+      "mla_mb": 2.25,
+      "mha_per_token": 65536,
+      "mqa_per_token": 512,
+      "gqa8_per_token": 4096,
+      "mla_per_token": 1152,
+      "mla_vs_mha": 1.7578125,
+      "mla_vs_gqa8": 28.125
+    },
+    {
+      "seq_len": 4096,
+      "mha_mb": 256.0,
+      "mqa_mb": 2.0,
+      "gqa4_mb": 8.0,
+      "gqa8_mb": 16.0,
+      "mla_mb": 4.5,
+      "mha_per_token": 65536,
+      "mqa_per_token": 512,
+      "gqa8_per_token": 4096,
+      "mla_per_token": 1152,
+      "mla_vs_mha": 1.7578125,
+      "mla_vs_gqa8": 28.125
+    },
+    {
+      "seq_len": 8192,
+      "mha_mb": 512.0,
+      "mqa_mb": 4.0,
+      "gqa4_mb": 16.0,
+      "gqa8_mb": 32.0,
+      "mla_mb": 9.0,
+      "mha_per_token": 65536,
+      "mqa_per_token": 512,
+      "gqa8_per_token": 4096,
+      "mla_per_token": 1152,
+      "mla_vs_mha": 1.7578125,
+      "mla_vs_gqa8": 28.125
+    },
+    {
+      "seq_len": 16384,
+      "mha_mb": 1024.0,
+      "mqa_mb": 8.0,
+      "gqa4_mb": 32.0,
+      "gqa8_mb": 64.0,
+      "mla_mb": 18.0,
+      "mha_per_token": 65536,
+      "mqa_per_token": 512,
+      "gqa8_per_token": 4096,
+      "mla_per_token": 1152,
+      "mla_vs_mha": 1.7578125,
+      "mla_vs_gqa8": 28.125
+    }
+  ],
+  "exp2": {
+    "overall_cos_sim": 0.99951171875,
+    "overall_max_err": 7.62939453125e-05,
+    "overall_mean_err": 1.3589859008789062e-05,
+    "per_batch": [
+      {
+        "batch": 0,
+        "cos_sim": 1.0,
+        "max_err": 7.62939453125e-05
+      },
+      {
+        "batch": 1,
+        "cos_sim": 0.9990234375,
+        "max_err": 6.103515625e-05
+      },
+      {
+        "batch": 2,
+        "cos_sim": 1.0,
+        "max_err": 6.103515625e-05
+      },
+      {
+        "batch": 3,
+        "cos_sim": 0.99951171875,
+        "max_err": 6.103515625e-05
+      }
+    ],
+    "flex_note": "FlexAttention score_mod with dynamic tensor indexing requires PyTorch 2.6+; PyTorch 2.5.1 torch.compile does not support data-dependent indexing in score_mod closures."
+  },
+  "exp3": [
+    {
+      "kv_lora_rank": 64,
+      "kv_cache_per_token_bytes": 192,
+      "kv_cache_ratio_vs_mha": 2.34375,
+      "cos_sim": 1.0009765625,
+      "vanilla_ms": 0.6128326058387756,
+      "absorb_ms": 0.5614243447780609,
+      "speedup": 1.0915675665632867
+    },
+    {
+      "kv_lora_rank": 128,
+      "kv_cache_per_token_bytes": 320,
+      "kv_cache_ratio_vs_mha": 3.90625,
+      "cos_sim": 0.99951171875,
+      "vanilla_ms": 0.6320856511592865,
+      "absorb_ms": 0.5974821746349335,
+      "speedup": 1.0579154960488921
+    },
+    {
+      "kv_lora_rank": 256,
+      "kv_cache_per_token_bytes": 576,
+      "kv_cache_ratio_vs_mha": 7.03125,
+      "cos_sim": 0.99951171875,
+      "vanilla_ms": 0.6424136459827423,
+      "absorb_ms": 0.5981586873531342,
+      "speedup": 1.0739853145415932
+    },
+    {
+      "kv_lora_rank": 512,
+      "kv_cache_per_token_bytes": 1088,
+      "kv_cache_ratio_vs_mha": 13.28125,
+      "cos_sim": 1.0,
+      "vanilla_ms": 0.6344631314277649,
+      "absorb_ms": 0.8394569158554077,
+      "speedup": 0.7558018993520902
+    },
+    {
+      "kv_lora_rank": 768,
+      "kv_cache_per_token_bytes": 1600,
+      "kv_cache_ratio_vs_mha": 19.53125,
+      "cos_sim": 0.9990234375,
+      "vanilla_ms": 0.6157927215099335,
+      "absorb_ms": 1.065993309020996,
+      "speedup": 0.5776703439869383
+    },
+    {
+      "kv_lora_rank": 1024,
+      "kv_cache_per_token_bytes": 2112,
+      "kv_cache_ratio_vs_mha": 25.78125,
+      "cos_sim": 0.99951171875,
+      "vanilla_ms": 0.6173260509967804,
+      "absorb_ms": 1.2318558990955353,
+      "speedup": 0.5011349553547938
+    }
+  ],
+  "exp4": [
+    {
+      "kv_len": 64,
+      "vanilla_ms": 0.5715705454349518,
+      "absorb_ms": 0.5223292857408524,
+      "speedup": 1.0942724465932587,
+      "mla_kv_mb": 0.03515625,
+      "mha_kv_mb": 0.5,
+      "mem_saving": 92.96875
+    },
+    {
+      "kv_len": 128,
+      "vanilla_ms": 0.5709342658519745,
+      "absorb_ms": 0.5333118140697479,
+      "speedup": 1.0705449434827374,
+      "mla_kv_mb": 0.0703125,
+      "mha_kv_mb": 1.0,
+      "mem_saving": 92.96875
+    },
+    {
+      "kv_len": 256,
+      "vanilla_ms": 1.0380562394857407,
+      "absorb_ms": 0.5543295294046402,
+      "speedup": 1.8726338475971713,
+      "mla_kv_mb": 0.140625,
+      "mha_kv_mb": 2.0,
+      "mem_saving": 92.96875
+    },
+    {
+      "kv_len": 512,
+      "vanilla_ms": 0.5768883973360062,
+      "absorb_ms": 0.5305513739585876,
+      "speedup": 1.0873374863430951,
+      "mla_kv_mb": 0.28125,
+      "mha_kv_mb": 4.0,
+      "mem_saving": 92.96875
+    },
+    {
+      "kv_len": 1024,
+      "vanilla_ms": 0.588471069931984,
+      "absorb_ms": 0.5338892340660095,
+      "speedup": 1.1022343819340361,
+      "mla_kv_mb": 0.5625,
+      "mha_kv_mb": 8.0,
+      "mem_saving": 92.96875
+    },
+    {
+      "kv_len": 2048,
+      "vanilla_ms": 0.5792833864688873,
+      "absorb_ms": 0.5435124039649963,
+      "speedup": 1.06581447312506,
+      "mla_kv_mb": 1.125,
+      "mha_kv_mb": 16.0,
+      "mem_saving": 92.96875
+    }
+  ],
+  "exp5": [
+    {
+      "kv_len": 64,
+      "vanilla_ms": 0.6081737577915192,
+      "absorb_ms": 0.6025843322277069,
+      "speedup": 1.0092757565453927,
+      "mla_kv_mb": 0.0703125,
+      "mha_kv_mb": 1.0
+    },
+    {
+      "kv_len": 128,
+      "vanilla_ms": 0.6375923752784729,
+      "absorb_ms": 0.5955949425697327,
+      "speedup": 1.0705134139110377,
+      "mla_kv_mb": 0.140625,
+      "mha_kv_mb": 2.0
+    },
+    {
+      "kv_len": 256,
+      "vanilla_ms": 0.6264202296733856,
+      "absorb_ms": 0.5959540605545044,
+      "speedup": 1.0511216738594482,
+      "mla_kv_mb": 0.28125,
+      "mha_kv_mb": 4.0
+    },
+    {
+      "kv_len": 512,
+      "vanilla_ms": 0.655684620141983,
+      "absorb_ms": 0.6148166954517365,
+      "speedup": 1.0664717223728266,
+      "mla_kv_mb": 0.5625,
+      "mha_kv_mb": 8.0
+    },
+    {
+      "kv_len": 1024,
+      "vanilla_ms": 0.6283603608608246,
+      "absorb_ms": 0.815969705581665,
+      "speedup": 0.7700780513816957,
+      "mla_kv_mb": 1.125,
+      "mha_kv_mb": 16.0
+    },
+    {
+      "kv_len": 2048,
+      "vanilla_ms": 1.3182729482650757,
+      "absorb_ms": 1.1745825409889221,
+      "speedup": 1.1223331713709754,
+      "mla_kv_mb": 2.25,
+      "mha_kv_mb": 32.0
+    },
+    {
+      "kv_len": 4096,
+      "vanilla_ms": 1.1675596237182617,
+      "absorb_ms": 1.9291192293167114,
+      "speedup": 0.6052293740972184,
+      "mla_kv_mb": 4.5,
+      "mha_kv_mb": 64.0
+    }
+  ],
+  "exp6": [
+    {
+      "batch_size": 1,
+      "vanilla_ms": 0.5782425403594971,
+      "absorb_ms": 0.538625568151474,
+      "speedup": 1.0735519710733112,
+      "vanilla_tokens_s": 1729.3781245812418,
+      "absorb_tokens_s": 1856.5772943752584
+    },
+    {
+      "batch_size": 2,
+      "vanilla_ms": 0.633326917886734,
+      "absorb_ms": 0.6211735308170319,
+      "speedup": 1.0195652043539536,
+      "vanilla_tokens_s": 3157.926725542535,
+      "absorb_tokens_s": 3219.7122072625866
+    },
+    {
+      "batch_size": 4,
+      "vanilla_ms": 0.6275735795497894,
+      "absorb_ms": 0.7755331695079803,
+      "speedup": 0.8092156521789254,
+      "vanilla_tokens_s": 6373.754616740768,
+      "absorb_tokens_s": 5157.741999014317
+    },
+    {
+      "batch_size": 8,
+      "vanilla_ms": 0.7402136921882629,
+      "absorb_ms": 1.0830804705619812,
+      "speedup": 0.6834336988868298,
+      "vanilla_tokens_s": 10807.689839335359,
+      "absorb_tokens_s": 7386.33944331857
+    }
+  ],
+  "exp7": [
+    {
+      "name": "MHA",
+      "kv_heads": 32,
+      "per_token_bytes": 8192,
+      "total_mem_mb": 16.0,
+      "latency_ms": 1.2177631258964539,
+      "tokens_s": 1681772.0593176682
+    },
+    {
+      "name": "GQA-4",
+      "kv_heads": 4,
+      "per_token_bytes": 1024,
+      "total_mem_mb": 2.0,
+      "latency_ms": 1.2186065316200256,
+      "tokens_s": 1680608.0936373875
+    },
+    {
+      "name": "GQA-8",
+      "kv_heads": 8,
+      "per_token_bytes": 2048,
+      "total_mem_mb": 4.0,
+      "latency_ms": 1.2192927300930023,
+      "tokens_s": 1679662.2742463062
+    },
+    {
+      "name": "MQA",
+      "kv_heads": 1,
+      "per_token_bytes": 256,
+      "total_mem_mb": 0.5,
+      "latency_ms": 1.2677207589149475,
+      "tokens_s": 1615497.7234520477
+    },
+    {
+      "name": "MLA",
+      "kv_heads": 1,
+      "per_token_bytes": 576,
+      "total_mem_mb": 1.125,
+      "latency_ms": 1.2697458267211914,
+      "tokens_s": 1612921.229509736
+    },
+    {
+      "name": "MLA_Vanilla",
+      "per_token_bytes": 576,
+      "total_mem_mb": 1.125,
+      "latency_ms": 2.6310496032238007,
+      "tokens_s": 778396.5750742991
+    },
+    {
+      "name": "MLA_MatAbsorb",
+      "per_token_bytes": 576,
+      "total_mem_mb": 1.125,
+      "latency_ms": 4.111657291650772,
+      "tokens_s": 498095.9877562551
+    }
+  ]
+}
