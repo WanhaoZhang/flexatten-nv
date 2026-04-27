@@ -51,9 +51,12 @@ docs/
 │   ├── flexatten_deep_dive.py
 │   ├── deep_dive_results.json
 │   └── figures/           # 图表 (8张)
-├── trace/                 # GPU 链路 & CuteDSL 接入分析
-│   ├── CAUSAL_FLEXATTENTION_CUTEDSL_TRACE.md
-│   ├── FLEXATTENTION_FLASH_CUTEDSL_BACKEND_REPORT.md
+├── trace/                 # GPU 执行管线 & CuteDSL 分析
+│   ├── FLEXATTENTION_GPU_PIPELINE_ANALYSIS.md  # 全新管线静态分析报告
+│   ├── analyze_flex_pipeline.py               # 分析图表生成脚本
+│   ├── figures/           # 分析图表 (6张)
+│   ├── CAUSAL_FLEXATTENTION_CUTEDSL_TRACE.md  # 原始 trace 报告
+│   ├── FLEXATTENTION_FLASH_CUTEDSL_BACKEND_REPORT.md  # FLASH 后端复测报告
 │   └── causal_attention_trace/   # trace 实验脚本
 ├── SLIDING_WINDOW_REPORT.md  # Sliding Window Attention
 ├── ALIBI_REPORT.md           # ALiBi 位置编码
@@ -74,6 +77,7 @@ docs/
 | [Document Packing 专题](docs/doc_packing/report.md) | 三种实现全解析：Vanilla / SDPA / FlexAttention | 5 |
 | [8种注意力模式全解析](docs/pattern_analysis/report.md) | Vanilla vs FlexAttention：Causal/SW/Prefix/ALiBi/Softcap/Dilated | 9 |
 | [源码级分析](docs/source_analysis/report.md) | Vanilla → SDPA → FlexAttention 三条执行路径 | 7 |
+| [FlexAttention GPU 执行管线静态分析](docs/trace/FLEXATTENTION_GPU_PIPELINE_ANALYSIS.md) | 6层编译架构、Triton/CuteDSL源码分析、Autotuning配置、BlockMask结构 | 6 |
 | [Causal FlexAttention GPU链路](docs/trace/CAUSAL_FLEXATTENTION_CUTEDSL_TRACE.md) | Dynamo/HOP/Inductor/Triton trace、CuteDSL/CUTLASS 接入分析 | - |
 | [FlexAttention FLASH/CuteDSL 后端复测](docs/trace/FLEXATTENTION_FLASH_CUTEDSL_BACKEND_REPORT.md) | 确认 FlexAttention 进入 CuteDSL/CUTLASS 调用链 | - |
 
