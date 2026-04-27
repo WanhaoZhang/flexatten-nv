@@ -1,0 +1,1149 @@
+{
+  "experiment1_memory_modeling": [
+    {
+      "config": "MHA (Llama-2 style)",
+      "precision": "FP16",
+      "seq_len": 1024,
+      "kv_cache_gb": 0.0156,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "MHA (Llama-2 style)",
+      "precision": "FP16",
+      "seq_len": 4096,
+      "kv_cache_gb": 0.0625,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "MHA (Llama-2 style)",
+      "precision": "FP16",
+      "seq_len": 8192,
+      "kv_cache_gb": 0.125,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "MHA (Llama-2 style)",
+      "precision": "FP16",
+      "seq_len": 16384,
+      "kv_cache_gb": 0.25,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "MHA (Llama-2 style)",
+      "precision": "FP16",
+      "seq_len": 32768,
+      "kv_cache_gb": 0.5,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "MHA (Llama-2 style)",
+      "precision": "FP16",
+      "seq_len": 65536,
+      "kv_cache_gb": 1.0,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "MHA (Llama-2 style)",
+      "precision": "FP16",
+      "seq_len": 131072,
+      "kv_cache_gb": 2.0,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "MHA (Llama-2 style)",
+      "precision": "FP8",
+      "seq_len": 1024,
+      "kv_cache_gb": 0.0078,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "MHA (Llama-2 style)",
+      "precision": "FP8",
+      "seq_len": 4096,
+      "kv_cache_gb": 0.0312,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "MHA (Llama-2 style)",
+      "precision": "FP8",
+      "seq_len": 8192,
+      "kv_cache_gb": 0.0625,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "MHA (Llama-2 style)",
+      "precision": "FP8",
+      "seq_len": 16384,
+      "kv_cache_gb": 0.125,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "MHA (Llama-2 style)",
+      "precision": "FP8",
+      "seq_len": 32768,
+      "kv_cache_gb": 0.25,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "MHA (Llama-2 style)",
+      "precision": "FP8",
+      "seq_len": 65536,
+      "kv_cache_gb": 0.5,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "MHA (Llama-2 style)",
+      "precision": "FP8",
+      "seq_len": 131072,
+      "kv_cache_gb": 1.0,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "MHA (Llama-2 style)",
+      "precision": "INT4",
+      "seq_len": 1024,
+      "kv_cache_gb": 0.0039,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "MHA (Llama-2 style)",
+      "precision": "INT4",
+      "seq_len": 4096,
+      "kv_cache_gb": 0.0156,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "MHA (Llama-2 style)",
+      "precision": "INT4",
+      "seq_len": 8192,
+      "kv_cache_gb": 0.0312,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "MHA (Llama-2 style)",
+      "precision": "INT4",
+      "seq_len": 16384,
+      "kv_cache_gb": 0.0625,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "MHA (Llama-2 style)",
+      "precision": "INT4",
+      "seq_len": 32768,
+      "kv_cache_gb": 0.125,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "MHA (Llama-2 style)",
+      "precision": "INT4",
+      "seq_len": 65536,
+      "kv_cache_gb": 0.25,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "MHA (Llama-2 style)",
+      "precision": "INT4",
+      "seq_len": 131072,
+      "kv_cache_gb": 0.5,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "GQA-8 (Llama-3 style)",
+      "precision": "FP16",
+      "seq_len": 1024,
+      "kv_cache_gb": 0.0039,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "GQA-8 (Llama-3 style)",
+      "precision": "FP16",
+      "seq_len": 4096,
+      "kv_cache_gb": 0.0156,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "GQA-8 (Llama-3 style)",
+      "precision": "FP16",
+      "seq_len": 8192,
+      "kv_cache_gb": 0.0312,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "GQA-8 (Llama-3 style)",
+      "precision": "FP16",
+      "seq_len": 16384,
+      "kv_cache_gb": 0.0625,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "GQA-8 (Llama-3 style)",
+      "precision": "FP16",
+      "seq_len": 32768,
+      "kv_cache_gb": 0.125,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "GQA-8 (Llama-3 style)",
+      "precision": "FP16",
+      "seq_len": 65536,
+      "kv_cache_gb": 0.25,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "GQA-8 (Llama-3 style)",
+      "precision": "FP16",
+      "seq_len": 131072,
+      "kv_cache_gb": 0.5,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "GQA-8 (Llama-3 style)",
+      "precision": "FP8",
+      "seq_len": 1024,
+      "kv_cache_gb": 0.002,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "GQA-8 (Llama-3 style)",
+      "precision": "FP8",
+      "seq_len": 4096,
+      "kv_cache_gb": 0.0078,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "GQA-8 (Llama-3 style)",
+      "precision": "FP8",
+      "seq_len": 8192,
+      "kv_cache_gb": 0.0156,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "GQA-8 (Llama-3 style)",
+      "precision": "FP8",
+      "seq_len": 16384,
+      "kv_cache_gb": 0.0312,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "GQA-8 (Llama-3 style)",
+      "precision": "FP8",
+      "seq_len": 32768,
+      "kv_cache_gb": 0.0625,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "GQA-8 (Llama-3 style)",
+      "precision": "FP8",
+      "seq_len": 65536,
+      "kv_cache_gb": 0.125,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "GQA-8 (Llama-3 style)",
+      "precision": "FP8",
+      "seq_len": 131072,
+      "kv_cache_gb": 0.25,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "GQA-8 (Llama-3 style)",
+      "precision": "INT4",
+      "seq_len": 1024,
+      "kv_cache_gb": 0.001,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "GQA-8 (Llama-3 style)",
+      "precision": "INT4",
+      "seq_len": 4096,
+      "kv_cache_gb": 0.0039,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "GQA-8 (Llama-3 style)",
+      "precision": "INT4",
+      "seq_len": 8192,
+      "kv_cache_gb": 0.0078,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "GQA-8 (Llama-3 style)",
+      "precision": "INT4",
+      "seq_len": 16384,
+      "kv_cache_gb": 0.0156,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "GQA-8 (Llama-3 style)",
+      "precision": "INT4",
+      "seq_len": 32768,
+      "kv_cache_gb": 0.0312,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "GQA-8 (Llama-3 style)",
+      "precision": "INT4",
+      "seq_len": 65536,
+      "kv_cache_gb": 0.0625,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "GQA-8 (Llama-3 style)",
+      "precision": "INT4",
+      "seq_len": 131072,
+      "kv_cache_gb": 0.125,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "GQA-4 (Qwen-2 style)",
+      "precision": "FP16",
+      "seq_len": 1024,
+      "kv_cache_gb": 0.002,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "GQA-4 (Qwen-2 style)",
+      "precision": "FP16",
+      "seq_len": 4096,
+      "kv_cache_gb": 0.0078,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "GQA-4 (Qwen-2 style)",
+      "precision": "FP16",
+      "seq_len": 8192,
+      "kv_cache_gb": 0.0156,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "GQA-4 (Qwen-2 style)",
+      "precision": "FP16",
+      "seq_len": 16384,
+      "kv_cache_gb": 0.0312,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "GQA-4 (Qwen-2 style)",
+      "precision": "FP16",
+      "seq_len": 32768,
+      "kv_cache_gb": 0.0625,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "GQA-4 (Qwen-2 style)",
+      "precision": "FP16",
+      "seq_len": 65536,
+      "kv_cache_gb": 0.125,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "GQA-4 (Qwen-2 style)",
+      "precision": "FP16",
+      "seq_len": 131072,
+      "kv_cache_gb": 0.25,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "GQA-4 (Qwen-2 style)",
+      "precision": "FP8",
+      "seq_len": 1024,
+      "kv_cache_gb": 0.001,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "GQA-4 (Qwen-2 style)",
+      "precision": "FP8",
+      "seq_len": 4096,
+      "kv_cache_gb": 0.0039,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "GQA-4 (Qwen-2 style)",
+      "precision": "FP8",
+      "seq_len": 8192,
+      "kv_cache_gb": 0.0078,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "GQA-4 (Qwen-2 style)",
+      "precision": "FP8",
+      "seq_len": 16384,
+      "kv_cache_gb": 0.0156,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "GQA-4 (Qwen-2 style)",
+      "precision": "FP8",
+      "seq_len": 32768,
+      "kv_cache_gb": 0.0312,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "GQA-4 (Qwen-2 style)",
+      "precision": "FP8",
+      "seq_len": 65536,
+      "kv_cache_gb": 0.0625,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "GQA-4 (Qwen-2 style)",
+      "precision": "FP8",
+      "seq_len": 131072,
+      "kv_cache_gb": 0.125,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "GQA-4 (Qwen-2 style)",
+      "precision": "INT4",
+      "seq_len": 1024,
+      "kv_cache_gb": 0.0005,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "GQA-4 (Qwen-2 style)",
+      "precision": "INT4",
+      "seq_len": 4096,
+      "kv_cache_gb": 0.002,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "GQA-4 (Qwen-2 style)",
+      "precision": "INT4",
+      "seq_len": 8192,
+      "kv_cache_gb": 0.0039,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "GQA-4 (Qwen-2 style)",
+      "precision": "INT4",
+      "seq_len": 16384,
+      "kv_cache_gb": 0.0078,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "GQA-4 (Qwen-2 style)",
+      "precision": "INT4",
+      "seq_len": 32768,
+      "kv_cache_gb": 0.0156,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "GQA-4 (Qwen-2 style)",
+      "precision": "INT4",
+      "seq_len": 65536,
+      "kv_cache_gb": 0.0312,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "GQA-4 (Qwen-2 style)",
+      "precision": "INT4",
+      "seq_len": 131072,
+      "kv_cache_gb": 0.0625,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "MLA-DeepSeek (latent=512)",
+      "precision": "FP16",
+      "seq_len": 1024,
+      "kv_cache_gb": 0.002,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "MLA-DeepSeek (latent=512)",
+      "precision": "FP16",
+      "seq_len": 4096,
+      "kv_cache_gb": 0.0078,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "MLA-DeepSeek (latent=512)",
+      "precision": "FP16",
+      "seq_len": 8192,
+      "kv_cache_gb": 0.0156,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "MLA-DeepSeek (latent=512)",
+      "precision": "FP16",
+      "seq_len": 16384,
+      "kv_cache_gb": 0.0312,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "MLA-DeepSeek (latent=512)",
+      "precision": "FP16",
+      "seq_len": 32768,
+      "kv_cache_gb": 0.0625,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "MLA-DeepSeek (latent=512)",
+      "precision": "FP16",
+      "seq_len": 65536,
+      "kv_cache_gb": 0.125,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "MLA-DeepSeek (latent=512)",
+      "precision": "FP16",
+      "seq_len": 131072,
+      "kv_cache_gb": 0.25,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "MLA-DeepSeek (latent=512)",
+      "precision": "FP8",
+      "seq_len": 1024,
+      "kv_cache_gb": 0.001,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "MLA-DeepSeek (latent=512)",
+      "precision": "FP8",
+      "seq_len": 4096,
+      "kv_cache_gb": 0.0039,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "MLA-DeepSeek (latent=512)",
+      "precision": "FP8",
+      "seq_len": 8192,
+      "kv_cache_gb": 0.0078,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "MLA-DeepSeek (latent=512)",
+      "precision": "FP8",
+      "seq_len": 16384,
+      "kv_cache_gb": 0.0156,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "MLA-DeepSeek (latent=512)",
+      "precision": "FP8",
+      "seq_len": 32768,
+      "kv_cache_gb": 0.0312,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "MLA-DeepSeek (latent=512)",
+      "precision": "FP8",
+      "seq_len": 65536,
+      "kv_cache_gb": 0.0625,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "MLA-DeepSeek (latent=512)",
+      "precision": "FP8",
+      "seq_len": 131072,
+      "kv_cache_gb": 0.125,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "MLA-DeepSeek (latent=512)",
+      "precision": "INT4",
+      "seq_len": 1024,
+      "kv_cache_gb": 0.0005,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "MLA-DeepSeek (latent=512)",
+      "precision": "INT4",
+      "seq_len": 4096,
+      "kv_cache_gb": 0.002,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "MLA-DeepSeek (latent=512)",
+      "precision": "INT4",
+      "seq_len": 8192,
+      "kv_cache_gb": 0.0039,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "MLA-DeepSeek (latent=512)",
+      "precision": "INT4",
+      "seq_len": 16384,
+      "kv_cache_gb": 0.0078,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "MLA-DeepSeek (latent=512)",
+      "precision": "INT4",
+      "seq_len": 32768,
+      "kv_cache_gb": 0.0156,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "MLA-DeepSeek (latent=512)",
+      "precision": "INT4",
+      "seq_len": 65536,
+      "kv_cache_gb": 0.0312,
+      "fits_in_vram": true,
+      "batch_size": 1
+    },
+    {
+      "config": "MLA-DeepSeek (latent=512)",
+      "precision": "INT4",
+      "seq_len": 131072,
+      "kv_cache_gb": 0.0625,
+      "fits_in_vram": true,
+      "batch_size": 1
+    }
+  ],
+  "experiment2_bandwidth_bound": [
+    {
+      "config": "GQA-8 FP16",
+      "seq_len": 1024,
+      "kv_bytes": 4194304,
+      "kv_gb": 0.0039,
+      "decode_time_us": 13.0,
+      "throughput_tokens_per_s": 76800.0
+    },
+    {
+      "config": "GQA-8 FP16",
+      "seq_len": 4096,
+      "kv_bytes": 16777216,
+      "kv_gb": 0.0156,
+      "decode_time_us": 52.1,
+      "throughput_tokens_per_s": 19200.0
+    },
+    {
+      "config": "GQA-8 FP16",
+      "seq_len": 8192,
+      "kv_bytes": 33554432,
+      "kv_gb": 0.0312,
+      "decode_time_us": 104.2,
+      "throughput_tokens_per_s": 9600.0
+    },
+    {
+      "config": "GQA-8 FP16",
+      "seq_len": 16384,
+      "kv_bytes": 67108864,
+      "kv_gb": 0.0625,
+      "decode_time_us": 208.3,
+      "throughput_tokens_per_s": 4800.0
+    },
+    {
+      "config": "GQA-8 FP16",
+      "seq_len": 32768,
+      "kv_bytes": 134217728,
+      "kv_gb": 0.125,
+      "decode_time_us": 416.7,
+      "throughput_tokens_per_s": 2400.0
+    },
+    {
+      "config": "GQA-8 FP16",
+      "seq_len": 65536,
+      "kv_bytes": 268435456,
+      "kv_gb": 0.25,
+      "decode_time_us": 833.3,
+      "throughput_tokens_per_s": 1200.0
+    },
+    {
+      "config": "GQA-8 FP8",
+      "seq_len": 1024,
+      "kv_bytes": 2097152,
+      "kv_gb": 0.002,
+      "decode_time_us": 6.5,
+      "throughput_tokens_per_s": 153600.0
+    },
+    {
+      "config": "GQA-8 FP8",
+      "seq_len": 4096,
+      "kv_bytes": 8388608,
+      "kv_gb": 0.0078,
+      "decode_time_us": 26.0,
+      "throughput_tokens_per_s": 38400.0
+    },
+    {
+      "config": "GQA-8 FP8",
+      "seq_len": 8192,
+      "kv_bytes": 16777216,
+      "kv_gb": 0.0156,
+      "decode_time_us": 52.1,
+      "throughput_tokens_per_s": 19200.0
+    },
+    {
+      "config": "GQA-8 FP8",
+      "seq_len": 16384,
+      "kv_bytes": 33554432,
+      "kv_gb": 0.0312,
+      "decode_time_us": 104.2,
+      "throughput_tokens_per_s": 9600.0
+    },
+    {
+      "config": "GQA-8 FP8",
+      "seq_len": 32768,
+      "kv_bytes": 67108864,
+      "kv_gb": 0.0625,
+      "decode_time_us": 208.3,
+      "throughput_tokens_per_s": 4800.0
+    },
+    {
+      "config": "GQA-8 FP8",
+      "seq_len": 65536,
+      "kv_bytes": 134217728,
+      "kv_gb": 0.125,
+      "decode_time_us": 416.7,
+      "throughput_tokens_per_s": 2400.0
+    },
+    {
+      "config": "GQA-8 INT4",
+      "seq_len": 1024,
+      "kv_bytes": 1048576.0,
+      "kv_gb": 0.001,
+      "decode_time_us": 3.3,
+      "throughput_tokens_per_s": 307200.0
+    },
+    {
+      "config": "GQA-8 INT4",
+      "seq_len": 4096,
+      "kv_bytes": 4194304.0,
+      "kv_gb": 0.0039,
+      "decode_time_us": 13.0,
+      "throughput_tokens_per_s": 76800.0
+    },
+    {
+      "config": "GQA-8 INT4",
+      "seq_len": 8192,
+      "kv_bytes": 8388608.0,
+      "kv_gb": 0.0078,
+      "decode_time_us": 26.0,
+      "throughput_tokens_per_s": 38400.0
+    },
+    {
+      "config": "GQA-8 INT4",
+      "seq_len": 16384,
+      "kv_bytes": 16777216.0,
+      "kv_gb": 0.0156,
+      "decode_time_us": 52.1,
+      "throughput_tokens_per_s": 19200.0
+    },
+    {
+      "config": "GQA-8 INT4",
+      "seq_len": 32768,
+      "kv_bytes": 33554432.0,
+      "kv_gb": 0.0312,
+      "decode_time_us": 104.2,
+      "throughput_tokens_per_s": 9600.0
+    },
+    {
+      "config": "GQA-8 INT4",
+      "seq_len": 65536,
+      "kv_bytes": 67108864.0,
+      "kv_gb": 0.0625,
+      "decode_time_us": 208.3,
+      "throughput_tokens_per_s": 4800.0
+    },
+    {
+      "config": "GQA-4 FP16",
+      "seq_len": 1024,
+      "kv_bytes": 2097152,
+      "kv_gb": 0.002,
+      "decode_time_us": 6.5,
+      "throughput_tokens_per_s": 153600.0
+    },
+    {
+      "config": "GQA-4 FP16",
+      "seq_len": 4096,
+      "kv_bytes": 8388608,
+      "kv_gb": 0.0078,
+      "decode_time_us": 26.0,
+      "throughput_tokens_per_s": 38400.0
+    },
+    {
+      "config": "GQA-4 FP16",
+      "seq_len": 8192,
+      "kv_bytes": 16777216,
+      "kv_gb": 0.0156,
+      "decode_time_us": 52.1,
+      "throughput_tokens_per_s": 19200.0
+    },
+    {
+      "config": "GQA-4 FP16",
+      "seq_len": 16384,
+      "kv_bytes": 33554432,
+      "kv_gb": 0.0312,
+      "decode_time_us": 104.2,
+      "throughput_tokens_per_s": 9600.0
+    },
+    {
+      "config": "GQA-4 FP16",
+      "seq_len": 32768,
+      "kv_bytes": 67108864,
+      "kv_gb": 0.0625,
+      "decode_time_us": 208.3,
+      "throughput_tokens_per_s": 4800.0
+    },
+    {
+      "config": "GQA-4 FP16",
+      "seq_len": 65536,
+      "kv_bytes": 134217728,
+      "kv_gb": 0.125,
+      "decode_time_us": 416.7,
+      "throughput_tokens_per_s": 2400.0
+    },
+    {
+      "config": "GQA-4 FP8",
+      "seq_len": 1024,
+      "kv_bytes": 1048576,
+      "kv_gb": 0.001,
+      "decode_time_us": 3.3,
+      "throughput_tokens_per_s": 307200.0
+    },
+    {
+      "config": "GQA-4 FP8",
+      "seq_len": 4096,
+      "kv_bytes": 4194304,
+      "kv_gb": 0.0039,
+      "decode_time_us": 13.0,
+      "throughput_tokens_per_s": 76800.0
+    },
+    {
+      "config": "GQA-4 FP8",
+      "seq_len": 8192,
+      "kv_bytes": 8388608,
+      "kv_gb": 0.0078,
+      "decode_time_us": 26.0,
+      "throughput_tokens_per_s": 38400.0
+    },
+    {
+      "config": "GQA-4 FP8",
+      "seq_len": 16384,
+      "kv_bytes": 16777216,
+      "kv_gb": 0.0156,
+      "decode_time_us": 52.1,
+      "throughput_tokens_per_s": 19200.0
+    },
+    {
+      "config": "GQA-4 FP8",
+      "seq_len": 32768,
+      "kv_bytes": 33554432,
+      "kv_gb": 0.0312,
+      "decode_time_us": 104.2,
+      "throughput_tokens_per_s": 9600.0
+    },
+    {
+      "config": "GQA-4 FP8",
+      "seq_len": 65536,
+      "kv_bytes": 67108864,
+      "kv_gb": 0.0625,
+      "decode_time_us": 208.3,
+      "throughput_tokens_per_s": 4800.0
+    },
+    {
+      "config": "GQA-4 INT4",
+      "seq_len": 1024,
+      "kv_bytes": 524288.0,
+      "kv_gb": 0.0005,
+      "decode_time_us": 1.6,
+      "throughput_tokens_per_s": 614400.0
+    },
+    {
+      "config": "GQA-4 INT4",
+      "seq_len": 4096,
+      "kv_bytes": 2097152.0,
+      "kv_gb": 0.002,
+      "decode_time_us": 6.5,
+      "throughput_tokens_per_s": 153600.0
+    },
+    {
+      "config": "GQA-4 INT4",
+      "seq_len": 8192,
+      "kv_bytes": 4194304.0,
+      "kv_gb": 0.0039,
+      "decode_time_us": 13.0,
+      "throughput_tokens_per_s": 76800.0
+    },
+    {
+      "config": "GQA-4 INT4",
+      "seq_len": 16384,
+      "kv_bytes": 8388608.0,
+      "kv_gb": 0.0078,
+      "decode_time_us": 26.0,
+      "throughput_tokens_per_s": 38400.0
+    },
+    {
+      "config": "GQA-4 INT4",
+      "seq_len": 32768,
+      "kv_bytes": 16777216.0,
+      "kv_gb": 0.0156,
+      "decode_time_us": 52.1,
+      "throughput_tokens_per_s": 19200.0
+    },
+    {
+      "config": "GQA-4 INT4",
+      "seq_len": 65536,
+      "kv_bytes": 33554432.0,
+      "kv_gb": 0.0312,
+      "decode_time_us": 104.2,
+      "throughput_tokens_per_s": 9600.0
+    },
+    {
+      "config": "MLA-512 FP16",
+      "seq_len": 1024,
+      "kv_bytes": 2097152,
+      "kv_gb": 0.002,
+      "decode_time_us": 6.5,
+      "throughput_tokens_per_s": 153600.0
+    },
+    {
+      "config": "MLA-512 FP16",
+      "seq_len": 4096,
+      "kv_bytes": 8388608,
+      "kv_gb": 0.0078,
+      "decode_time_us": 26.0,
+      "throughput_tokens_per_s": 38400.0
+    },
+    {
+      "config": "MLA-512 FP16",
+      "seq_len": 8192,
+      "kv_bytes": 16777216,
+      "kv_gb": 0.0156,
+      "decode_time_us": 52.1,
+      "throughput_tokens_per_s": 19200.0
+    },
+    {
+      "config": "MLA-512 FP16",
+      "seq_len": 16384,
+      "kv_bytes": 33554432,
+      "kv_gb": 0.0312,
+      "decode_time_us": 104.2,
+      "throughput_tokens_per_s": 9600.0
+    },
+    {
+      "config": "MLA-512 FP16",
+      "seq_len": 32768,
+      "kv_bytes": 67108864,
+      "kv_gb": 0.0625,
+      "decode_time_us": 208.3,
+      "throughput_tokens_per_s": 4800.0
+    },
+    {
+      "config": "MLA-512 FP16",
+      "seq_len": 65536,
+      "kv_bytes": 134217728,
+      "kv_gb": 0.125,
+      "decode_time_us": 416.7,
+      "throughput_tokens_per_s": 2400.0
+    },
+    {
+      "config": "MLA-512 FP8",
+      "seq_len": 1024,
+      "kv_bytes": 1048576,
+      "kv_gb": 0.001,
+      "decode_time_us": 3.3,
+      "throughput_tokens_per_s": 307200.0
+    },
+    {
+      "config": "MLA-512 FP8",
+      "seq_len": 4096,
+      "kv_bytes": 4194304,
+      "kv_gb": 0.0039,
+      "decode_time_us": 13.0,
+      "throughput_tokens_per_s": 76800.0
+    },
+    {
+      "config": "MLA-512 FP8",
+      "seq_len": 8192,
+      "kv_bytes": 8388608,
+      "kv_gb": 0.0078,
+      "decode_time_us": 26.0,
+      "throughput_tokens_per_s": 38400.0
+    },
+    {
+      "config": "MLA-512 FP8",
+      "seq_len": 16384,
+      "kv_bytes": 16777216,
+      "kv_gb": 0.0156,
+      "decode_time_us": 52.1,
+      "throughput_tokens_per_s": 19200.0
+    },
+    {
+      "config": "MLA-512 FP8",
+      "seq_len": 32768,
+      "kv_bytes": 33554432,
+      "kv_gb": 0.0312,
+      "decode_time_us": 104.2,
+      "throughput_tokens_per_s": 9600.0
+    },
+    {
+      "config": "MLA-512 FP8",
+      "seq_len": 65536,
+      "kv_bytes": 67108864,
+      "kv_gb": 0.0625,
+      "decode_time_us": 208.3,
+      "throughput_tokens_per_s": 4800.0
+    }
+  ],
+  "experiment3_dequant_overhead": [
+    {
+      "seq_len": 1024,
+      "fp16_decode_us": 29.0,
+      "int4_dequant_decode_us": 37.2,
+      "dequant_overhead_us": 8.2,
+      "overhead_pct": 28.2
+    },
+    {
+      "seq_len": 2048,
+      "fp16_decode_us": 43.0,
+      "int4_dequant_decode_us": 55.2,
+      "dequant_overhead_us": 12.2,
+      "overhead_pct": 28.4
+    },
+    {
+      "seq_len": 4096,
+      "fp16_decode_us": 70.9,
+      "int4_dequant_decode_us": 91.4,
+      "dequant_overhead_us": 20.4,
+      "overhead_pct": 28.8
+    },
+    {
+      "seq_len": 8192,
+      "fp16_decode_us": 126.8,
+      "int4_dequant_decode_us": 164.4,
+      "dequant_overhead_us": 37.5,
+      "overhead_pct": 29.6
+    },
+    {
+      "seq_len": 16384,
+      "fp16_decode_us": 238.7,
+      "int4_dequant_decode_us": 313.2,
+      "dequant_overhead_us": 74.5,
+      "overhead_pct": 31.2
+    }
+  ],
+  "experiment4_max_context": [
+    {
+      "config": "GQA-8 FP16",
+      "bytes_per_token": 4096,
+      "gb_per_1k_tokens": 0.0039,
+      "max_context_tokens": 2621440
+    },
+    {
+      "config": "GQA-8 FP8",
+      "bytes_per_token": 2048,
+      "gb_per_1k_tokens": 0.002,
+      "max_context_tokens": 5242880
+    },
+    {
+      "config": "GQA-8 INT4",
+      "bytes_per_token": 1024.0,
+      "gb_per_1k_tokens": 0.001,
+      "max_context_tokens": 10485760
+    },
+    {
+      "config": "GQA-4 FP16",
+      "bytes_per_token": 2048,
+      "gb_per_1k_tokens": 0.002,
+      "max_context_tokens": 5242880
+    },
+    {
+      "config": "GQA-4 FP8",
+      "bytes_per_token": 1024,
+      "gb_per_1k_tokens": 0.001,
+      "max_context_tokens": 10485760
+    },
+    {
+      "config": "GQA-4 INT4",
+      "bytes_per_token": 512.0,
+      "gb_per_1k_tokens": 0.0005,
+      "max_context_tokens": 20971520
+    },
+    {
+      "config": "MLA-512 FP16",
+      "bytes_per_token": 2048,
+      "gb_per_1k_tokens": 0.002,
+      "max_context_tokens": 5242880
+    },
+    {
+      "config": "MLA-512 FP8",
+      "bytes_per_token": 1024,
+      "gb_per_1k_tokens": 0.001,
+      "max_context_tokens": 10485760
+    }
+  ]
+}
