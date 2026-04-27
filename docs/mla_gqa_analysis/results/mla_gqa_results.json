@@ -1,0 +1,446 @@
+{
+  "experiment1_kv_memory": [
+    {
+      "config": "MHA-32",
+      "seq_len": 256,
+      "kv_elements": 2097152,
+      "kv_actual_mb": 4.0,
+      "peak_mb": 4.0
+    },
+    {
+      "config": "MHA-32",
+      "seq_len": 512,
+      "kv_elements": 4194304,
+      "kv_actual_mb": 8.0,
+      "peak_mb": 8.0
+    },
+    {
+      "config": "MHA-32",
+      "seq_len": 1024,
+      "kv_elements": 8388608,
+      "kv_actual_mb": 16.0,
+      "peak_mb": 16.0
+    },
+    {
+      "config": "MHA-32",
+      "seq_len": 2048,
+      "kv_elements": 16777216,
+      "kv_actual_mb": 32.0,
+      "peak_mb": 32.0
+    },
+    {
+      "config": "MHA-32",
+      "seq_len": 4096,
+      "kv_elements": 33554432,
+      "kv_actual_mb": 64.0,
+      "peak_mb": 64.0
+    },
+    {
+      "config": "MHA-32",
+      "seq_len": 8192,
+      "kv_elements": 67108864,
+      "kv_actual_mb": 128.0,
+      "peak_mb": 128.0
+    },
+    {
+      "config": "GQA-8",
+      "seq_len": 256,
+      "kv_elements": 524288,
+      "kv_actual_mb": 1.0,
+      "peak_mb": 1.0
+    },
+    {
+      "config": "GQA-8",
+      "seq_len": 512,
+      "kv_elements": 1048576,
+      "kv_actual_mb": 2.0,
+      "peak_mb": 2.0
+    },
+    {
+      "config": "GQA-8",
+      "seq_len": 1024,
+      "kv_elements": 2097152,
+      "kv_actual_mb": 4.0,
+      "peak_mb": 4.0
+    },
+    {
+      "config": "GQA-8",
+      "seq_len": 2048,
+      "kv_elements": 4194304,
+      "kv_actual_mb": 8.0,
+      "peak_mb": 8.0
+    },
+    {
+      "config": "GQA-8",
+      "seq_len": 4096,
+      "kv_elements": 8388608,
+      "kv_actual_mb": 16.0,
+      "peak_mb": 16.0
+    },
+    {
+      "config": "GQA-8",
+      "seq_len": 8192,
+      "kv_elements": 16777216,
+      "kv_actual_mb": 32.0,
+      "peak_mb": 32.0
+    },
+    {
+      "config": "GQA-4",
+      "seq_len": 256,
+      "kv_elements": 262144,
+      "kv_actual_mb": 0.5,
+      "peak_mb": 0.5
+    },
+    {
+      "config": "GQA-4",
+      "seq_len": 512,
+      "kv_elements": 524288,
+      "kv_actual_mb": 1.0,
+      "peak_mb": 1.0
+    },
+    {
+      "config": "GQA-4",
+      "seq_len": 1024,
+      "kv_elements": 1048576,
+      "kv_actual_mb": 2.0,
+      "peak_mb": 2.0
+    },
+    {
+      "config": "GQA-4",
+      "seq_len": 2048,
+      "kv_elements": 2097152,
+      "kv_actual_mb": 4.0,
+      "peak_mb": 4.0
+    },
+    {
+      "config": "GQA-4",
+      "seq_len": 4096,
+      "kv_elements": 4194304,
+      "kv_actual_mb": 8.0,
+      "peak_mb": 8.0
+    },
+    {
+      "config": "GQA-4",
+      "seq_len": 8192,
+      "kv_elements": 8388608,
+      "kv_actual_mb": 16.0,
+      "peak_mb": 16.0
+    },
+    {
+      "config": "MLA-512",
+      "seq_len": 256,
+      "kv_elements": 262144,
+      "kv_actual_mb": 0.5,
+      "peak_mb": 0.5
+    },
+    {
+      "config": "MLA-512",
+      "seq_len": 512,
+      "kv_elements": 524288,
+      "kv_actual_mb": 1.0,
+      "peak_mb": 1.0
+    },
+    {
+      "config": "MLA-512",
+      "seq_len": 1024,
+      "kv_elements": 1048576,
+      "kv_actual_mb": 2.0,
+      "peak_mb": 2.0
+    },
+    {
+      "config": "MLA-512",
+      "seq_len": 2048,
+      "kv_elements": 2097152,
+      "kv_actual_mb": 4.0,
+      "peak_mb": 4.0
+    },
+    {
+      "config": "MLA-512",
+      "seq_len": 4096,
+      "kv_elements": 4194304,
+      "kv_actual_mb": 8.0,
+      "peak_mb": 8.0
+    },
+    {
+      "config": "MLA-512",
+      "seq_len": 8192,
+      "kv_elements": 8388608,
+      "kv_actual_mb": 16.0,
+      "peak_mb": 16.0
+    }
+  ],
+  "experiment2_decode_latency": [
+    {
+      "config": "MHA-32",
+      "seq_len": 512,
+      "latency_us": 51.9,
+      "kv_bytes": 8388608,
+      "kv_mb": 8.0
+    },
+    {
+      "config": "MHA-32",
+      "seq_len": 1024,
+      "latency_us": 57.6,
+      "kv_bytes": 16777216,
+      "kv_mb": 16.0
+    },
+    {
+      "config": "MHA-32",
+      "seq_len": 2048,
+      "latency_us": 77.5,
+      "kv_bytes": 33554432,
+      "kv_mb": 32.0
+    },
+    {
+      "config": "MHA-32",
+      "seq_len": 4096,
+      "latency_us": 298.5,
+      "kv_bytes": 67108864,
+      "kv_mb": 64.0
+    },
+    {
+      "config": "MHA-32",
+      "seq_len": 8192,
+      "latency_us": 556.5,
+      "kv_bytes": 134217728,
+      "kv_mb": 128.0
+    },
+    {
+      "config": "GQA-8",
+      "seq_len": 512,
+      "latency_us": 52.0,
+      "kv_bytes": 2097152,
+      "kv_mb": 2.0
+    },
+    {
+      "config": "GQA-8",
+      "seq_len": 1024,
+      "latency_us": 58.2,
+      "kv_bytes": 4194304,
+      "kv_mb": 4.0
+    },
+    {
+      "config": "GQA-8",
+      "seq_len": 2048,
+      "latency_us": 78.5,
+      "kv_bytes": 8388608,
+      "kv_mb": 8.0
+    },
+    {
+      "config": "GQA-8",
+      "seq_len": 4096,
+      "latency_us": 298.3,
+      "kv_bytes": 16777216,
+      "kv_mb": 16.0
+    },
+    {
+      "config": "GQA-8",
+      "seq_len": 8192,
+      "latency_us": 555.8,
+      "kv_bytes": 33554432,
+      "kv_mb": 32.0
+    },
+    {
+      "config": "GQA-4",
+      "seq_len": 512,
+      "latency_us": 52.1,
+      "kv_bytes": 1048576,
+      "kv_mb": 1.0
+    },
+    {
+      "config": "GQA-4",
+      "seq_len": 1024,
+      "latency_us": 59.0,
+      "kv_bytes": 2097152,
+      "kv_mb": 2.0
+    },
+    {
+      "config": "GQA-4",
+      "seq_len": 2048,
+      "latency_us": 78.4,
+      "kv_bytes": 4194304,
+      "kv_mb": 4.0
+    },
+    {
+      "config": "GQA-4",
+      "seq_len": 4096,
+      "latency_us": 298.5,
+      "kv_bytes": 8388608,
+      "kv_mb": 8.0
+    },
+    {
+      "config": "GQA-4",
+      "seq_len": 8192,
+      "latency_us": 555.9,
+      "kv_bytes": 16777216,
+      "kv_mb": 16.0
+    },
+    {
+      "config": "MLA-512",
+      "seq_len": 512,
+      "latency_us": 181.2,
+      "kv_bytes": 1048576,
+      "kv_mb": 1.0
+    },
+    {
+      "config": "MLA-512",
+      "seq_len": 1024,
+      "latency_us": 210.0,
+      "kv_bytes": 2097152,
+      "kv_mb": 2.0
+    },
+    {
+      "config": "MLA-512",
+      "seq_len": 2048,
+      "latency_us": 410.0,
+      "kv_bytes": 4194304,
+      "kv_mb": 4.0
+    },
+    {
+      "config": "MLA-512",
+      "seq_len": 4096,
+      "latency_us": 998.1,
+      "kv_bytes": 8388608,
+      "kv_mb": 8.0
+    },
+    {
+      "config": "MLA-512",
+      "seq_len": 8192,
+      "latency_us": 2011.6,
+      "kv_bytes": 16777216,
+      "kv_mb": 16.0
+    }
+  ],
+  "experiment3_prefill_latency": [
+    {
+      "config": "MHA-32",
+      "seq_len": 256,
+      "prefill_us": 76.2
+    },
+    {
+      "config": "MHA-32",
+      "seq_len": 512,
+      "prefill_us": 119.7
+    },
+    {
+      "config": "MHA-32",
+      "seq_len": 1024,
+      "prefill_us": 301.1
+    },
+    {
+      "config": "MHA-32",
+      "seq_len": 2048,
+      "prefill_us": 1053.7
+    },
+    {
+      "config": "MHA-32",
+      "seq_len": 4096,
+      "prefill_us": 4561.8
+    },
+    {
+      "config": "GQA-8",
+      "seq_len": 256,
+      "prefill_us": 70.8
+    },
+    {
+      "config": "GQA-8",
+      "seq_len": 512,
+      "prefill_us": 138.7
+    },
+    {
+      "config": "GQA-8",
+      "seq_len": 1024,
+      "prefill_us": 315.6
+    },
+    {
+      "config": "GQA-8",
+      "seq_len": 2048,
+      "prefill_us": 1180.4
+    },
+    {
+      "config": "GQA-8",
+      "seq_len": 4096,
+      "prefill_us": 4732.9
+    },
+    {
+      "config": "GQA-4",
+      "seq_len": 256,
+      "prefill_us": 71.9
+    },
+    {
+      "config": "GQA-4",
+      "seq_len": 512,
+      "prefill_us": 131.4
+    },
+    {
+      "config": "GQA-4",
+      "seq_len": 1024,
+      "prefill_us": 319.6
+    },
+    {
+      "config": "GQA-4",
+      "seq_len": 2048,
+      "prefill_us": 1169.8
+    },
+    {
+      "config": "GQA-4",
+      "seq_len": 4096,
+      "prefill_us": 4600.1
+    },
+    {
+      "config": "MLA-512",
+      "seq_len": 256,
+      "prefill_us": 201.7
+    },
+    {
+      "config": "MLA-512",
+      "seq_len": 512,
+      "prefill_us": 246.8
+    },
+    {
+      "config": "MLA-512",
+      "seq_len": 1024,
+      "prefill_us": 446.2
+    },
+    {
+      "config": "MLA-512",
+      "seq_len": 2048,
+      "prefill_us": 1569.8
+    },
+    {
+      "config": "MLA-512",
+      "seq_len": 4096,
+      "prefill_us": 5201.6
+    }
+  ],
+  "experiment4_mla_projection": [
+    {
+      "seq_len": 512,
+      "projection_us": 93.9,
+      "direct_access_us": 6.6,
+      "overhead_us": 87.2,
+      "overhead_pct": 1317.6
+    },
+    {
+      "seq_len": 1024,
+      "projection_us": 114.6,
+      "direct_access_us": 6.6,
+      "overhead_us": 108.0,
+      "overhead_pct": 1632.4
+    },
+    {
+      "seq_len": 2048,
+      "projection_us": 168.1,
+      "direct_access_us": 6.5,
+      "overhead_us": 161.6,
+      "overhead_pct": 2472.9
+    },
+    {
+      "seq_len": 4096,
+      "projection_us": 313.7,
+      "direct_access_us": 6.6,
+      "overhead_us": 307.1,
+      "overhead_pct": 4676.2
+    }
+  ]
+}
