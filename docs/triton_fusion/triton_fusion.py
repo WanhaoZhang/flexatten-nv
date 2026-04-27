@@ -352,7 +352,7 @@ def experiment4_rmsnorm_standalone():
     print("="*60)
 
     @triton.jit
-    def rmsnorm_kernel(X_ptr, W_ptr, OUT_PTR, N, D, eps: tl.constexpr, BLOCK: tl.constexpr):
+    def rmsnorm_kernel(X_ptr, W_ptr, OUT_ptr, N, D, eps: tl.constexpr, BLOCK: tl.constexpr):
         row = tl.program_id(0)
         cols = tl.arange(0, BLOCK)
         mask = cols < D
