@@ -41,6 +41,8 @@ def make_nsa_mask(seq_len, sink_size, window_size, block_size, num_selected_bloc
     """
     # Pre-compute a block selection matrix as a tensor (avoids .item() in vmap)
     # selection_matrix[q_block, kv_block] = 1 if dynamically selected
+    num_blocks = (seq_len + block_size - 1) // block_size
+    torch.manual_seed(seed)
     selection_matrix = torch.zeros(num_blocks, num_blocks, dtype=torch.bool)
     for q_block in range(num_blocks):
         q_start = q_block * block_size

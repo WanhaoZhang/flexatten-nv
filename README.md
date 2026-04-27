@@ -113,6 +113,13 @@ docs/
 | [Paged Attention (中文)](docs/paged_attention/report_cn.md) | vLLM 核心：非连续 KV 存储、内存碎片消除 (PT 2.6.0 L4 重测) | 8 |
 | [Paged Attention (English)](docs/paged_attention/report_en.md) | Paged Attention detailed analysis (PT 2.6.0 L4 re-tested) | 8 |
 
+### 实验项目
+
+| 报告 | 内容 | 图表 |
+|------|------|------|
+| [FlexAttention Backward Benchmark](docs/backward_benchmark/report.md) | 训练闭环分析：Forward+Backward 延迟、峰值显存、编译开销、4 种 Mask 模式、SDPA 对比 | 6 |
+| [NSA 稀疏偏差分析](docs/nsa_deviation/) | Sink+Local+Dynamic Block 混合稀疏模式、理论稀疏率 vs 实际加速比偏差曲线 | - |
+
 ---
 
 ## 快速复现
