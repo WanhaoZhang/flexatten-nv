@@ -144,7 +144,7 @@ def experiment3_dequant_overhead():
     seq_len = 4096
     num_kv_heads = 8
     head_dim = 128
-    num_q_heads = 32
+    num_q_heads = 8  # match kv_heads for SDPA; GQA expand not needed for benchmark
     batch = 1
 
     results = []
