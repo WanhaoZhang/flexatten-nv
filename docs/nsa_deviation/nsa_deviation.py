@@ -39,52 +39,42 @@ def make_nsa_mask(seq_len, sink_size, window_size, block_size, num_selected_bloc
         num_selected_blocks: How many additional blocks to select dynamically
         seed: Random seed for block selection reproducibility
     """
-    # Pre-compute which blocks each query position selects
-    # This is done at mask creation time (simulates "compile-time" selection)
-    torch.manual_seed(seed)
-    num_blocks = (seq_len + block_size - 1) // block_size
-    # For each query block, pre-select `num_selected_blocks` additional KV blocks
-    selected = {}
+    # Pre-compute a block selection matrix as a tensor (avoids .item() in vmap)
+    # selection_matrix[q_block, kv_block] = 1 if dynamically selected
+    selection_matrix = torch.zeros(num_blocks, num_blocks, dtype=torch.bool)
     for q_block in range(num_blocks):
         q_start = q_block * block_size
         q_end = min(q_start + block_size, seq_len)
-        # Don't select blocks already covered by local window
         local_start = max(0, q_end - window_size)
         available = []
         for kb in range(num_blocks):
             kb_start = kb * block_size
             kb_end = min(kb_start + block_size, seq_len)
-            # Skip sink blocks (always visible)
             if kb_end <= sink_size:
                 continue
-            # Skip local window blocks (always visible)
             if kb_start >= local_start and kb_end <= q_end:
                 continue
-            # Skip future blocks (causal)
             if kb_start > q_end:
                 continue
             available.append(kb)
         if len(available) > num_selected_blocks:
             idx = torch.randperm(len(available))[:num_selected_blocks]
-            selected[q_block] = [available[i] for i in idx]
+            for i in idx:
+                selection_matrix[q_block, available[i]] = True
         else:
-            selected[q_block] = available
+            for kb in available:
+                selection_matrix[q_block, kb] = True
+
+    # Store as global buffer for mask function access
+    selection_buf = selection_matrix.cuda()
 
     def _mask(b, h, q_idx, kv_idx):
-        # Rule 1: Global sink - first sink_size tokens always visible
         is_sink = kv_idx < sink_size
-        # Rule 2: Causal
         is_causal = q_idx >= kv_idx
-        # Rule 3: Local window
         is_local = (q_idx >= kv_idx) & (q_idx - kv_idx < window_size)
-        # Rule 4: Dynamic block selection
         q_block = q_idx // block_size
         kv_block = kv_idx // block_size
-        # Use contiguous Tensor for block lookup
-        is_dynamic = torch.zeros_like(q_idx, dtype=torch.bool)
-        if q_block.item() in selected:
-            for sel_block in selected[q_block.item()]:
-                is_dynamic = is_dynamic | (kv_block == sel_block)
+        is_dynamic = selection_buf[q_block, kv_block]
         return (is_sink | is_local | is_dynamic) & is_causal
 
     return _mask
@@ -158,26 +148,45 @@ def experiment1_sparsity_vs_speedup():
 
     results = []
 
-    # Baseline: dense causal attention time
-    print("  Measuring dense baseline...")
+    # Baseline: FlexAttention with causal (dense within FlexAttention framework)
+    print("  Measuring FlexAttention dense baseline...")
     q_base = torch.randn(batch_size, num_heads, seq_len, head_dim, device='cuda', dtype=torch.float16)
     k_base = torch.randn(batch_size, num_heads, seq_len, head_dim, device='cuda', dtype=torch.float16)
     v_base = torch.randn(batch_size, num_heads, seq_len, head_dim, device='cuda', dtype=torch.float16)
 
-    # Dense SDPA baseline
+    # FlexAttention causal baseline
+    def causal_fn(b, h, q_idx, kv_idx):
+        return q_idx >= kv_idx
+
+    causal_mask = create_block_mask(causal_fn, batch_size, num_heads, seq_len, seq_len,
+                                     device='cuda', _compile=True)
+    # Warmup
     for _ in range(3):
-        F.scaled_dot_product_attention(q_base, k_base, v_base, is_causal=True)
+        flex_attention(q_base, k_base, v_base, block_mask=causal_mask)
     torch.cuda.synchronize()
 
     times_dense = []
     for _ in range(10):
         torch.cuda.synchronize()
         t0 = time.perf_counter()
-        out = F.scaled_dot_product_attention(q_base, k_base, v_base, is_causal=True)
+        out = flex_attention(q_base, k_base, v_base, block_mask=causal_mask)
         torch.cuda.synchronize()
         times_dense.append((time.perf_counter() - t0) * 1000)
     dense_ms = sum(times_dense) / len(times_dense)
-    print(f"  Dense SDPA baseline: {dense_ms:.2f}ms")
+    print(f"  FlexAttention dense causal baseline: {dense_ms:.2f}ms")
+
+    # Also measure SDPA for reference
+    times_sdpa = []
+    for _ in range(10):
+        torch.cuda.synchronize()
+        t0 = time.perf_counter()
+        F.scaled_dot_product_attention(q_base, k_base, v_base, is_causal=True)
+        torch.cuda.synchronize()
+        times_sdpa.append((time.perf_counter() - t0) * 1000)
+    sdpa_ms = sum(times_sdpa) / len(times_sdpa)
+    print(f"  SDPA FlashAttention reference: {sdpa_ms:.2f}ms")
+
+    del causal_mask
 
     # Now test each NSA config
     for cfg in configs:
@@ -351,25 +360,30 @@ def experiment3_deviation_curve():
     num_heads = 16  # fewer heads for faster iteration
     head_dim = 64
 
-    # Dense baseline
+    # Dense baseline: FlexAttention causal
     q_base = torch.randn(batch_size, num_heads, seq_len, head_dim, device='cuda', dtype=torch.float16)
     k_base = torch.randn(batch_size, num_heads, seq_len, head_dim, device='cuda', dtype=torch.float16)
     v_base = torch.randn(batch_size, num_heads, seq_len, head_dim, device='cuda', dtype=torch.float16)
 
-    # Warmup SDPA
+    # FlexAttention causal baseline
+    def causal_fn(b, h, q_idx, kv_idx):
+        return q_idx >= kv_idx
+    causal_mask = create_block_mask(causal_fn, batch_size, num_heads, seq_len, seq_len,
+                                     device='cuda', _compile=True)
     for _ in range(3):
-        F.scaled_dot_product_attention(q_base, k_base, v_base, is_causal=True)
+        flex_attention(q_base, k_base, v_base, block_mask=causal_mask)
     torch.cuda.synchronize()
 
     times_dense = []
     for _ in range(10):
         torch.cuda.synchronize()
         t0 = time.perf_counter()
-        F.scaled_dot_product_attention(q_base, k_base, v_base, is_causal=True)
+        flex_attention(q_base, k_base, v_base, block_mask=causal_mask)
         torch.cuda.synchronize()
         times_dense.append((time.perf_counter() - t0) * 1000)
     dense_ms = sum(times_dense) / len(times_dense)
-    print(f"  Dense baseline: {dense_ms:.2f}ms")
+    print(f"  FlexAttention dense baseline: {dense_ms:.2f}ms")
+    del causal_mask
 
     # Sweep window sizes (simplest way to control sparsity)
     # For causal + sliding window: sparsity = 1 - window/seq_len
