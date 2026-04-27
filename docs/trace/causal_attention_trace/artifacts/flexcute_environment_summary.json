@@ -1,0 +1,21 @@
+{
+  "created_at": "2026-04-27",
+  "conda_env": "flexcute",
+  "torch": "2.13.0.dev20260427+cu126",
+  "torch_file": "/home/zhangwh/miniconda3/envs/flexcute/lib/python3.11/site-packages/torch/__init__.py",
+  "cuda": "12.6",
+  "cuda_available": true,
+  "gpu": "NVIDIA L4",
+  "capability": [
+    8,
+    9
+  ],
+  "modules": {
+    "torch": "/home/zhangwh/miniconda3/envs/flexcute/lib/python3.11/site-packages/torch/__init__.py",
+    "triton": "/home/zhangwh/miniconda3/envs/flexcute/lib/python3.11/site-packages/triton/__init__.py",
+    "cutlass.cute": "/home/zhangwh/miniconda3/envs/flexcute/lib/python3.11/site-packages/nvidia_cutlass_dsl/python_packages/cutlass/cute/__init__.py",
+    "flash_attn.cute": "/home/zhangwh/flash-attention/flash_attn/cute/__init__.py",
+    "torch._inductor.codegen.cutedsl.cutedsl_template": "/home/zhangwh/miniconda3/envs/flexcute/lib/python3.11/site-packages/torch/_inductor/codegen/cutedsl/cutedsl_template.py",
+    "torch._inductor.kernel.flex.flex_flash_attention": "/home/zhangwh/miniconda3/envs/flexcute/lib/python3.11/site-packages/torch/_inductor/kernel/flex/flex_flash_attention.py"
+  }
+}

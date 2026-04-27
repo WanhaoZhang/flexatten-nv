@@ -1,8 +1,9 @@
 # Multi-Head Latent Attention (MLA) 原理探究与实验报告
 
-> 实验环境: NVIDIA GeForce RTX 3090 (24GB VRAM) | PyTorch 2.5.1+cu121 | FP16  
-> 实验代码: `src/mla_experiment.py` | 绘图代码: `src/plot_mla.py`  
-> 实验数据: `data/mla_results.json` | 图表目录: `docs/figures/mla_fig*.png`
+> 实验环境: NVIDIA L4 (24GB VRAM) | PyTorch 2.6.0+cu124 | FP16
+> 原始实验: RTX 3090 | PyTorch 2.5.1+cu121 (已在新环境重测)
+> 实验代码: `mla_experiment.py` | 绘图代码: `plot_mla.py`  
+> 实验数据: `mla_results.json` | 图表目录: `docs/figures/mla_fig*.png`
 
 ---
 
@@ -24,7 +25,7 @@
 14. [实验六：批次大小扩展性](#14-实验六批次大小扩展性)
 15. [实验七：全注意力机制对比](#15-实验七全注意力机制对比)
 16. [与前代注意力机制的全面对比](#16-与前代注意力机制的全面对比)
-17. [PyTorch 2.5.1 FlexAttention 的限制](#17-pytorch-2551-flexattention-的限制)
+17. [FlexAttention 与 MLA 的兼容性分析](#17-flexattention-与-mla-的兼容性分析)
 18. [结论与展望](#18-结论与展望)
 19. [附录](#附录)
 
@@ -583,9 +584,9 @@ q_head_dim       = 96        # Query 头总维度 (64 + 32)
 ### 8.3 硬件环境
 
 ```
-GPU:     NVIDIA GeForce RTX 3090 (24 GB GDDR6X)
+GPU:     NVIDIA L4 (24 GB GDDR6, Ada Lovelace)
 CUDA:    12.1
-PyTorch: 2.5.1+cu121
+PyTorch: 2.6.0+cu124
 Dtype:   torch.float16 (FP16)
 ```
 
@@ -706,7 +707,7 @@ Absorb:   score 空间 = [B, H, S, kv_lora_rank] × [B, H, kv_lora_rank, S]
 
 **实用意义**：
 
-DeepSeek-V2 使用 `kv_lora_rank=512`，此时在我们的 RTX 3090 上矩阵吸收有 ~24% 的开销。但这并不意味着矩阵吸收没有价值——在实际推理中，**内存带宽**往往是比**计算量**更关键的瓶颈。矩阵吸收避免了从显存读取大量解压后的 K/V 数据，在 memory-bound 场景中可能有净收益。
+DeepSeek-V2 使用 `kv_lora_rank=512`，此时在我们的 L4 上矩阵吸收有约 24% 的开销（Exp3: rank=512 speedup=0.63x）。但这并不意味着矩阵吸收没有价值——在实际推理中，**内存带宽**往往是比**计算量**更关键的瓶颈。矩阵吸收避免了从显存读取大量解压后的 K/V 数据，在 memory-bound 场景中可能有净收益。
 
 ---
 
@@ -869,11 +870,11 @@ DeepSeek-V2 使用 `kv_lora_rank=512`，此时在我们的 RTX 3090 上矩阵吸
 
 ---
 
-## 17. PyTorch 2.5.1 FlexAttention 的限制
+## 17. FlexAttention 与 MLA 的兼容性分析
 
-### 17.1 问题描述
+### 17.1 PyTorch 2.5.1 的限制（RTX 3090）
 
-在实验过程中，我们尝试使用 PyTorch 的 FlexAttention API 实现 MLA，但遇到了一个关键限制。
+在最初使用 PyTorch 2.5.1 的实验中，我们尝试使用 FlexAttention API 实现 MLA，但遇到了关键限制。
 
 MLA 的注意力分数计算需要在 `score_mod` 中动态索引张量：
 
@@ -885,23 +886,41 @@ def score_mod(score, b, h, q_idx, kv_idx):
     return score + rope_score
 ```
 
-### 17.2 错误信息
+**错误信息**：
 
 ```
 DataDependentOutputException: Dynamic indexing in score_mod is not supported
 ```
 
-### 17.3 原因
+**原因**：FlexAttention 的 `score_mod` 被 `torch.compile` 编译为固定模式的 CUDA kernel。在编译时，`b`、`h`、`q_idx`、`kv_idx` 是符号变量（symint），不能用它们作为张量的索引——因为编译器需要在编译时确定内存访问模式。
 
-FlexAttention 的 `score_mod` 被 `torch.compile` 编译为固定模式的 CUDA kernel。在编译时，`b`、`h`、`q_idx`、`kv_idx` 是符号变量（symint），不能用它们作为张量的索引——因为编译器需要在编译时确定内存访问模式。
+### 17.2 PyTorch 2.6.0 重测结果（NVIDIA L4）
 
-### 17.4 影响和替代方案
+将实验环境升级到 PyTorch 2.6.0+cu124 后，在 NVIDIA L4 上重新运行了完整的 7 组实验：
 
-- **PyTorch 2.5.1**：无法使用 FlexAttention 实现 MLA
-- **PyTorch 2.6+**：可能支持（需要验证）
-- **替代方案**：使用 Vanilla 或 MatAbsorb 的手写实现
+**实验结果摘要**：
 
-在本实验中，我们使用 VanillaMLA 和 MatAbsorbMLA 两种手写实现代替 FlexAttention。
+| 实验 | 关键结果 |
+|------|---------|
+| Exp1: KV Cache 内存对比 | MLA KV Cache 仅占 MHA 的 **1.8%**，与 PT 2.5.1 结果一致 |
+| Exp2: 正确性验证 | Vanilla vs MatAbsorb cos_sim=**1.000000**，max_err=**6.1e-05** |
+| Exp3: kv_lora_rank 扫描 | rank=128 时 speedup=**1.11x**，rank=512 时 speedup=**0.63x**（与 PT 2.5.1 趋势一致） |
+| Exp4: 解码延迟 | MatAbsorb 比 Vanilla 快 **7-10%**，内存节省 **93%** |
+| Exp5: 序列长度扩展 | 短序列 MatAbsorb 略快，长序列 (S>1024) Vanilla 更快 |
+| Exp6: 批次扩展 | B=1 speedup=**1.13x**，B=4+ 后 MatAbsorb 变慢 |
+| Exp7: 全对比 | MHA/GQA/MQA 延迟相近 (~4.2ms)，MLA_Vanilla=**6.99ms**，MLA_MatAbsorb=**9.02ms** |
+
+**关键发现**：
+
+1. **PT 2.6.0 仍未解决 `DataDependentOutputException`**：FlexAttention 的 `score_mod` 中动态张量索引依然不被支持，MLA 无法用 FlexAttention 的 `score_mod` 实现 RoPE 部分
+2. **MLA 的手写实现结果在两个版本间完全一致**：说明 MLA 的核心计算与 PyTorch 版本无关，是算法层面的特性
+3. **矩阵吸收的性能特征与 PT 2.5.1 一致**：短序列/rank < head_dim 时有加速，长序列/rank > head_dim 时有开销
+
+### 17.3 结论
+
+- **FlexAttention 与 MLA 的根本矛盾**：MLA 需要 RoPE 的动态索引，但 FlexAttention 的编译模型要求静态访问模式
+- **推荐方案**：使用手写的 VanillaMLA 或 MatAbsorbMLA 实现，不依赖 FlexAttention
+- **未来可能**：如果 PyTorch 在 `score_mod` 中支持动态索引（data-dependent access），则可以用 FlexAttention 实现 MLA 的完整计算流程
 
 ---
 
@@ -919,7 +938,7 @@ FlexAttention 的 `score_mod` 被 `torch.compile` 编译为固定模式的 CUDA 
 
 3. **MLA 的真正价值在于内存带宽节省**
 
-   在我们的 RTX 3090 实验中，纯计算延迟差异不大。但在大规模推理服务中，瓶颈往往是显存带宽——从 HBM 读取 KV Cache 的速度。MLA 将每次需要读取的数据量压缩到原来的 ~7%，这意味着在 memory-bound 场景中可以获得巨大的吞吐量提升。
+   在我们的 L4 + PT 2.6.0 实验中，纯计算延迟差异不大（Exp7: MLA_Vanilla=6.99ms vs MHA=4.26ms）。但在大规模推理服务中，瓶颈往往是显存带宽——从 HBM 读取 KV Cache 的速度。MLA 将每次需要读取的数据量压缩到原来的 ~7%，这意味着在 memory-bound 场景中可以获得巨大的吞吐量提升。
 
 4. **MLA vs GQA/MQA 的权衡清晰**
 

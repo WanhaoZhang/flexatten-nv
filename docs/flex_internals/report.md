@@ -1,8 +1,8 @@
 # FlexAttention 原理深度剖析与性能实验报告
 
 > 实验环境: NVIDIA L4 (24GB) | PyTorch 2.6.0+cu124 | FP16
-> 实验代码: [`src/flex_internals_experiment.py`](../src/flex_internals_experiment.py) | 绘图: [`src/plot_flex_internals.py`](../src/plot_flex_internals.py)
-> 实验数据: [`data/flex_internals_results.json`](../data/flex_internals_results.json) | 图表: [`docs/figures/flex_fig*.png`](figures/)
+> 实验代码: [绘图脚本](plot_flex_internals.py)
+> 实验数据: [实验数据](flex_internals_results.json) | 图表: [`docs/figures/flex_fig*.png`](figures/)
 > 实验总耗时: ~15 分钟 | 最后更新: 2026-04-27
 
 ---

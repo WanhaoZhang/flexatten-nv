@@ -1,6 +1,7 @@
 # Paged Attention: From Pain Point to FlexAttention Solution
 
-> RTX 3090 (24GB) | PyTorch 2.5.1+cu121 | Triton 3.1.0 | Based on [attention-gym](https://github.com/meta-pytorch/attention-gym)
+> NVIDIA L4 (24GB) | PyTorch 2.6.0+cu124 | Triton 3.2.0 | Based on [attention-gym](https://github.com/meta-pytorch/attention-gym)
+> Original: RTX 3090 | PyTorch 2.5.1 (re-tested on L4 + PT 2.6.0)
 
 ---
 
@@ -229,8 +230,8 @@ def flex_paged_attention(query, mgr, batch_indices, seq_lengths, mask_mod=None):
 
 | Item | Value |
 |------|-------|
-| GPU | NVIDIA RTX 3090, 24GB VRAM |
-| PyTorch | 2.5.1+cu121 |
+| GPU | NVIDIA L4, 24GB VRAM (Ada Lovelace) |
+| PyTorch | 2.6.0+cu124 |
 | Triton | 3.1.0 |
 | Page Size | 128 (FlexAttention BLOCK_SIZE constraint) |
 | Data Type | float16 |
@@ -430,15 +431,15 @@ conda activate tiny_moe
 cd ~/zwhllm/flexatten-nv
 
 # Run experiments (~10 min)
-python src/paged_attention_experiment.py
+python paged_attention_experiment.py
 
 # Generate figures
-python src/plot_paged_attention.py
+python plot_paged_attention.py
 
-# Results: data/paged_attention_results.json
+# Results: paged_attention_results.json
 # Figures: docs/figures/paged_*.png
 ```
 
 ---
 
-*Generated: 2026-04-26 | RTX 3090 | PyTorch 2.5.1 | 7 Experiments | 8 Figures*
+*Updated: 2026-04-27 | NVIDIA L4 | PyTorch 2.6.0 | 7 Experiments | 8 Figures*

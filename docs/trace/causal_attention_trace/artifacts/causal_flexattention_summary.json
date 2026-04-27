@@ -1,0 +1,362 @@
+{
+  "environment": {
+    "python": "3.11.15",
+    "platform": "Linux-5.10.0-39-cloud-amd64-x86_64-with-glibc2.31",
+    "torch_version": "2.6.0+cu124",
+    "torch_file": "/home/zhangwh/miniconda3/envs/flexatten/lib/python3.11/site-packages/torch/__init__.py",
+    "cuda_available": true,
+    "gpu": {
+      "name": "NVIDIA L4",
+      "capability": [
+        8,
+        9
+      ],
+      "driver_runtime_cuda": "12.4"
+    },
+    "module_specs": {
+      "flash_attn": null,
+      "flash_attn.cute": "ModuleNotFoundError: No module named 'flash_attn'",
+      "cutlass": null,
+      "cutlass.cute": "ModuleNotFoundError: No module named 'cutlass'",
+      "triton": "/home/zhangwh/miniconda3/envs/flexatten/lib/python3.11/site-packages/triton/__init__.py"
+    },
+    "flex_attention_source": "/home/zhangwh/miniconda3/envs/flexatten/lib/python3.11/site-packages/torch/nn/attention/flex_attention.py",
+    "flex_attention_signature": "(query: torch.Tensor, key: torch.Tensor, value: torch.Tensor, score_mod: Optional[Callable[[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor], torch.Tensor]] = None, block_mask: Optional[torch.nn.attention.flex_attention.BlockMask] = None, scale: Optional[float] = None, enable_gqa: bool = False, return_lse: bool = False, kernel_options: Optional[Dict[str, Any]] = None) -> Union[torch.Tensor, Tuple[torch.Tensor, torch.Tensor]]",
+    "flex_attention_has_backend_option_in_python_source": false
+  },
+  "default_triton_flexattention_run": {
+    "shape": [
+      1,
+      2,
+      128,
+      64
+    ],
+    "dtype": "torch.float16",
+    "kernel_options": {},
+    "compile_and_first_run_s": 4.480015301000094,
+    "warm_run_s": 0.00021459699928527698,
+    "max_abs_diff_vs_dense_reference": 0.0009765625,
+    "mean_abs_diff_vs_dense_reference": 2.8092363208997995e-05,
+    "max_abs_diff_between_compiled_runs": 0.0,
+    "block_mask": {
+      "kv_num_blocks_shape": [
+        1,
+        2,
+        1
+      ],
+      "kv_indices_shape": [
+        1,
+        2,
+        1,
+        1
+      ],
+      "full_kv_num_blocks_is_none": false,
+      "BLOCK_SIZE": [
+        128,
+        128
+      ]
+    }
+  },
+  "flash_cutedsl_probe": {
+    "requested_kernel_options": {
+      "BACKEND": "FLASH"
+    },
+    "flash_attn_cute_importable": true,
+    "installed_flex_attention_signature": "(query: torch.Tensor, key: torch.Tensor, value: torch.Tensor, score_mod: Optional[Callable[[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor], torch.Tensor]] = None, block_mask: Optional[torch.nn.attention.flex_attention.BlockMask] = None, scale: Optional[float] = None, enable_gqa: bool = False, return_lse: bool = False, kernel_options: Optional[Dict[str, Any]] = None) -> Union[torch.Tensor, Tuple[torch.Tensor, torch.Tensor]]",
+    "installed_python_source_mentions_BACKEND": false,
+    "status": "failed_or_unavailable",
+    "error_type": "BackendCompilerFailed",
+    "error": [
+      "backend='inductor' raised:",
+      "SubprocException: An exception occurred in a subprocess:",
+      "",
+      "Traceback (most recent call last):",
+      "  File \"/home/zhangwh/miniconda3/envs/flexatten/lib/python3.11/site-packages/torch/_inductor/compile_worker/subproc_pool.py\", line 279, in do_job",
+      "    result = job()",
+      "             ^^^^^",
+      "  File \"/home/zhangwh/miniconda3/envs/flexatten/lib/python3.11/site-packages/torch/_inductor/runtime/compile_tasks.py\", line 68, in _worker_compile_triton"
+    ]
+  },
+  "torchinductor_cache_root": "/tmp/torchinductor_zhangwh",
+  "generated_code_hints": [
+    {
+      "path": "/tmp/torchinductor_zhangwh/tq/ctqwer2hwtflrvmbfufbidquuv3htvioqmaaaz4imzd2benrmswc.py",
+      "matches": [
+        {
+          "line": 6,
+          "text": "from torch._inductor.runtime import triton_helpers, triton_heuristics"
+        },
+        {
+          "line": 7,
+          "text": "from torch._inductor.runtime.triton_helpers import libdevice, math as tl_math"
+        },
+        {
+          "line": 10,
+          "text": "@triton_heuristics.template("
+        },
+        {
+          "line": 13,
+          "text": "    triton_meta={'signature': {'arg_Q': '*fp16', 'arg_K': '*fp16', 'arg_V': '*fp16', 'arg_LSE': '*fp32', 'arg_KV_NUM_BLKS': '*i32', 'arg_KV_IDX': '*i32', 'arg_FULL_KV_NUM_BLKS': '*i32', 'arg_FULL_KV_IDX': '*i32', 'out_ptr0': '*fp16'}, 'devi"
+        },
+        {
+          "line": 14,
+          "text": "    inductor_meta={'kernel_name': 'triton_tem_fused_0', 'backend_hash': 'ED7BC4A578B1B37BE2C689588CFF1A6014268A470D67CB3993F345DBC09C4E7C', 'are_deterministic_algorithms_enabled': False, 'assert_indirect_indexing': True, 'autotune_local_cac"
+        },
+        {
+          "line": 16,
+          "text": "@triton.jit"
+        },
+        {
+          "line": 17,
+          "text": "def triton_tem_fused_0(arg_Q, arg_K, arg_V, arg_LSE, arg_KV_NUM_BLKS, arg_KV_IDX, arg_FULL_KV_NUM_BLKS, arg_FULL_KV_IDX, out_ptr0):"
+        },
+        {
+          "line": 250,
+          "text": "@triton.jit"
+        },
+        {
+          "line": 334,
+          "text": "@triton.jit"
+        },
+        {
+          "line": 350,
+          "text": "@triton.jit"
+        }
+      ]
+    },
+    {
+      "path": "/tmp/torchinductor_zhangwh/jo/cjobrshugelg4owymnpe4od6lvzvdyivqy7mg6zuidolbu3g2x5u.py",
+      "matches": [
+        {
+          "line": 16,
+          "text": "import torch._inductor.kernel.flex_attention"
+        },
+        {
+          "line": 20,
+          "text": "from torch._inductor.runtime.triton_heuristics import ("
+        },
+        {
+          "line": 44,
+          "text": "# Topologically Sorted Source Nodes: [flex_attention], Original ATen: []"
+        },
+        {
+          "line": 46,
+          "text": "#   flex_attention => flex_attention"
+        },
+        {
+          "line": 48,
+          "text": "#   %flex_attention : [num_users=1] = call_function[target=torch.ops.higher_order.flex_attention](args = (%arg0_1, %arg1_1, %arg2_1, %sdpa_score0, (128, 128, %arg4_1, %arg3_1, %arg5_1, %arg6_1, %arg7_1, %arg8_1, %arg9_1, %arg10_1, 128, 128,"
+        },
+        {
+          "line": 49,
+          "text": "triton_tem_fused_0 = async_compile.triton('triton_tem_fused_0', '''"
+        },
+        {
+          "line": 54,
+          "text": "from torch._inductor.runtime import triton_helpers, triton_heuristics"
+        },
+        {
+          "line": 55,
+          "text": "from torch._inductor.runtime.triton_helpers import libdevice, math as tl_math"
+        },
+        {
+          "line": 58,
+          "text": "@triton_heuristics.template("
+        },
+        {
+          "line": 61,
+          "text": "    triton_meta={'signature': {'arg_Q': '*fp16', 'arg_K': '*fp16', 'arg_V': '*fp16', 'arg_LSE': '*fp32', 'arg_KV_NUM_BLKS': '*i32', 'arg_KV_IDX': '*i32', 'arg_FULL_KV_NUM_BLKS': '*i32', 'arg_FULL_KV_IDX': '*i32', 'out_ptr0': '*fp16'}, 'devi"
+        },
+        {
+          "line": 62,
+          "text": "    inductor_meta={'kernel_name': 'triton_tem_fused_0', 'backend_hash': 'ED7BC4A578B1B37BE2C689588CFF1A6014268A470D67CB3993F345DBC09C4E7C', 'are_deterministic_algorithms_enabled': False, 'assert_indirect_indexing': True, 'autotune_local_cac"
+        },
+        {
+          "line": 64,
+          "text": "@triton.jit"
+        }
+      ]
+    },
+    {
+      "path": "/tmp/torchinductor_zhangwh/ld/cldcbqjjeryjrad3mhbuwpayckayd4nxkhytxlvi54ktj7mvpt2m.py",
+      "matches": [
+        {
+          "line": 7,
+          "text": "from torch._inductor.runtime import triton_helpers, triton_heuristics"
+        },
+        {
+          "line": 8,
+          "text": "from torch._inductor.runtime.triton_helpers import libdevice, math as tl_math"
+        },
+        {
+          "line": 11,
+          "text": "@triton_heuristics.template("
+        },
+        {
+          "line": 14,
+          "text": "    triton_meta={'signature': {'arg_Q': '*fp16', 'arg_K': '*fp16', 'arg_V': '*fp16', 'arg_LSE': '*fp32', 'arg_KV_NUM_BLKS': '*i32', 'arg_KV_IDX': '*i32', 'arg_FULL_KV_NUM_BLKS': '*i32', 'arg_FULL_KV_IDX': '*i32', 'out_ptr0': '*fp16'}, 'devi"
+        },
+        {
+          "line": 17,
+          "text": "@triton.jit"
+        },
+        {
+          "line": 18,
+          "text": "def triton_flex_attention(arg_Q, arg_K, arg_V, arg_LSE, arg_KV_NUM_BLKS, arg_KV_IDX, arg_FULL_KV_NUM_BLKS, arg_FULL_KV_IDX, out_ptr0):"
+        },
+        {
+          "line": 251,
+          "text": "@triton.jit"
+        },
+        {
+          "line": 335,
+          "text": "@triton.jit"
+        },
+        {
+          "line": 351,
+          "text": "@triton.jit"
+        }
+      ]
+    },
+    {
+      "path": "/tmp/torchinductor_zhangwh/hl/chl7wff6337a3pbyma5ri7xle63wh2yu3fxsepmqkeodjxg2cg5s.py",
+      "matches": [
+        {
+          "line": 6,
+          "text": "from torch._inductor.runtime import triton_helpers, triton_heuristics"
+        },
+        {
+          "line": 7,
+          "text": "from torch._inductor.runtime.triton_helpers import libdevice, math as tl_math"
+        },
+        {
+          "line": 10,
+          "text": "@triton_heuristics.template("
+        },
+        {
+          "line": 13,
+          "text": "    triton_meta={'signature': {'arg_Q': '*fp16', 'arg_K': '*fp16', 'arg_V': '*fp16', 'arg_LSE': '*fp32', 'arg_KV_NUM_BLKS': '*i32', 'arg_KV_IDX': '*i32', 'arg_FULL_KV_NUM_BLKS': '*i32', 'arg_FULL_KV_IDX': '*i32', 'out_ptr0': '*fp16'}, 'devi"
+        },
+        {
+          "line": 14,
+          "text": "    inductor_meta={'kernel_name': 'triton_tem_fused_0', 'backend_hash': 'ED7BC4A578B1B37BE2C689588CFF1A6014268A470D67CB3993F345DBC09C4E7C', 'are_deterministic_algorithms_enabled': False, 'assert_indirect_indexing': True, 'autotune_local_cac"
+        },
+        {
+          "line": 16,
+          "text": "@triton.jit"
+        },
+        {
+          "line": 17,
+          "text": "def triton_tem_fused_0(arg_Q, arg_K, arg_V, arg_LSE, arg_KV_NUM_BLKS, arg_KV_IDX, arg_FULL_KV_NUM_BLKS, arg_FULL_KV_IDX, out_ptr0):"
+        },
+        {
+          "line": 249,
+          "text": "@triton.jit"
+        },
+        {
+          "line": 332,
+          "text": "@triton.jit"
+        },
+        {
+          "line": 348,
+          "text": "@triton.jit"
+        }
+      ]
+    },
+    {
+      "path": "/tmp/torchinductor_zhangwh/ua/cuactwn7hdymygeojykqetse24ypy3q24sksnql6feuoy4iud675.py",
+      "matches": [
+        {
+          "line": 16,
+          "text": "import torch._inductor.kernel.flex_attention"
+        },
+        {
+          "line": 20,
+          "text": "from torch._inductor.runtime.triton_heuristics import ("
+        },
+        {
+          "line": 44,
+          "text": "# Topologically Sorted Source Nodes: [flex_attention], Original ATen: []"
+        },
+        {
+          "line": 46,
+          "text": "#   flex_attention => flex_attention"
+        },
+        {
+          "line": 48,
+          "text": "#   %flex_attention : [num_users=1] = call_function[target=torch.ops.higher_order.flex_attention](args = (%arg0_1, %arg1_1, %arg2_1, %sdpa_score0, (128, 128, %arg4_1, %arg3_1, %arg5_1, %arg6_1, %arg7_1, %arg8_1, %arg9_1, %arg10_1, 128, 128,"
+        },
+        {
+          "line": 49,
+          "text": "triton_tem_fused_0 = async_compile.triton('triton_tem_fused_0', '''"
+        },
+        {
+          "line": 54,
+          "text": "from torch._inductor.runtime import triton_helpers, triton_heuristics"
+        },
+        {
+          "line": 55,
+          "text": "from torch._inductor.runtime.triton_helpers import libdevice, math as tl_math"
+        },
+        {
+          "line": 58,
+          "text": "@triton_heuristics.template("
+        },
+        {
+          "line": 61,
+          "text": "    triton_meta={'signature': {'arg_Q': '*fp16', 'arg_K': '*fp16', 'arg_V': '*fp16', 'arg_LSE': '*fp32', 'arg_KV_NUM_BLKS': '*i32', 'arg_KV_IDX': '*i32', 'arg_FULL_KV_NUM_BLKS': '*i32', 'arg_FULL_KV_IDX': '*i32', 'out_ptr0': '*fp16'}, 'devi"
+        },
+        {
+          "line": 62,
+          "text": "    inductor_meta={'kernel_name': 'triton_tem_fused_0', 'backend_hash': 'ED7BC4A578B1B37BE2C689588CFF1A6014268A470D67CB3993F345DBC09C4E7C', 'are_deterministic_algorithms_enabled': False, 'assert_indirect_indexing': True, 'autotune_local_cac"
+        },
+        {
+          "line": 64,
+          "text": "@triton.jit"
+        }
+      ]
+    },
+    {
+      "path": "/tmp/torchinductor_zhangwh/wh/cwh25yrvevaxzitkb35bk7djajfbb4bvmascdpsesxxjmxfd2tew.py",
+      "matches": [
+        {
+          "line": 7,
+          "text": "from torch._inductor.runtime import triton_helpers, triton_heuristics"
+        },
+        {
+          "line": 8,
+          "text": "from torch._inductor.runtime.triton_helpers import libdevice, math as tl_math"
+        },
+        {
+          "line": 11,
+          "text": "@triton_heuristics.template("
+        },
+        {
+          "line": 14,
+          "text": "    triton_meta={'signature': {'arg_Q': '*fp16', 'arg_K': '*fp16', 'arg_V': '*fp16', 'arg_LSE': '*fp32', 'arg_KV_NUM_BLKS': '*i32', 'arg_KV_IDX': '*i32', 'arg_FULL_KV_NUM_BLKS': '*i32', 'arg_FULL_KV_IDX': '*i32', 'out_ptr0': '*fp16'}, 'devi"
+        },
+        {
+          "line": 17,
+          "text": "@triton.jit"
+        },
+        {
+          "line": 18,
+          "text": "def triton_flex_attention(arg_Q, arg_K, arg_V, arg_LSE, arg_KV_NUM_BLKS, arg_KV_IDX, arg_FULL_KV_NUM_BLKS, arg_FULL_KV_IDX, out_ptr0):"
+        },
+        {
+          "line": 250,
+          "text": "@triton.jit"
+        },
+        {
+          "line": 333,
+          "text": "@triton.jit"
+        },
+        {
+          "line": 349,
+          "text": "@triton.jit"
+        }
+      ]
+    }
+  ],
+  "output_checksum": 44.32321548461914
+}

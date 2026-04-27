@@ -1,6 +1,7 @@
 # Paged Attention：从痛点到 FlexAttention 解决方案
 
-> RTX 3090 (24GB) | PyTorch 2.5.1+cu121 | Triton 3.1.0 | 基于 [attention-gym](https://github.com/meta-pytorch/attention-gym)
+> NVIDIA L4 (24GB) | PyTorch 2.6.0+cu124 | Triton 3.2.0 | 基于 [attention-gym](https://github.com/meta-pytorch/attention-gym)
+> 原始实验: RTX 3090 | PyTorch 2.5.1 (已在 L4 + PT 2.6.0 重测)
 
 ---
 
@@ -228,8 +229,8 @@ def flex_paged_attention(query, mgr, batch_indices, seq_lengths, mask_mod=None):
 
 | 项目 | 配置 |
 |------|------|
-| GPU | NVIDIA RTX 3090, 24GB 显存 |
-| PyTorch | 2.5.1+cu121 |
+| GPU | NVIDIA L4, 24GB 显存 (Ada Lovelace) |
+| PyTorch | 2.6.0+cu124 |
 | Triton | 3.1.0 |
 | Page Size | 128（FlexAttention BLOCK_SIZE 限制） |
 | 数据类型 | float16 |
@@ -429,15 +430,15 @@ conda activate tiny_moe
 cd ~/zwhllm/flexatten-nv
 
 # 运行实验（约 10 分钟）
-python src/paged_attention_experiment.py
+python paged_attention_experiment.py
 
 # 生成图表
-python src/plot_paged_attention.py
+python plot_paged_attention.py
 
-# 结果：data/paged_attention_results.json
+# 结果：paged_attention_results.json
 # 图表：docs/figures/paged_*.png
 ```
 
 ---
 
-*生成日期：2026-04-26 | RTX 3090 | PyTorch 2.5.1 | 7 组实验 | 8 张图表*
+*更新日期：2026-04-27 | NVIDIA L4 | PyTorch 2.6.0 | 7 组实验 | 8 张图表*
