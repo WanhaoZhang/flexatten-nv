@@ -292,7 +292,7 @@ def experiment4_max_context_analysis():
             "max_context_tokens": max_tokens,
         }
         results.append(result)
-        print(f"  {cfg['name']:15s} | {bytes_per_token:>4d} bytes/token | {gb_per_1k:.4f} GB/1K | max={max_tokens:>10d} tokens")
+        print(f"  {cfg['name']:15s} | {bytes_per_token:>6.0f} bytes/token | {gb_per_1k:.4f} GB/1K | max={max_tokens:>10d} tokens")
 
     return results
 
