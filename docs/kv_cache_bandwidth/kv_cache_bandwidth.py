@@ -311,7 +311,7 @@ if __name__ == '__main__':
 
     all_results = {}
     all_results["experiment1_memory_modeling"] = experiment1_memory_modeling()
-    all_results["experiment2_bandwidth_bound"] = experiment2_bandwidth_decode()
+    all_results["experiment2_bandwidth_bound"] = experiment2_bandwidth_bound_decode()
     all_results["experiment3_dequant_overhead"] = experiment3_dequant_overhead()
     all_results["experiment4_max_context"] = experiment4_max_context_analysis()
 
