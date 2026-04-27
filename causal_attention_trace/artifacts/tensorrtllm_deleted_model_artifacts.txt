@@ -1,0 +1,17 @@
+2026-04-27T12:16:53+00:00
+Deleted TensorRT-LLM downloaded model artifacts with user approval to free disk for FlexAttention CuteDSL environment work.
+15G	/home/zhangwh/qwen_model
+3988014264 /home/zhangwh/qwen_model/model-00001-of-00004.safetensors
+3957749112 /home/zhangwh/qwen_model/model-00003-of-00004.safetensors
+3957749080 /home/zhangwh/qwen_model/model-00002-of-00004.safetensors
+3539181096 /home/zhangwh/qwen_model/model-00004-of-00004.safetensors
+7028015 /home/zhangwh/qwen_model/tokenizer.json
+2776833 /home/zhangwh/qwen_model/vocab.json
+1671839 /home/zhangwh/qwen_model/merges.txt
+31696 /home/zhangwh/qwen_model/model.safetensors.index.json
+6896 /home/zhangwh/qwen_model/LICENSE
+4259 /home/zhangwh/qwen_model/README.md
+1519 /home/zhangwh/qwen_model/.gitattributes
+1287 /home/zhangwh/qwen_model/tokenizer_config.json
+663 /home/zhangwh/qwen_model/config.json
+243 /home/zhangwh/qwen_model/generation_config.json
