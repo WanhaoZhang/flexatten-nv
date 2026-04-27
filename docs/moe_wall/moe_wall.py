@@ -120,8 +120,8 @@ def experiment2_expert_routing_simulation():
         for _ in range(5):
             # Gather expert weights for each token
             selected = expert_weights[route_indices]  # [B, top_k, expert_dim, model_dim]
-            # Compute: each token does matmul with its selected expert
-            out = torch.matmul(selected, x.unsqueeze(-1))  # [B, top_k, expert_dim, 1]
+            # Compute: einsum for batched matmul
+            out = torch.einsum('bted,bd->bte', selected.float(), x.float()).half()
         torch.cuda.synchronize()
 
         # Measure MoE-style scatter access
@@ -130,7 +130,7 @@ def experiment2_expert_routing_simulation():
             torch.cuda.synchronize()
             t0 = time.perf_counter()
             selected = expert_weights[route_indices]
-            out = torch.matmul(selected, x.unsqueeze(-1))
+            out = torch.einsum('bted,bd->bte', selected.float(), x.float()).half()
             torch.cuda.synchronize()
             times_moe.append((time.perf_counter() - t0) * 1e6)
         moe_us = np.median(times_moe)

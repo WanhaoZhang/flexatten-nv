@@ -115,10 +115,16 @@ docs/
 
 ### 实验项目
 
-| 报告 | 内容 | 图表 |
-|------|------|------|
-| [FlexAttention Backward Benchmark](docs/backward_benchmark/report.md) | 训练闭环分析：Forward+Backward 延迟、峰值显存、编译开销、4 种 Mask 模式、SDPA 对比 | 6 |
-| [NSA 稀疏偏差分析](docs/nsa_deviation/) | Sink+Local+Dynamic Block 混合稀疏模式、理论稀疏率 vs 实际加速比偏差曲线 | - |
+| 项目 | 状态 | 内容 | 图表 |
+|------|------|------|------|
+| [项目一：FlexAttention Backward Benchmark](docs/backward_benchmark/report.md) | Done | 训练闭环：Forward+Backward 延迟、峰值显存、4 种 Mask、SDPA 对比 | 6 |
+| [项目二：NSA 稀疏偏差分析](docs/nsa_deviation/report.md) | Done | Sink+Local+Dynamic Block 混合稀疏、稀疏率 vs 实际加速偏差（93.8%稀疏→1.02x加速） | - |
+| [项目三：KV Cache 带宽墙](docs/kv_cache_bandwidth/report.md) | Done | MHA/GQA/MLA 内存建模、带宽受限 decode 吞吐、INT4 反量化开销、最大上下文分析 | 5 |
+| [项目五：GQA→MLA 推理分析](docs/mla_gqa_analysis/report.md) | Done | MHA/GQA/MLA 显存公式推演、Decode 带宽瓶颈、L4 最大上下文 | - |
+| [项目十：Triton 算子融合](docs/triton_fusion/report.md) | Done | RMSNorm+RoPE+SiLU 融合、Triton vs PyTorch、内存流量分析（RMSNorm 2.3x 加速） | 4 |
+| [项目四：Speculative Decoding](docs/spec_decoding/) | Running | 接受率 vs 加速比模型、Draft 开销分析、任务类型模拟、最优 gamma 扫描 | - |
+| [项目九：MoE Inference Wall](docs/moe_wall/) | Running | Expert 权重足迹、路由内存模拟、负载均衡、Dense vs MoE 延迟 | - |
+| [项目十二：Liger Kernel](docs/liger_kernel/) | Running | Logits 内存爆炸、Chunked CE 融合、最大 seq OOM 测试 | - |
 
 ---
 
