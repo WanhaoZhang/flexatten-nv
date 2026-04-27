@@ -1,0 +1,176 @@
+{
+  "experiment1_weight_footprint": [
+    {
+      "name": "Dense-7B",
+      "total_params_B": 6.48,
+      "total_weights_gb": 12.06,
+      "active_params_B": 10.8,
+      "active_weights_gb": 20.12,
+      "sparsity_ratio": -0.668,
+      "decode_time_us": 68693333.3,
+      "decode_tok_per_s": 0.0
+    },
+    {
+      "name": "MoE-A2.7B (8 experts)",
+      "total_params_B": 8.22,
+      "total_weights_gb": 15.31,
+      "active_params_B": 2.41,
+      "active_weights_gb": 4.48,
+      "sparsity_ratio": 0.707,
+      "decode_time_us": 15306666.7,
+      "decode_tok_per_s": 0.1
+    },
+    {
+      "name": "MoE-A2.7B (64 experts)",
+      "total_params_B": 15.97,
+      "total_weights_gb": 29.75,
+      "active_params_B": 0.95,
+      "active_weights_gb": 1.78,
+      "sparsity_ratio": 0.94,
+      "decode_time_us": 6066666.7,
+      "decode_tok_per_s": 0.2
+    },
+    {
+      "name": "DeepSeek-V2-Lite (64 exp)",
+      "total_params_B": 15.97,
+      "total_weights_gb": 29.75,
+      "active_params_B": 0.95,
+      "active_weights_gb": 1.78,
+      "sparsity_ratio": 0.94,
+      "decode_time_us": 6066666.7,
+      "decode_tok_per_s": 0.2
+    },
+    {
+      "name": "Mixtral-8x7B",
+      "total_params_B": 47.24,
+      "total_weights_gb": 88.0,
+      "active_params_B": 13.42,
+      "active_weights_gb": 25.0,
+      "sparsity_ratio": 0.716,
+      "decode_time_us": 85333333.3,
+      "decode_tok_per_s": 0.0
+    }
+  ],
+  "experiment2_routing_simulation": [
+    {
+      "batch_size": 1,
+      "n_experts": 64,
+      "top_k": 2,
+      "moe_latency_us": 2381.9,
+      "dense_latency_us": 2278.7,
+      "moe_dense_ratio": 1.05,
+      "moe_read_mb": 11.53,
+      "dense_read_mb": 5.77
+    },
+    {
+      "batch_size": 4,
+      "n_experts": 64,
+      "top_k": 2,
+      "moe_latency_us": 3455.2,
+      "dense_latency_us": 2285.6,
+      "moe_dense_ratio": 1.51,
+      "moe_read_mb": 46.14,
+      "dense_read_mb": 23.07
+    },
+    {
+      "batch_size": 8,
+      "n_experts": 64,
+      "top_k": 2,
+      "moe_latency_us": 7387.6,
+      "dense_latency_us": 2282.8,
+      "moe_dense_ratio": 3.24,
+      "moe_read_mb": 92.27,
+      "dense_read_mb": 46.14
+    },
+    {
+      "batch_size": 16,
+      "n_experts": 64,
+      "top_k": 2,
+      "moe_latency_us": 12415.6,
+      "dense_latency_us": 2285.3,
+      "moe_dense_ratio": 5.43,
+      "moe_read_mb": 184.55,
+      "dense_read_mb": 92.27
+    },
+    {
+      "batch_size": 32,
+      "n_experts": 64,
+      "top_k": 2,
+      "moe_latency_us": 25134.1,
+      "dense_latency_us": 2282.8,
+      "moe_dense_ratio": 11.01,
+      "moe_read_mb": 369.1,
+      "dense_read_mb": 184.55
+    }
+  ],
+  "experiment3_load_balance": [
+    {
+      "distribution": "Uniform",
+      "max_load": 2106,
+      "min_load": 1915,
+      "load_balance_ratio": 0.909,
+      "effective_batch_ratio": 1.053,
+      "expert_utilization": 1.0,
+      "wasted_compute_pct": 9.1
+    },
+    {
+      "distribution": "Mild skew (Zipf-1.1)",
+      "max_load": 32044,
+      "min_load": 303,
+      "load_balance_ratio": 0.009,
+      "effective_batch_ratio": 16.022,
+      "expert_utilization": 1.0,
+      "wasted_compute_pct": 99.1
+    },
+    {
+      "distribution": "Heavy skew (Zipf-1.5)",
+      "max_load": 54186,
+      "min_load": 92,
+      "load_balance_ratio": 0.002,
+      "effective_batch_ratio": 27.093,
+      "expert_utilization": 1.0,
+      "wasted_compute_pct": 99.8
+    },
+    {
+      "distribution": "Extreme skew (80/20)",
+      "max_load": 2569,
+      "min_load": 2352,
+      "load_balance_ratio": 0.916,
+      "effective_batch_ratio": 1.284,
+      "expert_utilization": 0.812,
+      "wasted_compute_pct": 8.4
+    }
+  ],
+  "experiment4_dense_vs_moe": [
+    {
+      "batch_size": 1,
+      "dense_us": 2542.2,
+      "moe_us": 7439.8,
+      "moe_overhead_ratio": 2.93
+    },
+    {
+      "batch_size": 2,
+      "dense_us": 2578.8,
+      "moe_us": 12632.8,
+      "moe_overhead_ratio": 4.9
+    },
+    {
+      "batch_size": 4,
+      "dense_us": 2579.1,
+      "moe_us": 22987.0,
+      "moe_overhead_ratio": 8.91
+    },
+    {
+      "batch_size": 8,
+      "dense_us": 2580.9,
+      "moe_us": 43713.9,
+      "moe_overhead_ratio": 16.94
+    },
+    {
+      "batch_size": 16,
+      "dense_us": 2581.8,
+      "moe_us": 85182.0,
+      "moe_overhead_ratio": 32.99
+    }
+  ]
+}
