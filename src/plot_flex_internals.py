@@ -31,9 +31,9 @@ def fig1_blockmask_anatomy():
     ax.bar([str(r) for r in reqs], sparsities, color='#3498db', edgecolor='white')
     ax.set_xlabel('Requested BLOCK_SIZE')
     ax.set_ylabel('Causal Sparsity (%)')
-    ax.set_title('PyTorch 2.5.1: BLOCK_SIZE Ignored!\n(Always forced to 128)')
-    for i, (r, s) in enumerate(zip(reqs, sparsities)):
-        ax.text(i, s + 1, f'Actual=128\nSp={s:.0f}%', ha='center', fontsize=8)
+    ax.set_title('PyTorch 2.6.0: BLOCK_SIZE Now Respected!\n(Requested BLOCK_SIZE is now actual size)')
+    for i, (r, a, s) in enumerate(zip(reqs, actuals, sparsities)):
+        ax.text(i, s + 1, f'Actual={a}\nSp={s:.0f}%', ha='center', fontsize=8)
 
     # 1b: Conceptual block mask visualization
     ax = axes[1]
