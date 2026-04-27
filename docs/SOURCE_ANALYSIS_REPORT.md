@@ -66,7 +66,7 @@
 
 ### 2.2 显存逐步累积（实验F4）
 
-![Memory Waterfall](figures_source/F4_memory_waterfall.png)
+![Memory Waterfall](figures/F4_memory_waterfall.png)
 
 | S | 输入后 | QK^T后 | mask后 | softmax后 | 最终 | SDPA | Flex |
 |---|-------|--------|-------|----------|------|------|------|
@@ -97,7 +97,7 @@
 
 ### 3.2 后端性能对比
 
-![SDPA Backends](figures_source/F5_sdpa_backends.png)
+![SDPA Backends](figures/F5_sdpa_backends.png)
 
 | S | Flash2 (ms) | Math (ms) | Efficient (ms) | Flash2 vs Math |
 |---|------------|----------|---------------|---------------|
@@ -154,7 +154,7 @@ flex_attention(q, k, v,        → Layer 2: FlexAttentionHOP
 
 ### 4.2 编译开销分析（实验F2）
 
-![Compile Overhead](figures_source/F2_compile_overhead.png)
+![Compile Overhead](figures/F2_compile_overhead.png)
 
 | S | 模式 | 首次调用 (ms) | 缓存调用 (ms) | 编译开销 (ms) |
 |---|------|-------------|-------------|-------------|
@@ -172,7 +172,7 @@ flex_attention(q, k, v,        → Layer 2: FlexAttentionHOP
 
 ### 4.3 BlockMask 内部结构（实验F3）
 
-![BlockMask Structure](figures_source/F3_blockmask_structure.png)
+![BlockMask Structure](figures/F3_blockmask_structure.png)
 
 BlockMask 是 FlexAttention 的核心数据结构，它将 S×S 的 boolean mask 压缩为块级表示：
 
@@ -197,7 +197,7 @@ BlockMask 是 FlexAttention 的核心数据结构，它将 S×S 的 boolean mask
 
 ### 5.1 延迟对比
 
-![Three Way Benchmark](figures_source/F6_three_way_benchmark.png)
+![Three Way Benchmark](figures/F6_three_way_benchmark.png)
 
 **Causal 模式**：
 
@@ -228,7 +228,7 @@ BlockMask 是 FlexAttention 的核心数据结构，它将 S×S 的 boolean mask
 
 ### 6.1 前向+反向对比（实验F7）
 
-![Autograd](figures_source/F7_autograd.png)
+![Autograd](figures/F7_autograd.png)
 
 在 S=2048 下的前向+反向时间：
 
@@ -245,7 +245,7 @@ BlockMask 是 FlexAttention 的核心数据结构，它将 S×S 的 boolean mask
 
 ### 6.2 数值精度分析（实验F8）
 
-![Precision](figures_source/F8_precision.png)
+![Precision](figures/F8_precision.png)
 
 与 FP32 参考实现的最大绝对误差：
 

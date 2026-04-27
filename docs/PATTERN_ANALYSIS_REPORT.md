@@ -252,7 +252,7 @@ def ultimate_score(score, b, h, q_idx, kv_idx):
 
 ### 3.1 全模式对比：Vanilla vs FlexAttention（实验E1）
 
-![Pattern Comparison](figures_patterns/E1_pattern_comparison.png)
+![Pattern Comparison](figures/E1_pattern_comparison.png)
 
 **S=2048 下的前向延迟**：
 
@@ -274,7 +274,7 @@ def ultimate_score(score, b, h, q_idx, kv_idx):
 
 ### 3.2 可扩展性：长序列压力测试（实验E2）
 
-![Scalability](figures_patterns/E2_scalability.png)
+![Scalability](figures/E2_scalability.png)
 
 **Document Packing (8 docs) 的可扩展性**：
 
@@ -290,7 +290,7 @@ def ultimate_score(score, b, h, q_idx, kv_idx):
 
 ### 3.3 SDPA 基线（实验E3）
 
-![SDPA Baseline](figures_patterns/E3_sdpa_baseline.png)
+![SDPA Baseline](figures/E3_sdpa_baseline.png)
 
 | S | SDPA (ms) | SDPA (GB) |
 |---|-----------|-----------|
@@ -304,12 +304,12 @@ SDPA 在标准 Causal 模式下是不可战胜的——S=8192 时比 Flex 快 **
 
 ### 3.4 Head维度和Batch Size 扫描（实验E4）
 
-![Head Dimension](figures_patterns/E4_head_dim.png)
-![Batch Size](figures_patterns/E4_batch_size.png)
+![Head Dimension](figures/E4_head_dim.png)
+![Batch Size](figures/E4_batch_size.png)
 
 ### 3.5 稀疏率分析（实验E5）
 
-![Sparsity](figures_patterns/E5_sparsity.png)
+![Sparsity](figures/E5_sparsity.png)
 
 | 模式 | 像素级稀疏率 | 块级跳过率 |
 |------|------------|-----------|
@@ -325,7 +325,7 @@ SDPA 在标准 Causal 模式下是不可战胜的——S=8192 时比 Flex 快 **
 
 ### 3.6 梯度流分析（实验E6）
 
-![Gradient Flow](figures_patterns/E6_gradient_flow.png)
+![Gradient Flow](figures/E6_gradient_flow.png)
 
 | 模式 | Vanilla BWD/FWD | Flex BWD/FWD |
 |------|----------------|-------------|
@@ -338,7 +338,7 @@ FlexAttention 的反向传播开销比例更小，因为前向被 Triton kernel 
 
 ### 3.7 长上下文压力测试（实验E7）
 
-![Long Context](figures_patterns/E7_long_context.png)
+![Long Context](figures/E7_long_context.png)
 
 | S | Vanilla | Flex | SDPA |
 |---|---------|------|------|
@@ -351,7 +351,7 @@ Vanilla 和 Flex 都在 S=16384 时 OOM，SDPA 凭借极致的显存优化可以
 
 ### 3.8 BlockMask 结构分析（实验E8）
 
-![BlockMask Analysis](figures_patterns/E8_blockmask_analysis.png)
+![BlockMask Analysis](figures/E8_blockmask_analysis.png)
 
 | 模式 | 非空块数 | 总块数 | 块利用率 |
 |------|---------|-------|---------|
