@@ -145,11 +145,11 @@ def experiment1_latency_by_mask():
 
     for seq_len in seq_lengths:
         print(f"\n--- seq_len={seq_len} ---")
-        q = torch.randn(batch_size, seq_len, num_heads, head_dim, device='cuda',
+        q = torch.randn(batch_size, num_heads, seq_len, head_dim, device='cuda',
                         dtype=torch.float16, requires_grad=True)
-        k = torch.randn(batch_size, seq_len, num_heads, head_dim, device='cuda',
+        k = torch.randn(batch_size, num_heads, seq_len, head_dim, device='cuda',
                         dtype=torch.float16, requires_grad=True)
-        v = torch.randn(batch_size, seq_len, num_heads, head_dim, device='cuda',
+        v = torch.randn(batch_size, num_heads, seq_len, head_dim, device='cuda',
                         dtype=torch.float16, requires_grad=True)
 
         for mask_name, mask_fn, mask_kwargs in mask_configs:
@@ -248,11 +248,11 @@ def experiment2_compilation_overhead():
         print(f"\n  {mask_name}:")
 
         reset_memory_stats()
-        q = torch.randn(batch_size, seq_len, num_heads, head_dim, device='cuda',
+        q = torch.randn(batch_size, num_heads, seq_len, head_dim, device='cuda',
                         dtype=torch.float16, requires_grad=True)
-        k = torch.randn(batch_size, seq_len, num_heads, head_dim, device='cuda',
+        k = torch.randn(batch_size, num_heads, seq_len, head_dim, device='cuda',
                         dtype=torch.float16, requires_grad=True)
-        v = torch.randn(batch_size, seq_len, num_heads, head_dim, device='cuda',
+        v = torch.randn(batch_size, num_heads, seq_len, head_dim, device='cuda',
                         dtype=torch.float16, requires_grad=True)
 
         block_mask = create_block_mask(mask_fn, batch_size, num_heads, seq_len, seq_len,
@@ -344,11 +344,11 @@ def experiment3_doc_packing():
             reset_memory_stats()
 
             try:
-                q = torch.randn(batch_size, seq_len, num_heads, head_dim, device='cuda',
+                q = torch.randn(batch_size, num_heads, seq_len, head_dim, device='cuda',
                                 dtype=torch.float16, requires_grad=True)
-                k = torch.randn(batch_size, seq_len, num_heads, head_dim, device='cuda',
+                k = torch.randn(batch_size, num_heads, seq_len, head_dim, device='cuda',
                                 dtype=torch.float16, requires_grad=True)
-                v = torch.randn(batch_size, seq_len, num_heads, head_dim, device='cuda',
+                v = torch.randn(batch_size, num_heads, seq_len, head_dim, device='cuda',
                                 dtype=torch.float16, requires_grad=True)
 
                 block_mask = create_block_mask(mask_fn, batch_size, num_heads, seq_len, seq_len,
@@ -430,9 +430,9 @@ def experiment4_backend_comparison():
     for seq_len in seq_lengths:
         print(f"\n--- seq_len={seq_len} ---")
 
-        q_base = torch.randn(batch_size, seq_len, num_heads, head_dim, device='cuda', dtype=torch.float16)
-        k_base = torch.randn(batch_size, seq_len, num_heads, head_dim, device='cuda', dtype=torch.float16)
-        v_base = torch.randn(batch_size, seq_len, num_heads, head_dim, device='cuda', dtype=torch.float16)
+        q_base = torch.randn(batch_size, num_heads, seq_len, head_dim, device='cuda', dtype=torch.float16)
+        k_base = torch.randn(batch_size, num_heads, seq_len, head_dim, device='cuda', dtype=torch.float16)
+        v_base = torch.randn(batch_size, num_heads, seq_len, head_dim, device='cuda', dtype=torch.float16)
 
         # Causal block mask for FlexAttention
         try:
@@ -445,7 +445,7 @@ def experiment4_backend_comparison():
         for backend_name, run_fn in [
             ("FlexAttention", lambda q, k, v: flex_attention(q, k, v, block_mask=block_mask)),
             ("SDPA_causal", lambda q, k, v: F.scaled_dot_product_attention(
-                q.transpose(1, 2), k.transpose(1, 2), v.transpose(1, 2), is_causal=True).transpose(1, 2)),
+                q, k, v, is_causal=True)),
             ("Vanilla_eager", lambda q, k, v: _vanilla_causal_attention(q, k, v)),
         ]:
             try:
@@ -514,11 +514,7 @@ def experiment4_backend_comparison():
     return results
 
 def _vanilla_causal_attention(q, k, v):
-    """Vanilla eager attention with causal mask."""
-    # q,k,v: [B, S, H, D] -> [B, H, S, D]
-    q = q.transpose(1, 2)
-    k = k.transpose(1, 2)
-    v = v.transpose(1, 2)
+    """Vanilla eager attention with causal mask. Input: [B, H, S, D]."""
     scale = q.shape[-1] ** -0.5
     attn = torch.matmul(q, k.transpose(-2, -1)) * scale
     seq_len = q.shape[-2]
@@ -526,7 +522,7 @@ def _vanilla_causal_attention(q, k, v):
     attn = attn.masked_fill(causal_mask, float('-inf'))
     attn = F.softmax(attn, dim=-1)
     out = torch.matmul(attn, v)
-    return out.transpose(1, 2)
+    return out
 
 # ============================================================
 # Main
