@@ -412,5 +412,71 @@
       "S": 1024,
       "D": 64
     }
+  },
+  "pt25_compat": {
+    "note": "PyTorch 2.5.1 BLOCK_SIZE restriction workaround",
+    "block_size_sweep": [
+      {
+        "requested": 16,
+        "actual": 128,
+        "sparsity": 46.875
+      },
+      {
+        "requested": 32,
+        "actual": 128,
+        "sparsity": 43.75
+      },
+      {
+        "requested": 64,
+        "actual": 128,
+        "sparsity": 37.5
+      },
+      {
+        "requested": 128,
+        "actual": 128,
+        "sparsity": 25.0
+      }
+    ],
+    "compile_overhead_estimate": {
+      "no_mod": 195.4,
+      "causal_score": 191.5,
+      "causal_block": 214.9
+    }
+  },
+  "pt26_compat": {
+    "note": "PyTorch 2.6.0+ properly supports BLOCK_SIZE",
+    "block_size_sweep": [
+      {
+        "requested": 16,
+        "actual": 16,
+        "sparsity": 46.875
+      },
+      {
+        "requested": 32,
+        "actual": 32,
+        "sparsity": 43.75
+      },
+      {
+        "requested": 64,
+        "actual": 64,
+        "sparsity": 37.5
+      },
+      {
+        "requested": 128,
+        "actual": 128,
+        "sparsity": 25.0
+      }
+    ],
+    "compile_overhead_measured": {
+      "no_mod": 198.9,
+      "causal_score": 193.3,
+      "causal_block": 215.5
+    }
+  },
+  "pt25_vs_pt26": {
+    "block_size": {
+      "pt25": "forced 128",
+      "pt26": "respects request"
+    }
   }
 }
