@@ -17,6 +17,7 @@ FlexAttention 是 PyTorch 2.5+ 引入的灵活注意力机制 API，允许用纯
 | [Document Packing 专题](docs/DOC_PACKING_ATTENTION.md) | 三种实现全解析：Vanilla / SDPA / FlexAttention | 5 |
 | [8种注意力模式全解析](docs/PATTERN_ANALYSIS_REPORT.md) | Vanilla vs FlexAttention：Causal/SW/Prefix/ALiBi/Softcap/Dilated | 9 |
 | [源码级分析](docs/SOURCE_ANALYSIS_REPORT.md) | Vanilla → SDPA → FlexAttention 三条执行路径 | 7 |
+| [Causal FlexAttention GPU链路与CuteDSL接入分析](docs/CAUSAL_FLEXATTENTION_CUTEDSL_TRACE.md) | 最小 causal attention 实现、Dynamo/HOP/Inductor/Triton trace、CuteDSL/CUTLASS 接入点分析 | - |
 
 ### 单一模式深度报告
 
