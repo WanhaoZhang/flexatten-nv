@@ -77,9 +77,14 @@ docs/
 | [Document Packing 专题](docs/doc_packing/report.md) | 三种实现全解析：Vanilla / SDPA / FlexAttention | 5 |
 | [8种注意力模式全解析](docs/pattern_analysis/report.md) | Vanilla vs FlexAttention：Causal/SW/Prefix/ALiBi/Softcap/Dilated | 9 |
 | [源码级分析](docs/source_analysis/report.md) | Vanilla → SDPA → FlexAttention 三条执行路径 | 7 |
-| [FlexAttention GPU 执行管线静态分析](docs/trace/FLEXATTENTION_GPU_PIPELINE_ANALYSIS.md) | 6层编译架构、Triton/CuteDSL源码分析、Autotuning配置、BlockMask结构 | 6 |
-| [Causal FlexAttention GPU链路](docs/trace/CAUSAL_FLEXATTENTION_CUTEDSL_TRACE.md) | Dynamo/HOP/Inductor/Triton trace、CuteDSL/CUTLASS 接入分析 | - |
-| [FlexAttention FLASH/CuteDSL 后端复测](docs/trace/FLEXATTENTION_FLASH_CUTEDSL_BACKEND_REPORT.md) | 确认 FlexAttention 进入 CuteDSL/CUTLASS 调用链 | - |
+
+### GPU 编译管线与后端分析
+
+| 报告 | 内容 | 图表 |
+|------|------|------|
+| [FlexAttention GPU 执行管线静态分析](docs/trace/FLEXATTENTION_GPU_PIPELINE_ANALYSIS.md) | 6层编译架构全景、Triton/CuteDSL双路径源码分析、Autotuning配置、BlockMask BCSR结构、BLOCK_SIZE影响、L4(sm89)限制分析 | 6 |
+| [Causal FlexAttention GPU链路追踪](docs/trace/CAUSAL_FLEXATTENTION_CUTEDSL_TRACE.md) | 最小causal实例全链路trace：Dynamo→HOP→Inductor→TritonTemplate→Triton kernel，CuteDSL/FLASH后端探测结果 | - |
+| [FlexAttention FLASH/CuteDSL 后端复测](docs/trace/FLEXATTENTION_FLASH_CUTEDSL_BACKEND_REPORT.md) | PT nightly + nvidia-cutlass-dsl + FA4 Cute环境搭建，确认CuteDSL代码生成路径正确，sm89架构限制验证 | - |
 
 ### 单一模式深度报告
 
