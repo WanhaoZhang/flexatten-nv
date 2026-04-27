@@ -86,6 +86,13 @@ docs/
 | [Causal FlexAttention GPU链路追踪](docs/trace/CAUSAL_FLEXATTENTION_CUTEDSL_TRACE.md) | 最小causal实例全链路trace：Dynamo→HOP→Inductor→TritonTemplate→Triton kernel，CuteDSL/FLASH后端探测结果 | - |
 | [FlexAttention FLASH/CuteDSL 后端复测](docs/trace/FLEXATTENTION_FLASH_CUTEDSL_BACKEND_REPORT.md) | PT nightly + nvidia-cutlass-dsl + FA4 Cute环境搭建，确认CuteDSL代码生成路径正确，sm89架构限制验证 | - |
 
+### Ascend NPU 后端接入分析
+
+| 报告 | 内容 | 图表 |
+|------|------|------|
+| [NPU mm/CATLASS 接入分析](docs/trace/NPU_MM_CATLASS_ANALYSIS.md) | mm/addmm 通过 register_lowering 接入 CATLASS C++ 模板，Autotuning 策略，与 NVIDIA CUTLASS 对比 | - |
+| [NPU FlexAttention/Triton 接入分析](docs/trace/NPU_FLEXATTENTION_TRITON_ANALYSIS.md) | FlexAttention 通过 NPUTritonTemplate 接入 Triton，K/V 转置修复，load_checked_2d 替代 make_block_ptr，NPU autotuning 配置（910B3），与 NVIDIA Triton 路径差异分析 | - |
+
 ### 单一模式深度报告
 
 | 报告 | 核心发现 |
