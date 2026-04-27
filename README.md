@@ -53,8 +53,10 @@ docs/
 │   └── figures/           # 图表 (8张)
 ├── trace/                 # GPU 执行管线 & CuteDSL 分析
 │   ├── FLEXATTENTION_GPU_PIPELINE_ANALYSIS.md  # 全新管线静态分析报告
-│   ├── analyze_flex_pipeline.py               # 分析图表生成脚本
-│   ├── figures/           # 分析图表 (6张)
+│   ├── FLEXATTENTION_CATLASS_INTEGRATION_DESIGN.md  # FlexAttention→CATLASS 接入技术方案
+│   ├── analyze_flex_pipeline.py               # 管线分析图表生成脚本
+│   ├── analyze_flex_catlass_integration.py    # 接入方案图表生成脚本
+│   ├── figures/           # 分析图表 (12张)
 │   ├── CAUSAL_FLEXATTENTION_CUTEDSL_TRACE.md  # 原始 trace 报告
 │   ├── FLEXATTENTION_FLASH_CUTEDSL_BACKEND_REPORT.md  # FLASH 后端复测报告
 │   └── causal_attention_trace/   # trace 实验脚本
@@ -92,6 +94,7 @@ docs/
 |------|------|------|
 | [NPU mm/CATLASS 接入分析](docs/trace/NPU_MM_CATLASS_ANALYSIS.md) | mm/addmm 通过 register_lowering 接入 CATLASS C++ 模板，Autotuning 策略，与 NVIDIA CUTLASS 对比 | - |
 | [NPU FlexAttention/Triton 接入分析](docs/trace/NPU_FLEXATTENTION_TRITON_ANALYSIS.md) | FlexAttention 通过 NPUTritonTemplate 接入 Triton，K/V 转置修复，load_checked_2d 替代 make_block_ptr，NPU autotuning 配置（910B3），与 NVIDIA Triton 路径差异分析 | - |
+| [FlexAttention 接入 CATLASS 技术方案](docs/trace/FLEXATTENTION_CATLASS_INTEGRATION_DESIGN.md) | FlexAttention → CATLASS 集成架构设计：CATLASSFATemplate、Pattern Matcher、BlockMask 转换、代码生成流程、4 阶段实现路线图、与 NVIDIA CuteDSL/NPU Triton 路径对比 | 6 |
 
 ### 单一模式深度报告
 
