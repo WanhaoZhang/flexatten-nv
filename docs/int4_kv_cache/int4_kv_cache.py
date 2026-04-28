@@ -102,7 +102,7 @@ def experiment2_fp8_kv_cache():
         gpu_memory_utilization=0.8,
         dtype="float16",
         trust_remote_code=True,
-        kv_cache_dtype="fp8_e4m3fn",  # FP8 KV cache
+        kv_cache_dtype="fp8_e4m3",  # FP8 KV cache
     )
 
     # Warmup
