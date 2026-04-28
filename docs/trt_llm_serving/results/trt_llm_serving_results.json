@@ -1,0 +1,455 @@
+{
+  "experiment1_vllm_baseline": [
+    {
+      "method": "vLLM",
+      "batch_size": 1,
+      "max_tokens": 32,
+      "total_time_ms": 167.2,
+      "output_tokens": 32,
+      "prompt_tokens": 7,
+      "output_tps": 191.0,
+      "total_tps": 233.0,
+      "per_request_ms": 167.2
+    },
+    {
+      "method": "vLLM",
+      "batch_size": 1,
+      "max_tokens": 128,
+      "total_time_ms": 634.7,
+      "output_tokens": 128,
+      "prompt_tokens": 7,
+      "output_tps": 202.0,
+      "total_tps": 213.0,
+      "per_request_ms": 634.7
+    },
+    {
+      "method": "vLLM",
+      "batch_size": 4,
+      "max_tokens": 32,
+      "total_time_ms": 177.0,
+      "output_tokens": 128,
+      "prompt_tokens": 28,
+      "output_tps": 723.0,
+      "total_tps": 881.0,
+      "per_request_ms": 44.3
+    },
+    {
+      "method": "vLLM",
+      "batch_size": 4,
+      "max_tokens": 128,
+      "total_time_ms": 634.8,
+      "output_tokens": 512,
+      "prompt_tokens": 28,
+      "output_tps": 807.0,
+      "total_tps": 851.0,
+      "per_request_ms": 158.7
+    },
+    {
+      "method": "vLLM",
+      "batch_size": 8,
+      "max_tokens": 64,
+      "total_time_ms": 326.8,
+      "output_tokens": 512,
+      "prompt_tokens": 56,
+      "output_tps": 1567.0,
+      "total_tps": 1738.0,
+      "per_request_ms": 40.8
+    },
+    {
+      "method": "vLLM",
+      "batch_size": 16,
+      "max_tokens": 64,
+      "total_time_ms": 343.6,
+      "output_tokens": 1024,
+      "prompt_tokens": 118,
+      "output_tps": 2980.0,
+      "total_tps": 3323.0,
+      "per_request_ms": 21.5
+    },
+    {
+      "method": "vLLM",
+      "batch_size": 32,
+      "max_tokens": 64,
+      "total_time_ms": 371.5,
+      "output_tokens": 2048,
+      "prompt_tokens": 246,
+      "output_tps": 5513.0,
+      "total_tps": 6176.0,
+      "per_request_ms": 11.6
+    },
+    {
+      "method": "vLLM",
+      "batch_size": 32,
+      "max_tokens": 128,
+      "total_time_ms": 721.0,
+      "output_tokens": 4096,
+      "prompt_tokens": 246,
+      "output_tps": 5681.0,
+      "total_tps": 6022.0,
+      "per_request_ms": 22.5
+    },
+    {
+      "method": "vLLM",
+      "batch_size": 64,
+      "max_tokens": 32,
+      "total_time_ms": 229.4,
+      "output_tokens": 2048,
+      "prompt_tokens": 502,
+      "output_tps": 8929.0,
+      "total_tps": 11117.0,
+      "per_request_ms": 3.6
+    }
+  ],
+  "experiment2_efficiency_model": [
+    {
+      "method": "vLLM (FP16)",
+      "seq_len": 128,
+      "decode_weight_ms": 3.29,
+      "kv_read_ms": 0.04,
+      "total_decode_ms": 3.5,
+      "prefill_ms": 2.11,
+      "max_concurrent": 2055,
+      "batch32_tps": 8694.0
+    },
+    {
+      "method": "vLLM (FP16)",
+      "seq_len": 512,
+      "decode_weight_ms": 3.29,
+      "kv_read_ms": 0.15,
+      "total_decode_ms": 3.61,
+      "prefill_ms": 8.43,
+      "max_concurrent": 513,
+      "batch32_tps": 8416.0
+    },
+    {
+      "method": "vLLM (FP16)",
+      "seq_len": 2048,
+      "decode_weight_ms": 3.29,
+      "kv_read_ms": 0.59,
+      "total_decode_ms": 4.07,
+      "prefill_ms": 33.73,
+      "max_concurrent": 128,
+      "batch32_tps": 7461.0
+    },
+    {
+      "method": "vLLM (FP16)",
+      "seq_len": 8192,
+      "decode_weight_ms": 3.29,
+      "kv_read_ms": 2.35,
+      "total_decode_ms": 5.92,
+      "prefill_ms": 134.9,
+      "max_concurrent": 32,
+      "batch32_tps": 5131.0
+    },
+    {
+      "method": "vLLM (FP8 KV)",
+      "seq_len": 128,
+      "decode_weight_ms": 3.29,
+      "kv_read_ms": 0.02,
+      "total_decode_ms": 3.58,
+      "prefill_ms": 2.11,
+      "max_concurrent": 4111,
+      "batch32_tps": 8499.0
+    },
+    {
+      "method": "vLLM (FP8 KV)",
+      "seq_len": 512,
+      "decode_weight_ms": 3.29,
+      "kv_read_ms": 0.07,
+      "total_decode_ms": 3.64,
+      "prefill_ms": 8.43,
+      "max_concurrent": 1027,
+      "batch32_tps": 8360.0
+    },
+    {
+      "method": "vLLM (FP8 KV)",
+      "seq_len": 2048,
+      "decode_weight_ms": 3.29,
+      "kv_read_ms": 0.29,
+      "total_decode_ms": 3.87,
+      "prefill_ms": 33.73,
+      "max_concurrent": 256,
+      "batch32_tps": 7847.0
+    },
+    {
+      "method": "vLLM (FP8 KV)",
+      "seq_len": 8192,
+      "decode_weight_ms": 3.29,
+      "kv_read_ms": 1.17,
+      "total_decode_ms": 4.83,
+      "prefill_ms": 134.9,
+      "max_concurrent": 64,
+      "batch32_tps": 6300.0
+    },
+    {
+      "method": "TRT-LLM (FP16)",
+      "seq_len": 128,
+      "decode_weight_ms": 3.29,
+      "kv_read_ms": 0.04,
+      "total_decode_ms": 3.4,
+      "prefill_ms": 2.11,
+      "max_concurrent": 2055,
+      "batch32_tps": 9232.0
+    },
+    {
+      "method": "TRT-LLM (FP16)",
+      "seq_len": 512,
+      "decode_weight_ms": 3.29,
+      "kv_read_ms": 0.15,
+      "total_decode_ms": 3.51,
+      "prefill_ms": 8.43,
+      "max_concurrent": 513,
+      "batch32_tps": 8937.0
+    },
+    {
+      "method": "TRT-LLM (FP16)",
+      "seq_len": 2048,
+      "decode_weight_ms": 3.29,
+      "kv_read_ms": 0.59,
+      "total_decode_ms": 3.96,
+      "prefill_ms": 33.73,
+      "max_concurrent": 128,
+      "batch32_tps": 7922.0
+    },
+    {
+      "method": "TRT-LLM (FP16)",
+      "seq_len": 8192,
+      "decode_weight_ms": 3.29,
+      "kv_read_ms": 2.35,
+      "total_decode_ms": 5.76,
+      "prefill_ms": 134.9,
+      "max_concurrent": 32,
+      "batch32_tps": 5449.0
+    },
+    {
+      "method": "TRT-LLM (INT8)",
+      "seq_len": 128,
+      "decode_weight_ms": 1.65,
+      "kv_read_ms": 0.02,
+      "total_decode_ms": 1.72,
+      "prefill_ms": 2.11,
+      "max_concurrent": 4201,
+      "batch32_tps": 18285.0
+    },
+    {
+      "method": "TRT-LLM (INT8)",
+      "seq_len": 512,
+      "decode_weight_ms": 1.65,
+      "kv_read_ms": 0.07,
+      "total_decode_ms": 1.77,
+      "prefill_ms": 8.43,
+      "max_concurrent": 1050,
+      "batch32_tps": 17700.0
+    },
+    {
+      "method": "TRT-LLM (INT8)",
+      "seq_len": 2048,
+      "decode_weight_ms": 1.65,
+      "kv_read_ms": 0.29,
+      "total_decode_ms": 2.0,
+      "prefill_ms": 33.73,
+      "max_concurrent": 262,
+      "batch32_tps": 15691.0
+    },
+    {
+      "method": "TRT-LLM (INT8)",
+      "seq_len": 8192,
+      "decode_weight_ms": 1.65,
+      "kv_read_ms": 1.17,
+      "total_decode_ms": 2.91,
+      "prefill_ms": 134.9,
+      "max_concurrent": 65,
+      "batch32_tps": 10792.0
+    },
+    {
+      "method": "TRT-LLM (INT4)",
+      "seq_len": 128,
+      "decode_weight_ms": 0.82,
+      "kv_read_ms": 0.02,
+      "total_decode_ms": 0.88,
+      "prefill_ms": 2.11,
+      "max_concurrent": 4246,
+      "batch32_tps": 35120.0
+    },
+    {
+      "method": "TRT-LLM (INT4)",
+      "seq_len": 512,
+      "decode_weight_ms": 0.82,
+      "kv_read_ms": 0.07,
+      "total_decode_ms": 0.94,
+      "prefill_ms": 8.43,
+      "max_concurrent": 1061,
+      "batch32_tps": 32964.0
+    },
+    {
+      "method": "TRT-LLM (INT4)",
+      "seq_len": 2048,
+      "decode_weight_ms": 0.82,
+      "kv_read_ms": 0.29,
+      "total_decode_ms": 1.17,
+      "prefill_ms": 33.73,
+      "max_concurrent": 265,
+      "batch32_tps": 26466.0
+    },
+    {
+      "method": "TRT-LLM (INT4)",
+      "seq_len": 8192,
+      "decode_weight_ms": 0.82,
+      "kv_read_ms": 1.17,
+      "total_decode_ms": 2.1,
+      "prefill_ms": 134.9,
+      "max_concurrent": 66,
+      "batch32_tps": 14797.0
+    }
+  ],
+  "experiment3_latency": [
+    {
+      "method": "vLLM TTFT",
+      "prompt_length": 26,
+      "ttft_ms": 13.6,
+      "prefill_tps": 1910.0
+    },
+    {
+      "method": "vLLM TTFT",
+      "prompt_length": 51,
+      "ttft_ms": 9.9,
+      "prefill_tps": 5132.0
+    },
+    {
+      "method": "vLLM TTFT",
+      "prompt_length": 106,
+      "ttft_ms": 9.9,
+      "prefill_tps": 10658.0
+    },
+    {
+      "method": "vLLM TTFT",
+      "prompt_length": 211,
+      "ttft_ms": 10.0,
+      "prefill_tps": 21046.0
+    },
+    {
+      "method": "vLLM TTFT",
+      "prompt_length": 426,
+      "ttft_ms": 10.9,
+      "prefill_tps": 39029.0
+    },
+    {
+      "method": "vLLM TTFT",
+      "prompt_length": 851,
+      "ttft_ms": 15.4,
+      "prefill_tps": 55413.0
+    },
+    {
+      "method": "vLLM Decode",
+      "prompt_tokens": 1,
+      "generated_tokens": 128,
+      "total_time_ms": 632.9,
+      "estimated_decode_ms": 4.94,
+      "decode_tps": 202.0
+    }
+  ],
+  "experiment4_concurrency": [
+    {
+      "method": "vLLM FP16",
+      "seq_len": 512,
+      "max_concurrent_requests": 513,
+      "total_kv_tokens": 263140
+    },
+    {
+      "method": "vLLM FP16",
+      "seq_len": 2048,
+      "max_concurrent_requests": 128,
+      "total_kv_tokens": 263140
+    },
+    {
+      "method": "vLLM FP16",
+      "seq_len": 8192,
+      "max_concurrent_requests": 32,
+      "total_kv_tokens": 263140
+    },
+    {
+      "method": "vLLM FP16",
+      "seq_len": 32768,
+      "max_concurrent_requests": 8,
+      "total_kv_tokens": 263140
+    },
+    {
+      "method": "vLLM FP8 KV",
+      "seq_len": 512,
+      "max_concurrent_requests": 1027,
+      "total_kv_tokens": 526280
+    },
+    {
+      "method": "vLLM FP8 KV",
+      "seq_len": 2048,
+      "max_concurrent_requests": 256,
+      "total_kv_tokens": 526280
+    },
+    {
+      "method": "vLLM FP8 KV",
+      "seq_len": 8192,
+      "max_concurrent_requests": 64,
+      "total_kv_tokens": 526280
+    },
+    {
+      "method": "vLLM FP8 KV",
+      "seq_len": 32768,
+      "max_concurrent_requests": 16,
+      "total_kv_tokens": 526280
+    },
+    {
+      "method": "TRT-LLM FP16",
+      "seq_len": 512,
+      "max_concurrent_requests": 513,
+      "total_kv_tokens": 263140
+    },
+    {
+      "method": "TRT-LLM FP16",
+      "seq_len": 2048,
+      "max_concurrent_requests": 128,
+      "total_kv_tokens": 263140
+    },
+    {
+      "method": "TRT-LLM FP16",
+      "seq_len": 8192,
+      "max_concurrent_requests": 32,
+      "total_kv_tokens": 263140
+    },
+    {
+      "method": "TRT-LLM FP16",
+      "seq_len": 32768,
+      "max_concurrent_requests": 8,
+      "total_kv_tokens": 263140
+    },
+    {
+      "method": "TRT-LLM INT8 weight + FP8 KV",
+      "seq_len": 512,
+      "max_concurrent_requests": 1050,
+      "total_kv_tokens": 537767
+    },
+    {
+      "method": "TRT-LLM INT8 weight + FP8 KV",
+      "seq_len": 2048,
+      "max_concurrent_requests": 262,
+      "total_kv_tokens": 537767
+    },
+    {
+      "method": "TRT-LLM INT8 weight + FP8 KV",
+      "seq_len": 8192,
+      "max_concurrent_requests": 65,
+      "total_kv_tokens": 537767
+    },
+    {
+      "method": "TRT-LLM INT8 weight + FP8 KV",
+      "seq_len": 32768,
+      "max_concurrent_requests": 16,
+      "total_kv_tokens": 537767
+    }
+  ],
+  "metadata": {
+    "gpu": "NVIDIA L4",
+    "model": "Qwen2.5-0.5B-Instruct",
+    "vllm_version": "0.19.1",
+    "trt_llm_installed": false
+  }
+}
