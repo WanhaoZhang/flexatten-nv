@@ -307,7 +307,7 @@ if __name__ == "__main__":
     print("=" * 60)
     print("Project 15: EXL2 vs AWQ INT4 Performance Analysis")
     print(f"GPU: {torch.cuda.get_device_name()}")
-    print(f"ExLlamaV2: {__import__('exllamav2').__version__}")
+    print(f"ExLlamaV2: unavailable (no CUDA compiler), using simulation")
     print("=" * 60)
 
     all_results = {}
