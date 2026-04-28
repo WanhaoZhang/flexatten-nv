@@ -40,8 +40,9 @@ def load_peft_model_with_adapters(num_adapters=1, rank=8):
         target_modules=["q_proj", "v_proj"],
     )
     model = get_peft_model(model, lora_config)
-
-    # Add additional adapters
+    # Default adapter is named "default" - rename it to "adapter_0"
+    model.set_adapter("default")
+    # Add additional adapters starting from adapter_1
     for i in range(1, num_adapters):
         adapter_name = f"adapter_{i}"
         model.add_adapter(adapter_name, lora_config)
@@ -74,7 +75,8 @@ def experiment1_multi_lora_throughput():
         for _ in range(num_iters):
             t0 = time.time()
             for b in range(batch_size):
-                model.set_adapter(f"adapter_{b % n}")
+                adapter_name = f"adapter_{b % n}" if (b % n) > 0 else "default"
+                model.set_adapter(adapter_name)
                 with torch.no_grad():
                     out = model(dummy_input)
             torch.cuda.synchronize()
@@ -158,7 +160,7 @@ def experiment3_same_vs_mixed():
         dummy_input = torch.randint(1, 1000, (bs, seq_len), device="cuda")
 
         # Same adapter (batched)
-        model.set_adapter("adapter_0")
+        model.set_adapter("default")
         torch.cuda.synchronize()
         times_same = []
         for _ in range(num_iters):
@@ -174,7 +176,7 @@ def experiment3_same_vs_mixed():
         for _ in range(num_iters):
             t0 = time.time()
             for b in range(bs):
-                model.set_adapter(f"adapter_{b % num_adapters}")
+                model.set_adapter(f"adapter_{b % num_adapters}" if (b % num_adapters) > 0 else "default")
                 with torch.no_grad():
                     out = model(dummy_input[b:b+1])
             torch.cuda.synchronize()
@@ -230,7 +232,7 @@ def experiment4_rank_impact():
 
     for rank in [1, 2, 4, 8, 16, 32, 64]:
         model = load_peft_model_with_adapters(num_adapters=1, rank=rank)
-        model.set_adapter("adapter_0")
+        model.set_adapter("default")
 
         torch.cuda.synchronize()
         times = []
