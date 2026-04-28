@@ -1,0 +1,137 @@
+{
+  "experiment1_fp16": [
+    {
+      "method": "FP16",
+      "seq_len": 64,
+      "prefill_ms": 47.9,
+      "tokens_per_s": 1336.0
+    },
+    {
+      "method": "FP16",
+      "seq_len": 128,
+      "prefill_ms": 29.36,
+      "tokens_per_s": 4359.0
+    },
+    {
+      "method": "FP16",
+      "seq_len": 256,
+      "prefill_ms": 30.37,
+      "tokens_per_s": 8428.0
+    },
+    {
+      "method": "FP16",
+      "seq_len": 512,
+      "prefill_ms": 29.57,
+      "tokens_per_s": 17312.0
+    },
+    {
+      "method": "FP16",
+      "seq_len": 1024,
+      "prefill_ms": 31.16,
+      "tokens_per_s": 32862.0
+    },
+    {
+      "method": "FP16",
+      "model_size_mb": 942.0,
+      "gpu_memory_gb": 0.99,
+      "decode_ms": 31.87,
+      "decode_tok_per_s": 31.0
+    }
+  ],
+  "experiment2_simulated_int4": [
+    {
+      "method": "Simulated INT4-AWQ",
+      "original_weight_bytes": 988065536,
+      "quantized_weight_bytes": 277853184,
+      "compression_ratio": 3.56,
+      "memory_saved_pct": 71.9,
+      "fp16_forward_ms": 29.24,
+      "dequant_overhead_ms": 45.81,
+      "dequant_vs_forward": 1.57
+    }
+  ],
+  "experiment3_vllm": [
+    {
+      "method": "vLLM (FP16)",
+      "batch_size": 1,
+      "total_time_ms": 360.9,
+      "tokens_per_s": 177.0,
+      "total_tokens": 64
+    },
+    {
+      "method": "vLLM (FP16)",
+      "batch_size": 4,
+      "total_time_ms": 338.5,
+      "tokens_per_s": 756.0,
+      "total_tokens": 256
+    },
+    {
+      "method": "vLLM (FP16)",
+      "batch_size": 8,
+      "total_time_ms": 336.7,
+      "tokens_per_s": 1521.0,
+      "total_tokens": 512
+    },
+    {
+      "method": "vLLM (FP16)",
+      "batch_size": 16,
+      "total_time_ms": 343.5,
+      "tokens_per_s": 2981.0,
+      "total_tokens": 1024
+    },
+    {
+      "method": "vLLM (FP16)",
+      "batch_size": 32,
+      "total_time_ms": 370.7,
+      "tokens_per_s": 5525.0,
+      "total_tokens": 2048
+    }
+  ],
+  "experiment4_bandwidth": [
+    {
+      "method": "FP16 weights",
+      "bytes_per_param": 2,
+      "total_weight_mb": 988.0,
+      "theoretical_decode_ms": 3.29,
+      "theoretical_decode_tps": 304.0,
+      "vs_fp16_speedup": 1.0
+    },
+    {
+      "method": "INT8 weights",
+      "bytes_per_param": 1,
+      "total_weight_mb": 494.0,
+      "theoretical_decode_ms": 1.65,
+      "theoretical_decode_tps": 607.0,
+      "vs_fp16_speedup": 2.0
+    },
+    {
+      "method": "INT4-AWQ",
+      "bytes_per_param": 0.5,
+      "total_weight_mb": 247.0,
+      "theoretical_decode_ms": 0.82,
+      "theoretical_decode_tps": 1214.0,
+      "vs_fp16_speedup": 4.0
+    },
+    {
+      "method": "INT4-EXL2 (4.0 bpw)",
+      "bytes_per_param": 0.5,
+      "total_weight_mb": 247.0,
+      "theoretical_decode_ms": 0.82,
+      "theoretical_decode_tps": 1214.0,
+      "vs_fp16_speedup": 4.0
+    },
+    {
+      "method": "INT3 (3.0 bpw)",
+      "bytes_per_param": 0.375,
+      "total_weight_mb": 185.0,
+      "theoretical_decode_ms": 0.62,
+      "theoretical_decode_tps": 1619.0,
+      "vs_fp16_speedup": 5.33
+    }
+  ],
+  "metadata": {
+    "gpu": "NVIDIA L4",
+    "model": "Qwen2.5-0.5B-Instruct",
+    "exllamav2_version": "0.3.2"
+  }
+}
