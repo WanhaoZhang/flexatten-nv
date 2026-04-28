@@ -4,35 +4,72 @@
 
 ## 1. 研究背景
 
-FlexAttention 是 PyTorch 2.5+ 引入的灵活注意力 API，允许用纯 Python 函数（mask_mod / score_mod）描述注意力修改。大量现有分析聚焦于**前向推理**的性能，但**训练场景**（forward + backward）下的实际表现尚缺系统性数据。
+### 1.1 为什么需要 FlexAttention
 
-核心问题：
-1. 不同 mask 模式在 backward 中的性能差异有多大？
-2. FlexAttention 的编译开销（JIT）对训练循环影响多大？
-3. 相比 SDPA（FlashAttention）和 Vanilla Eager，FlexAttention 的性能差距是多少？
-4. Document Packing 在训练态下的实际表现如何？
+大模型训练中，标准 Causal Attention（下三角 mask）无法满足所有场景需求：
+
+- **Sliding Window Attention**（Mistral、LongChat）：每个 token 只关注最近 W 个 token，降低 O(S²) 复杂度
+- **PrefixLM**（T5 风格、UL2）：前缀部分使用双向 attention，生成部分使用 causal
+- **Document Packing**：多个不相关文档拼接到同一序列，文档间需要 block-diagonal mask
+- **NSA/Longformer 等稀疏 attention**：混合全局 + 局部 + 动态稀疏模式
+
+传统做法是为每种 mask **手写 CUDA kernel**，维护成本极高。PyTorch 2.5 引入的 **FlexAttention** 解决了这个问题：用纯 Python 函数描述 mask 规则，框架自动编译为高效 kernel。
+
+### 1.2 FlexAttention 架构原理
+
+FlexAttention 的执行链路：
+
+```
+Python mask_mod/score_mod → Dynamo 追踪 → Inductor 降级 → Triton JIT kernel
+```
+
+核心数据结构是 **BlockMask**（BCSR 格式）：
+- 将 S×S 的 attention mask 划分为 BLOCK_SIZE × BLOCK_SIZE 的 block 网格
+- 每个标记为 0 的 block 可以**跳过计算**（理论上）
+- BCSR 格式只存储非零 block 的坐标和值
+
+**Forward kernel**：遍历 BlockMask 中的活跃 block，计算 Q×K^T / √d，应用 score_mod，得到 attention 输出。
+
+**Backward kernel**：需要在 forward 基础上额外计算 Q、K、V 的梯度。理论上 backward 计算量约是 forward 的 2-3x（需要分别对 Q、K、V 求梯度），但 FlashAttention 系列的 kernel fusion 技术可以大幅减少额外开销。
+
+**Triton kernel 的工作方式**：每个 Triton program instance 处理一个 block，从全局内存加载 Q_block、K_block、V_block，在 SRAM 中完成计算后写回。block 的稀疏性理论上允许跳过全零 block，从而加速计算。
+
+### 1.3 研究目标
+
+现有公开分析几乎全部聚焦于 FlexAttention 的**前向推理**性能，训练场景（forward + backward）缺乏系统性数据。本实验的目标：
+
+1. **量化 backward 开销**：不同 mask 模式下，backward 相对 forward 的延迟比是多少？
+2. **评估编译开销**：JIT 编译在训练循环中的首次调用 vs 稳态性能差异？
+3. **横向对比**：FlexAttention (Triton) vs SDPA (FlashAttention) vs Vanilla Eager 的性能差距有多大？
+4. **稀疏性验证**：BlockMask 的 BCSR 稀疏性在实际 kernel 中是否生效？
+5. **训练可行性**：峰值显存、序列长度上限等训练关键指标如何？
+
+---
 
 ## 2. 实验设计
 
 ### 2.1 变量矩阵
 
-| 变量 | 取值 |
-|------|------|
-| 序列长度 (S) | 512, 1024, 2048, 4096 |
-| 头数 (H) | 32 |
-| 头维度 (D) | 64 |
-| 批量 (B) | 1 |
-| 数据类型 | FP16 |
-| Mask 模式 | Causal, SlidingWindow(256/512), PrefixLM(128/256) |
+| 变量 | 取值 | 说明 |
+|------|------|------|
+| 序列长度 (S) | 512, 1024, 2048, 4096 | 覆盖短到长序列 |
+| 头数 (H) | 32 | Qwen2.5-0.5B 的 GQA 配置 |
+| 头维度 (D) | 64 | 标准 head_dim |
+| 批量 (B) | 1 | 单 batch 以隔离 attention 开销 |
+| 数据类型 | FP16 | 训练默认精度 |
+| BLOCK_SIZE | 128 | FlexAttention 默认 block 大小 |
+| Mask 模式 | Causal, SlidingWindow(256/512), PrefixLM(128/256) | 覆盖主要使用场景 |
 
-### 2.2 实验组
+### 2.2 实验组与目标
 
-| 实验 | 测量内容 | 迭代次数 |
-|------|---------|---------|
-| Exp1 | Forward + Backward 延迟 + 峰值显存 | 5 次取平均 |
-| Exp2 | 编译开销：首次调用 vs 稳态 | 1 + 10 次 |
-| Exp3 | Document Packing：不同文档数 | 5 次取平均 |
-| Exp4 | FlexAttention vs SDPA vs Vanilla | 5 次取平均 |
+| 实验 | 目标 | 测量内容 | 方法 |
+|------|------|---------|------|
+| Exp1 | 量化不同 mask 的 forward+backward 延迟与显存 | 延迟 (ms) + 峰值显存 (MB) | 5 次取平均，seq×mask 交叉组合 |
+| Exp2 | 评估 JIT 编译对训练循环的影响 | 首次 vs 稳态延迟 | 1 次编译 + 10 次稳态 |
+| Exp3 | 验证 Document Packing 的稀疏性收益 | 不同文档数的延迟 | 2/4/8/16 docs，理论稀疏率 50%-93.8% |
+| Exp4 | 横向对比三种 attention 实现 | FlexAttention vs SDPA vs Vanilla | seq=2048 固定，5 次取平均 |
+
+---
 
 ## 3. 核心发现
 

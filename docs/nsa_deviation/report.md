@@ -2,11 +2,43 @@
 
 > NVIDIA L4 (24GB) | PyTorch 2.6.0+cu124 | FlexAttention + Triton 3.2.0
 
-## 1. 研究问题
+## 1. 研究背景
 
-理论上过滤掉 90% 的 Attention 计算，应该快 10 倍。但实际 GPU kernel 运行中，由于内存对齐、block 调度开销，往往达不到。这个"偏差"在哪里？
+### 1.1 稀疏注意力的承诺与现实
 
-以 DeepSeek 的 NSA（Native Sparse Attention）为代表，前沿正在抛弃单纯的"滑动窗口"，转向"局部窗口 + 全局 Sink + 动态选择块"的混合稀疏模式。
+标准 Self-Attention 的计算复杂度为 O(S²)，随序列长度增长迅速成为瓶颈。理论上，如果只计算"重要"的 attention 连接，跳过其余 90%，就能获得 10x 加速。这就是**稀疏注意力**的核心承诺。
+
+然而，GPU 并非"算多少就快多少"的理想机器。实际加速受制于：
+- **内存对齐**：GPU 以 block（如 128×128）为单位加载和计算，即使 block 内只有一个有效元素也要加载整个 block
+- **Kernel launch 开销**：每次 kernel 调用有固定开销（~5-10μs），粒度过细反而拖慢
+- **带宽瓶颈**：当计算量已经足够小，性能上限由内存带宽决定，减少计算量不再有帮助
+
+这导致**理论稀疏率与实际加速比之间存在巨大偏差**——这正是本实验要定量分析的问题。
+
+### 1.2 NSA：Native Sparse Attention
+
+DeepSeek 的 NSA（Native Sparse Attention）代表了当前稀疏注意力的前沿设计。它抛弃了简单的"滑动窗口"，采用**三层混合架构**：
+
+```
+Attention(x) = GlobalSink(x) + LocalWindow(x) + DynamicBlock(x)
+```
+
+- **Global Sink**：前 N 个 token（如 64 个）作为"attention sink"，所有 token 都能访问。保持全局信息流
+- **Local Window**：每个 token 只关注最近 M 个相邻 token（如 256-512）。捕获局部依赖
+- **Dynamic Block Selection**：中间部分的 token 按 block 粒度（如 64 个一组）选择性访问，由路由网络决定哪些 block 重要
+
+这种设计的理论稀疏率可以非常高（如 90%+），同时保留关键信息传递通道。
+
+### 1.3 研究目标
+
+本实验的核心目标是**定量揭示稀疏注意力的理论加速与实际加速之间的偏差**：
+
+1. **偏差曲线**：从 0% 到 93.8% 稀疏率，实际加速比如何变化？偏差有多大？
+2. **NSA 模式验证**：Global Sink + Local Window + Dynamic Block 的混合模式在 FlexAttention/Triton 上能否获得加速？
+3. **Block 大小影响**：BLOCK_SIZE（64/128/256）是否影响稀疏性的利用效率？
+4. **根因定位**：为什么稀疏性没有转化为加速？是 Triton kernel 的限制还是 GPU 硬件的限制？
+
+---
 
 ## 2. 实验设计
 
@@ -20,15 +52,17 @@ NSA Mask = Global Sink + Local Window + Dynamic Block Selection
 
 - **Global Sink**: 前 N 个 token 永远可见（attention sink）
 - **Local Window**: 最近 M 个 token 永远可见（局部窗口）
-- **Dynamic Block**: 中间部分按 block 选择性可见
+- **Dynamic Block**: 中间部分按 block 选择性可见（每 K 个 block 保留 1 个）
 
-### 2.2 实验组
+### 2.2 实验组与目标
 
-| 实验 | 测量内容 |
-|------|---------|
-| Exp1 | NSA-like pattern vs baseline（FlexAttention dense causal）|
-| Exp2 | BLOCK_SIZE (64/128/256) 对 NSA 性能的影响 |
-| Exp3 | 理论稀疏率 vs 实际加速比偏差曲线（8 个窗口大小）|
+| 实验 | 目标 | 方法 |
+|------|------|------|
+| Exp1 | 对比 NSA-like pattern 与 dense causal 的实际性能 | seq=2048, 5 种 NSA 配置 |
+| Exp2 | 验证 BLOCK_SIZE 对稀疏性利用的影响 | BLOCK_SIZE=64/128/256 |
+| Exp3 | 绘制理论稀疏率 vs 实际加速比的偏差曲线 | 8 个窗口大小，稀疏率 0%-93.8% |
+
+---
 
 ## 3. 核心发现
 

@@ -6,43 +6,71 @@
 
 ---
 
-## 1. 研究背景与原理
+## 1. 研究背景
 
-### 1.1 自回归解码的瓶颈
+### 1.1 自回归解码的 memory-bound 困境
 
-LLM decode 阶段每次只生成 1 个 token，是严格的 **memory-bound** 操作。每个 token 都需要加载全部模型权重（942MB FP16），导致单 stream decode 吞吐极低（~35 tok/s）。
+LLM 的 decode 阶段面临根本性的效率问题：**每生成 1 个 token，都需要加载全部模型权重**。对于 Qwen2.5-0.5B（942MB FP16），L4 的 300 GB/s 带宽意味着：
+
+$$\text{理论极限} = \frac{300 \text{ GB/s}}{942 \text{ MB}} \approx 318 \text{ tok/s}$$
+
+实际单 stream decode 约 35 tok/s，效率仅 11%。其余 89% 时间花在 kernel launch、内存延迟和 GPU 空闲上。这是所有 memory-bound 操作的通病——**GPU 算力大量浪费**。
+
+Batching 可以提升利用率（BS=32 时达 5,500 tok/s），但对**延迟敏感场景**（如交互式对话），用户只等待单个请求的响应，batch 并不能减少 per-token 延迟。
 
 ### 1.2 Speculative Decoding 原理
 
-核心思想：用一个小的 **draft model** 快速生成 K 个候选 token，然后用 **target model** 一次性验证所有 K 个 token。
+Speculative Decoding（投机解码）是解决单 stream decode 低效的核心方案。核心思想：
 
-1. Draft model 自回归生成 K 个 token（小模型，速度快）
-2. Target model 并行验证 K 个 token（一次 forward pass）
-3. 保留通过验证的 token，丢弃第一个不匹配的及之后的 token
+```
+传统: Target → tok1 → Target → tok2 → Target → tok3 ...  (N 次 forward)
+投机: Draft → tok1,tok2,tok3,tok4 → Target 验证全部 → 接受 tok1,tok2 → 丢弃 tok3,tok4
+```
 
-**理论加速比**取决于接受率 α 和 draft size γ：
+1. **Draft phase**：用小模型（3-10x 更小）快速生成 γ 个候选 token
+2. **Verify phase**：用 target model 一次 forward pass 并行验证所有 γ 个 token
+3. **Accept/Reject**：保留通过验证的 token，丢弃第一个不匹配的及之后的所有 token
 
-$$\text{Expected tokens per round} = \frac{1 - \alpha^\gamma}{1 - \alpha}$$
+**接受率推导**：设 draft model 与 target model 的 token 分布分别为 $q(x)$ 和 $p(x)$，接受概率：
+
+$$\alpha = \mathbb{E}\left[\min\left(1, \frac{p(x)}{q(x)}\right)\right]$$
+
+当 draft model 越接近 target model，α 越接近 1。每轮期望生成的 token 数：
+
+$$\mathbb{E}[\text{tokens}] = \frac{1 - \alpha^\gamma}{1 - \alpha}$$
+
+γ=4, α=0.9 时，期望 3.44 个 token/轮，即 3.44x 加速（扣除 draft 开销后约 2.6x）。
+
+### 1.3 Speculative Decoding 的变体
+
+| 方法 | Draft 来源 | 特点 |
+|------|-----------|------|
+| Classic SpecDec | 独立小模型 | 最简单，需要额外的 draft model |
+| Medusa | Multiple heads 接在 LM head 后 | 无需额外模型，多 head 并行预测 |
+| Eagle | 利用 1 层 transformer + feature | 极低延迟 draft，接近 target 质量 |
+| Self-speculative | 同一模型 early exit | 无需额外模型，利用中间层输出 |
+
+### 1.4 研究目标
+
+本实验的核心目标是**评估 Speculative Decoding 在 L4 上的实际可行性**：
+
+1. **Decode 性能画像**：0.5B 模型在 L4 上的 per-token 延迟和 KV Cache 影响有多大？
+2. **同模型投机测试**：用同一模型模拟 draft+verify，验证投机解码的加速机制
+3. **理论最优配置**：不同 (α, γ) 组合的理论加速比热力图
+4. **vLLM 基线**：vLLM 批量推理的吞吐量上限
 
 ---
 
 ## 2. 实验设计
 
-### 实验 1：自回归 Decode 性能分析
+### 2.1 实验组与目标
 
-**目的**：测量不同 KV Cache 大小下的 decode 延迟。
-
-### 实验 2：投机解码模拟
-
-**目的**：用同一模型模拟 draft + verify 流程，测量实际加速。
-
-### 实验 3：理论加速分析
-
-**目的**：计算不同 (α, γ) 组合的理论加速比。
-
-### 实验 4：vLLM 批量吞吐
-
-**目的**：不同输出长度下的 vLLM 吞吐量基线。
+| 实验 | 目标 | 方法 |
+|------|------|------|
+| Exp1 | 画像 decode 阶段的延迟和 KV Cache 影响 | 不同 prompt 长度, 测量 per-token 延迟 |
+| Exp2 | 模拟 draft+verify 流程, 测量实际加速 | 同一模型作 draft, K=2/4/6/8/10/16 |
+| Exp3 | 计算理论加速比热力图 | α=0.5-0.99, γ=1-16 |
+| Exp4 | 测量 vLLM 批量推理吞吐上限 | BS=8, max_tok=16/32/64/128/256 |
 
 ---
 

@@ -6,48 +6,78 @@
 
 ---
 
-## 1. 研究背景与原理
+## 1. 研究背景
 
-### 1.1 LLM Serving 框架对比
+### 1.1 LLM Serving 的核心挑战
+
+LLM 推理服务与单次推理不同，需要同时处理多个并发请求。核心挑战是 **KV Cache 管理**和 **decode 效率**：
+
+- **KV Cache 碎片化**：不同请求的序列长度不同，固定大小分配导致显存浪费
+- **Decode memory-bound**：每个 token 都需加载全部权重，GPU 利用率低
+- **延迟 vs 吞吐权衡**：高吞吐需要大 batch，但大 batch 增加单请求延迟
+
+### 1.2 vLLM 架构原理
+
+vLLM 是当前最流行的开源 LLM serving 框架，核心创新包括：
+
+**PagedAttention**：借鉴 OS 虚拟内存的分页机制管理 KV Cache。将 KV Cache 分成固定大小的 block（如 16 tokens），按需分配，消除碎片化。
+
+**Continuous Batching**：传统 static batching 等所有请求完成才返回，continuous batching 在每个 iteration 级别调度——完成的请求立即返回，新请求即时加入，最大化 GPU 利用率。
+
+**执行链路**：
+```
+HTTP Request → Scheduler → PagedAttention (KV 分配) → torch.compile (Inductor) → GPU Kernel
+```
+
+vLLM 使用 `torch.compile` 做 JIT 优化（Inductor 后端），但核心 attention kernel 使用 FlashAttention/FlashInfer 的 CUDA 实现。
+
+### 1.3 TensorRT-LLM 架构原理
+
+TensorRT-LLM 是 NVIDIA 官方的 LLM serving 框架，针对自家 GPU 深度优化：
+
+**编译链路**：
+```
+HuggingFace Model → TensorRT-LLM Builder → TensorRT Engine (序列化) → Runtime Execution
+```
+
+关键优化：
+1. **权重 INT8/INT4 量化 + 反量化融合**：权重存储为 INT8/INT4，在 kernel 内部反量化为 FP16 计算，减少内存带宽
+2. **FP8 KV Cache + 动态 scaling**：KV 向量存储为 FP8，每层每 head 维护独立的 scale factor
+3. **TensorRT 图优化**：算子融合（QKV projection + RoPE 融合、FFN 融合）、内存规划（in-place 操作、显存复用）
+4. **xQA kernel**：NVIDIA 专用的 attention kernel，支持 GQA/MQA/MLA 的融合计算
+
+### 1.4 vLLM vs TRT-LLM 关键差异
 
 | 特性 | vLLM | TensorRT-LLM |
 |------|------|--------------|
-| 开发方 | UC Berkeley | NVIDIA |
 | 核心 | PagedAttention + Continuous Batching | 优化 CUDA kernel + TensorRT |
-| 量化 | AWQ, GPTQ | INT8/INT4 权重 + FP8 KV |
-| 编译 | torch.compile (Inductor) | TensorRT 图优化 + Kernel 融合 |
-| 优势 | 易用性、生态 | 极致性能、NVIDIA 硬件优化 |
+| 编译 | torch.compile (Inductor) JIT | TensorRT AOT 编译 |
+| 量化 | AWQ, GPTQ (模型权重) | INT8/INT4 权重 + FP8 KV |
+| Attention | FlashAttention / FlashInfer | xQA (NVIDIA 专用) |
+| 优势 | 易用性、生态、灵活性 | 极致性能、NVIDIA 硬件优化 |
 | KV Cache | PagedAttention (虚拟内存) | 连续内存池 |
 
-### 1.2 关键差异
+### 1.5 研究目标
 
-**vLLM**：基于 PyTorch 生态，torch.compile 做 JIT 优化，PagedAttention 管理零碎片 KV Cache。
+本实验的核心目标是**对比 vLLM 和 TRT-LLM 在 L4 上的实际和理论性能**：
 
-**TRT-LLM**：NVIDIA 针对自家 GPU 深度优化，包括：
-- 权重 INT8/INT4 量化 + 反量化融合
-- FP8 KV Cache + 动态 scaling
-- TensorRT 图级优化（算子融合、内存规划）
-- 专用的 attention kernel（xQA）
+1. **vLLM 吞吐基线**：BS × Max Tokens 的完整吞吐量矩阵
+2. **理论 decode 模型**：数学建模 vLLM vs TRT-LLM 在不同量化下的 decode 性能
+3. **延迟分析**：TTFT 和 decode 延迟随 prompt 长度的变化
+4. **并发极限**：不同框架和精度下的最大并发请求数
 
 ---
 
 ## 2. 实验设计
 
-### 实验 1：vLLM Serving 基线
+### 2.1 实验组与目标
 
-**目的**：BS × Max Tokens 的完整吞吐量矩阵。
-
-### 实验 2：框架效率理论模型
-
-**目的**：数学建模 vLLM vs TRT-LLM 在不同量化下的 decode 性能。
-
-### 实验 3：TTFT 和延迟分析
-
-**目的**：测量不同 prompt 长度的 TTFT 和 decode 延迟。
-
-### 实验 4：并发极限分析
-
-**目的**：计算不同框架和精度下的最大并发请求数。
+| 实验 | 目标 | 方法 |
+|------|------|------|
+| Exp1 | 建立 vLLM 吞吐基线矩阵 | BS=1/4/8/16/32/64, MT=32/64/128 |
+| Exp2 | 理论建模 vLLM vs TRT-LLM decode 性能 | 数学建模权重加载 + KV 读取延迟 |
+| Exp3 | 分析 TTFT 和 decode 延迟 | 不同 prompt 长度 (26-851 tokens) |
+| Exp4 | 计算不同框架/精度的并发极限 | 基于显存容量和 KV Cache 大小 |
 
 ---
 
