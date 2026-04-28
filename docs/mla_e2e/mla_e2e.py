@@ -140,18 +140,18 @@ def experiment2_projection_latency():
 
         # MLA: latent read + projection
         for latent_dim in latent_dims:
-            latent_cache = torch.randn(24, sl, latent_dim, device=device, dtype=torch.float16)
-            w_k = torch.randn(24, num_heads, latent_dim, head_dim, device=device, dtype=torch.float16)
-            w_v = torch.randn(24, num_heads, latent_dim, head_dim, device=device, dtype=torch.float16)
+            latent_cache = torch.randn(sl, latent_dim, device=device, dtype=torch.float16)
+            w_k = torch.randn(num_heads, latent_dim, head_dim, device=device, dtype=torch.float16)
+            w_v = torch.randn(num_heads, latent_dim, head_dim, device=device, dtype=torch.float16)
 
             torch.cuda.synchronize()
             times = []
             for _ in range(num_iters):
                 t0 = time.time()
                 # Read latent and project to K, V
-                # latent: (24, sl, latent_dim) -> K: (24, sl, num_heads, head_dim)
-                k_proj = torch.einsum('sld,hdk->lshk', latent_cache.float(), w_k.float()).half()
-                v_proj = torch.einsum('sld,hdk->lshk', latent_cache.float(), w_v.float()).half()
+                # latent: (sl, latent_dim) -> K: (sl, num_heads, head_dim)
+                k_proj = torch.einsum('sd,hdk->shk', latent_cache.float(), w_k.float()).half()
+                v_proj = torch.einsum('sd,hdk->shk', latent_cache.float(), w_v.float()).half()
                 torch.cuda.synchronize()
                 times.append(time.time() - t0)
 
