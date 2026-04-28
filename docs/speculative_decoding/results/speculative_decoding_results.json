@@ -1,0 +1,531 @@
+{
+  "experiment1_autoregressive": [
+    {
+      "method": "Autoregressive",
+      "prompt_length": 64,
+      "decode_ms_per_token": 31.29,
+      "kv_cache_mb": 1.0,
+      "decode_tok_per_s": 32.0
+    },
+    {
+      "method": "Autoregressive",
+      "prompt_length": 128,
+      "decode_ms_per_token": 27.59,
+      "kv_cache_mb": 1.7,
+      "decode_tok_per_s": 36.2
+    },
+    {
+      "method": "Autoregressive",
+      "prompt_length": 256,
+      "decode_ms_per_token": 28.05,
+      "kv_cache_mb": 3.2,
+      "decode_tok_per_s": 35.7
+    },
+    {
+      "method": "Autoregressive",
+      "prompt_length": 512,
+      "decode_ms_per_token": 28.19,
+      "kv_cache_mb": 6.2,
+      "decode_tok_per_s": 35.5
+    },
+    {
+      "method": "Autoregressive",
+      "prompt_length": 1024,
+      "decode_ms_per_token": 28.37,
+      "kv_cache_mb": 12.2,
+      "decode_tok_per_s": 35.3
+    },
+    {
+      "method": "Autoregressive",
+      "prompt_length": 2048,
+      "decode_ms_per_token": 29.21,
+      "kv_cache_mb": 24.2,
+      "decode_tok_per_s": 34.2
+    }
+  ],
+  "experiment2_speculative_sim": [
+    {
+      "method": "Speculative Decoding",
+      "draft_size_k": 2,
+      "total_draft_ms": 29.2,
+      "verify_ms": 48.6,
+      "acceptance_rate": 1.0,
+      "accepted_tokens": 2,
+      "theoretical_speedup": 0.77
+    },
+    {
+      "method": "Speculative Decoding",
+      "draft_size_k": 4,
+      "total_draft_ms": 83.7,
+      "verify_ms": 27.5,
+      "acceptance_rate": 1.0,
+      "accepted_tokens": 4,
+      "theoretical_speedup": 1.08
+    },
+    {
+      "method": "Speculative Decoding",
+      "draft_size_k": 6,
+      "total_draft_ms": 139.0,
+      "verify_ms": 28.2,
+      "acceptance_rate": 1.0,
+      "accepted_tokens": 6,
+      "theoretical_speedup": 1.08
+    },
+    {
+      "method": "Speculative Decoding",
+      "draft_size_k": 8,
+      "total_draft_ms": 197.3,
+      "verify_ms": 27.9,
+      "acceptance_rate": 0.75,
+      "accepted_tokens": 6,
+      "theoretical_speedup": 1.07
+    },
+    {
+      "method": "Speculative Decoding",
+      "draft_size_k": 10,
+      "total_draft_ms": 251.5,
+      "verify_ms": 30.2,
+      "acceptance_rate": 0.6,
+      "accepted_tokens": 6,
+      "theoretical_speedup": 1.06
+    },
+    {
+      "method": "Speculative Decoding",
+      "draft_size_k": 16,
+      "total_draft_ms": 420.2,
+      "verify_ms": 28.4,
+      "acceptance_rate": 0.375,
+      "accepted_tokens": 6,
+      "theoretical_speedup": 1.07
+    }
+  ],
+  "experiment3_speedup_theory": [
+    {
+      "method": "Theoretical",
+      "acceptance_rate": 0.6,
+      "draft_size": 2,
+      "expected_accepted_tokens": 2.32,
+      "speedup": 1.39
+    },
+    {
+      "method": "Theoretical",
+      "acceptance_rate": 0.6,
+      "draft_size": 4,
+      "expected_accepted_tokens": 2.69,
+      "speedup": 1.15
+    },
+    {
+      "method": "Theoretical",
+      "acceptance_rate": 0.6,
+      "draft_size": 6,
+      "expected_accepted_tokens": 2.66,
+      "speedup": 0.89
+    },
+    {
+      "method": "Theoretical",
+      "acceptance_rate": 0.6,
+      "draft_size": 8,
+      "expected_accepted_tokens": 2.59,
+      "speedup": 0.71
+    },
+    {
+      "method": "Theoretical",
+      "acceptance_rate": 0.6,
+      "draft_size": 10,
+      "expected_accepted_tokens": 2.55,
+      "speedup": 0.59
+    },
+    {
+      "method": "Theoretical",
+      "acceptance_rate": 0.6,
+      "draft_size": 16,
+      "expected_accepted_tokens": 2.5,
+      "speedup": 0.4
+    },
+    {
+      "method": "Theoretical",
+      "acceptance_rate": 0.7,
+      "draft_size": 2,
+      "expected_accepted_tokens": 2.68,
+      "speedup": 1.61
+    },
+    {
+      "method": "Theoretical",
+      "acceptance_rate": 0.7,
+      "draft_size": 4,
+      "expected_accepted_tokens": 3.49,
+      "speedup": 1.5
+    },
+    {
+      "method": "Theoretical",
+      "acceptance_rate": 0.7,
+      "draft_size": 6,
+      "expected_accepted_tokens": 3.65,
+      "speedup": 1.22
+    },
+    {
+      "method": "Theoretical",
+      "acceptance_rate": 0.7,
+      "draft_size": 8,
+      "expected_accepted_tokens": 3.6,
+      "speedup": 0.98
+    },
+    {
+      "method": "Theoretical",
+      "acceptance_rate": 0.7,
+      "draft_size": 10,
+      "expected_accepted_tokens": 3.52,
+      "speedup": 0.81
+    },
+    {
+      "method": "Theoretical",
+      "acceptance_rate": 0.7,
+      "draft_size": 16,
+      "expected_accepted_tokens": 3.38,
+      "speedup": 0.53
+    },
+    {
+      "method": "Theoretical",
+      "acceptance_rate": 0.8,
+      "draft_size": 2,
+      "expected_accepted_tokens": 3.08,
+      "speedup": 1.85
+    },
+    {
+      "method": "Theoretical",
+      "acceptance_rate": 0.8,
+      "draft_size": 4,
+      "expected_accepted_tokens": 4.59,
+      "speedup": 1.97
+    },
+    {
+      "method": "Theoretical",
+      "acceptance_rate": 0.8,
+      "draft_size": 6,
+      "expected_accepted_tokens": 5.26,
+      "speedup": 1.75
+    },
+    {
+      "method": "Theoretical",
+      "acceptance_rate": 0.8,
+      "draft_size": 8,
+      "expected_accepted_tokens": 5.5,
+      "speedup": 1.5
+    },
+    {
+      "method": "Theoretical",
+      "acceptance_rate": 0.8,
+      "draft_size": 10,
+      "expected_accepted_tokens": 5.54,
+      "speedup": 1.28
+    },
+    {
+      "method": "Theoretical",
+      "acceptance_rate": 0.8,
+      "draft_size": 16,
+      "expected_accepted_tokens": 5.31,
+      "speedup": 0.84
+    },
+    {
+      "method": "Theoretical",
+      "acceptance_rate": 0.9,
+      "draft_size": 2,
+      "expected_accepted_tokens": 3.52,
+      "speedup": 2.11
+    },
+    {
+      "method": "Theoretical",
+      "acceptance_rate": 0.9,
+      "draft_size": 4,
+      "expected_accepted_tokens": 6.06,
+      "speedup": 2.6
+    },
+    {
+      "method": "Theoretical",
+      "acceptance_rate": 0.9,
+      "draft_size": 6,
+      "expected_accepted_tokens": 7.87,
+      "speedup": 2.62
+    },
+    {
+      "method": "Theoretical",
+      "acceptance_rate": 0.9,
+      "draft_size": 8,
+      "expected_accepted_tokens": 9.14,
+      "speedup": 2.49
+    },
+    {
+      "method": "Theoretical",
+      "acceptance_rate": 0.9,
+      "draft_size": 10,
+      "expected_accepted_tokens": 10.0,
+      "speedup": 2.31
+    },
+    {
+      "method": "Theoretical",
+      "acceptance_rate": 0.9,
+      "draft_size": 16,
+      "expected_accepted_tokens": 11.11,
+      "speedup": 1.75
+    },
+    {
+      "method": "Theoretical",
+      "acceptance_rate": 0.95,
+      "draft_size": 2,
+      "expected_accepted_tokens": 3.75,
+      "speedup": 2.25
+    },
+    {
+      "method": "Theoretical",
+      "acceptance_rate": 0.95,
+      "draft_size": 4,
+      "expected_accepted_tokens": 6.97,
+      "speedup": 2.99
+    },
+    {
+      "method": "Theoretical",
+      "acceptance_rate": 0.95,
+      "draft_size": 6,
+      "expected_accepted_tokens": 9.71,
+      "speedup": 3.24
+    },
+    {
+      "method": "Theoretical",
+      "acceptance_rate": 0.95,
+      "draft_size": 8,
+      "expected_accepted_tokens": 12.04,
+      "speedup": 3.28
+    },
+    {
+      "method": "Theoretical",
+      "acceptance_rate": 0.95,
+      "draft_size": 10,
+      "expected_accepted_tokens": 14.01,
+      "speedup": 3.23
+    },
+    {
+      "method": "Theoretical",
+      "acceptance_rate": 0.95,
+      "draft_size": 16,
+      "expected_accepted_tokens": 18.24,
+      "speedup": 2.88
+    }
+  ],
+  "experiment4_vllm_throughput": [
+    {
+      "method": "vLLM Baseline",
+      "batch_size": 8,
+      "max_tokens": 16,
+      "total_output_tokens": 128,
+      "total_prompt_tokens": 48,
+      "total_time_ms": 118.0,
+      "output_tps": 1085.0,
+      "total_tps": 1491.0
+    },
+    {
+      "method": "vLLM Baseline",
+      "batch_size": 8,
+      "max_tokens": 32,
+      "total_output_tokens": 256,
+      "total_prompt_tokens": 48,
+      "total_time_ms": 179.8,
+      "output_tps": 1424.0,
+      "total_tps": 1691.0
+    },
+    {
+      "method": "vLLM Baseline",
+      "batch_size": 8,
+      "max_tokens": 64,
+      "total_output_tokens": 512,
+      "total_prompt_tokens": 48,
+      "total_time_ms": 327.0,
+      "output_tps": 1566.0,
+      "total_tps": 1712.0
+    },
+    {
+      "method": "vLLM Baseline",
+      "batch_size": 8,
+      "max_tokens": 128,
+      "total_output_tokens": 1024,
+      "total_prompt_tokens": 48,
+      "total_time_ms": 641.6,
+      "output_tps": 1596.0,
+      "total_tps": 1671.0
+    },
+    {
+      "method": "vLLM Baseline",
+      "batch_size": 8,
+      "max_tokens": 256,
+      "total_output_tokens": 2048,
+      "total_prompt_tokens": 48,
+      "total_time_ms": 1277.3,
+      "output_tps": 1603.0,
+      "total_tps": 1641.0
+    },
+    {
+      "method": "Simulated Speculation",
+      "max_tokens": 16,
+      "gamma": 4,
+      "acceptance_rate": 0.7,
+      "expected_speedup": 1.15,
+      "num_spec_rounds": 6.3
+    },
+    {
+      "method": "Simulated Speculation",
+      "max_tokens": 16,
+      "gamma": 4,
+      "acceptance_rate": 0.85,
+      "expected_speedup": 1.45,
+      "num_spec_rounds": 5.0
+    },
+    {
+      "method": "Simulated Speculation",
+      "max_tokens": 16,
+      "gamma": 8,
+      "acceptance_rate": 0.7,
+      "expected_speedup": 0.92,
+      "num_spec_rounds": 5.1
+    },
+    {
+      "method": "Simulated Speculation",
+      "max_tokens": 16,
+      "gamma": 8,
+      "acceptance_rate": 0.85,
+      "expected_speedup": 1.43,
+      "num_spec_rounds": 3.3
+    },
+    {
+      "method": "Simulated Speculation",
+      "max_tokens": 32,
+      "gamma": 4,
+      "acceptance_rate": 0.7,
+      "expected_speedup": 1.15,
+      "num_spec_rounds": 12.6
+    },
+    {
+      "method": "Simulated Speculation",
+      "max_tokens": 32,
+      "gamma": 4,
+      "acceptance_rate": 0.85,
+      "expected_speedup": 1.45,
+      "num_spec_rounds": 10.0
+    },
+    {
+      "method": "Simulated Speculation",
+      "max_tokens": 32,
+      "gamma": 8,
+      "acceptance_rate": 0.7,
+      "expected_speedup": 0.92,
+      "num_spec_rounds": 10.2
+    },
+    {
+      "method": "Simulated Speculation",
+      "max_tokens": 32,
+      "gamma": 8,
+      "acceptance_rate": 0.85,
+      "expected_speedup": 1.43,
+      "num_spec_rounds": 6.6
+    },
+    {
+      "method": "Simulated Speculation",
+      "max_tokens": 64,
+      "gamma": 4,
+      "acceptance_rate": 0.7,
+      "expected_speedup": 1.15,
+      "num_spec_rounds": 25.3
+    },
+    {
+      "method": "Simulated Speculation",
+      "max_tokens": 64,
+      "gamma": 4,
+      "acceptance_rate": 0.85,
+      "expected_speedup": 1.45,
+      "num_spec_rounds": 20.1
+    },
+    {
+      "method": "Simulated Speculation",
+      "max_tokens": 64,
+      "gamma": 8,
+      "acceptance_rate": 0.7,
+      "expected_speedup": 0.92,
+      "num_spec_rounds": 20.4
+    },
+    {
+      "method": "Simulated Speculation",
+      "max_tokens": 64,
+      "gamma": 8,
+      "acceptance_rate": 0.85,
+      "expected_speedup": 1.43,
+      "num_spec_rounds": 13.2
+    },
+    {
+      "method": "Simulated Speculation",
+      "max_tokens": 128,
+      "gamma": 4,
+      "acceptance_rate": 0.7,
+      "expected_speedup": 1.15,
+      "num_spec_rounds": 50.5
+    },
+    {
+      "method": "Simulated Speculation",
+      "max_tokens": 128,
+      "gamma": 4,
+      "acceptance_rate": 0.85,
+      "expected_speedup": 1.45,
+      "num_spec_rounds": 40.2
+    },
+    {
+      "method": "Simulated Speculation",
+      "max_tokens": 128,
+      "gamma": 8,
+      "acceptance_rate": 0.7,
+      "expected_speedup": 0.92,
+      "num_spec_rounds": 40.7
+    },
+    {
+      "method": "Simulated Speculation",
+      "max_tokens": 128,
+      "gamma": 8,
+      "acceptance_rate": 0.85,
+      "expected_speedup": 1.43,
+      "num_spec_rounds": 26.4
+    },
+    {
+      "method": "Simulated Speculation",
+      "max_tokens": 256,
+      "gamma": 4,
+      "acceptance_rate": 0.7,
+      "expected_speedup": 1.15,
+      "num_spec_rounds": 101.1
+    },
+    {
+      "method": "Simulated Speculation",
+      "max_tokens": 256,
+      "gamma": 4,
+      "acceptance_rate": 0.85,
+      "expected_speedup": 1.45,
+      "num_spec_rounds": 80.3
+    },
+    {
+      "method": "Simulated Speculation",
+      "max_tokens": 256,
+      "gamma": 8,
+      "acceptance_rate": 0.7,
+      "expected_speedup": 0.92,
+      "num_spec_rounds": 81.5
+    },
+    {
+      "method": "Simulated Speculation",
+      "max_tokens": 256,
+      "gamma": 8,
+      "acceptance_rate": 0.85,
+      "expected_speedup": 1.43,
+      "num_spec_rounds": 52.8
+    }
+  ],
+  "metadata": {
+    "gpu": "NVIDIA L4",
+    "model": "Qwen2.5-0.5B-Instruct",
+    "vllm_version": "0.19.1"
+  }
+}
