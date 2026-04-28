@@ -1,0 +1,276 @@
+{
+  "experiment1_multi_throughput": [
+    {
+      "num_adapters": 1,
+      "rank": 8,
+      "avg_latency_ms": 221.4,
+      "tokens_per_s": 1156.2,
+      "gpu_memory_gb": 0.99,
+      "throughput_vs_single": 1.0
+    },
+    {
+      "num_adapters": 2,
+      "rank": 8,
+      "avg_latency_ms": 172.7,
+      "tokens_per_s": 1482.2,
+      "gpu_memory_gb": 1.021,
+      "throughput_vs_single": 1.282
+    },
+    {
+      "num_adapters": 4,
+      "rank": 8,
+      "avg_latency_ms": 181.3,
+      "tokens_per_s": 1412.3,
+      "gpu_memory_gb": 1.026,
+      "throughput_vs_single": 1.222
+    },
+    {
+      "num_adapters": 8,
+      "rank": 8,
+      "avg_latency_ms": 191.8,
+      "tokens_per_s": 1335.0,
+      "gpu_memory_gb": 1.034,
+      "throughput_vs_single": 1.155
+    },
+    {
+      "num_adapters": 16,
+      "rank": 8,
+      "avg_latency_ms": 214.6,
+      "tokens_per_s": 1192.8,
+      "gpu_memory_gb": 1.051,
+      "throughput_vs_single": 1.032
+    }
+  ],
+  "experiment2_memory_overhead": [
+    {
+      "rank": 1,
+      "num_adapters": 8,
+      "total_lora_mem_mb": 2.2,
+      "per_adapter_mb": 0.3,
+      "gpu_total_gb": 0.999
+    },
+    {
+      "rank": 2,
+      "num_adapters": 8,
+      "total_lora_mem_mb": 4.4,
+      "per_adapter_mb": 0.6,
+      "gpu_total_gb": 1.001
+    },
+    {
+      "rank": 4,
+      "num_adapters": 8,
+      "total_lora_mem_mb": 8.9,
+      "per_adapter_mb": 1.1,
+      "gpu_total_gb": 1.005
+    },
+    {
+      "rank": 8,
+      "num_adapters": 8,
+      "total_lora_mem_mb": 17.7,
+      "per_adapter_mb": 2.2,
+      "gpu_total_gb": 1.014
+    },
+    {
+      "rank": 16,
+      "num_adapters": 8,
+      "total_lora_mem_mb": 35.4,
+      "per_adapter_mb": 4.4,
+      "gpu_total_gb": 1.031
+    },
+    {
+      "rank": 32,
+      "num_adapters": 8,
+      "total_lora_mem_mb": 70.9,
+      "per_adapter_mb": 8.9,
+      "gpu_total_gb": 1.066
+    },
+    {
+      "rank": 64,
+      "num_adapters": 8,
+      "total_lora_mem_mb": 141.7,
+      "per_adapter_mb": 17.7,
+      "gpu_total_gb": 1.135
+    }
+  ],
+  "experiment3_same_vs_mixed": [
+    {
+      "batch_size": 1,
+      "same_lora_ms": 39.3,
+      "mixed_lora_ms": 47.6,
+      "slowdown": 1.21,
+      "same_tps": 1627.0,
+      "mixed_tps": 1344.0
+    },
+    {
+      "batch_size": 2,
+      "same_lora_ms": 41.0,
+      "mixed_lora_ms": 99.1,
+      "slowdown": 2.42,
+      "same_tps": 3124.0,
+      "mixed_tps": 1292.0
+    },
+    {
+      "batch_size": 4,
+      "same_lora_ms": 39.9,
+      "mixed_lora_ms": 191.8,
+      "slowdown": 4.81,
+      "same_tps": 6414.0,
+      "mixed_tps": 1334.0
+    },
+    {
+      "batch_size": 8,
+      "same_lora_ms": 39.9,
+      "mixed_lora_ms": 384.9,
+      "slowdown": 9.64,
+      "same_tps": 12822.0,
+      "mixed_tps": 1330.0
+    }
+  ],
+  "experiment4_rank_impact": [
+    {
+      "rank": 0,
+      "latency_ms": 29.46,
+      "note": "No LoRA baseline"
+    },
+    {
+      "rank": 1,
+      "latency_ms": 39.25,
+      "overhead_pct": 33.2
+    },
+    {
+      "rank": 2,
+      "latency_ms": 38.31,
+      "overhead_pct": 30.0
+    },
+    {
+      "rank": 4,
+      "latency_ms": 39.42,
+      "overhead_pct": 33.8
+    },
+    {
+      "rank": 8,
+      "latency_ms": 39.16,
+      "overhead_pct": 32.9
+    },
+    {
+      "rank": 16,
+      "latency_ms": 39.56,
+      "overhead_pct": 34.3
+    },
+    {
+      "rank": 32,
+      "latency_ms": 39.05,
+      "overhead_pct": 32.5
+    },
+    {
+      "rank": 64,
+      "latency_ms": 39.23,
+      "overhead_pct": 33.1
+    }
+  ],
+  "experiment5_max_adapters": [
+    {
+      "num_adapters": 20,
+      "rank": 8,
+      "memory_gb": 1.04,
+      "per_adapter_mb": 2.21
+    },
+    {
+      "num_adapters": 40,
+      "rank": 8,
+      "memory_gb": 1.083,
+      "per_adapter_mb": 2.21
+    },
+    {
+      "num_adapters": 60,
+      "rank": 8,
+      "memory_gb": 1.126,
+      "per_adapter_mb": 2.21
+    },
+    {
+      "num_adapters": 80,
+      "rank": 8,
+      "memory_gb": 1.17,
+      "per_adapter_mb": 2.21
+    },
+    {
+      "num_adapters": 100,
+      "rank": 8,
+      "memory_gb": 1.213,
+      "per_adapter_mb": 2.21
+    },
+    {
+      "num_adapters": 120,
+      "rank": 8,
+      "memory_gb": 1.256,
+      "per_adapter_mb": 2.21
+    },
+    {
+      "num_adapters": 140,
+      "rank": 8,
+      "memory_gb": 1.299,
+      "per_adapter_mb": 2.21
+    },
+    {
+      "num_adapters": 160,
+      "rank": 8,
+      "memory_gb": 1.343,
+      "per_adapter_mb": 2.21
+    },
+    {
+      "num_adapters": 180,
+      "rank": 8,
+      "memory_gb": 1.386,
+      "per_adapter_mb": 2.21
+    },
+    {
+      "num_adapters": 200,
+      "rank": 8,
+      "memory_gb": 1.429,
+      "per_adapter_mb": 2.21
+    },
+    {
+      "num_adapters": 220,
+      "rank": 8,
+      "memory_gb": 1.472,
+      "per_adapter_mb": 2.21
+    },
+    {
+      "num_adapters": 240,
+      "rank": 8,
+      "memory_gb": 1.516,
+      "per_adapter_mb": 2.21
+    },
+    {
+      "num_adapters": 260,
+      "rank": 8,
+      "memory_gb": 1.559,
+      "per_adapter_mb": 2.21
+    },
+    {
+      "num_adapters": 280,
+      "rank": 8,
+      "memory_gb": 1.602,
+      "per_adapter_mb": 2.21
+    },
+    {
+      "num_adapters": 300,
+      "rank": 8,
+      "memory_gb": 1.645,
+      "per_adapter_mb": 2.21
+    },
+    {
+      "num_adapters": 300,
+      "rank": 8,
+      "memory_gb": 1.645,
+      "per_adapter_mb": 2.21,
+      "note": "max adapters before limit"
+    }
+  ],
+  "metadata": {
+    "gpu": "NVIDIA L4",
+    "model": "Qwen2.5-0.5B-Instruct",
+    "peft_version": "0.19.1",
+    "torch_version": "2.6.0+cu124"
+  }
+}
