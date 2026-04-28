@@ -76,7 +76,7 @@ def experiment1_autoregressive_profile():
         kv_size_mb = sum(
             p.numel() * p.element_size()
             for layer_past in past
-            for p in layer_past
+            for p in layer_past if p is not None
         ) / (1024 * 1024)
 
         result = {
