@@ -1,0 +1,144 @@
+{
+  "experiment1_ttft": [
+    {
+      "question_idx": 0,
+      "prompt_tokens": 1201,
+      "ttft_no_cache_ms": 1136.4,
+      "ttft_cached_ms": 854.0,
+      "speedup": 1.33
+    },
+    {
+      "question_idx": 1,
+      "prompt_tokens": 1201,
+      "ttft_no_cache_ms": 188.7,
+      "ttft_cached_ms": 166.4,
+      "speedup": 1.13
+    },
+    {
+      "question_idx": 2,
+      "prompt_tokens": 1201,
+      "ttft_no_cache_ms": 189.8,
+      "ttft_cached_ms": 168.2,
+      "speedup": 1.13
+    },
+    {
+      "question_idx": 3,
+      "prompt_tokens": 1201,
+      "ttft_no_cache_ms": 187.0,
+      "ttft_cached_ms": 166.5,
+      "speedup": 1.12
+    },
+    {
+      "question_idx": 4,
+      "prompt_tokens": 1201,
+      "ttft_no_cache_ms": 189.0,
+      "ttft_cached_ms": 165.7,
+      "speedup": 1.14
+    }
+  ],
+  "experiment2_prefix_length": [
+    {
+      "prefix_length_tokens": 43,
+      "ttft_cold_ms": 99.1,
+      "ttft_warm_ms": 84.1,
+      "speedup": 1.18,
+      "saved_ms": 15.0
+    },
+    {
+      "prefix_length_tokens": 85,
+      "ttft_cold_ms": 84.7,
+      "ttft_warm_ms": 84.4,
+      "speedup": 1.0,
+      "saved_ms": 0.4
+    },
+    {
+      "prefix_length_tokens": 176,
+      "ttft_cold_ms": 84.4,
+      "ttft_warm_ms": 84.5,
+      "speedup": 1.0,
+      "saved_ms": -0.0
+    },
+    {
+      "prefix_length_tokens": 351,
+      "ttft_cold_ms": 85.4,
+      "ttft_warm_ms": 84.5,
+      "speedup": 1.01,
+      "saved_ms": 0.9
+    },
+    {
+      "prefix_length_tokens": 701,
+      "ttft_cold_ms": 87.2,
+      "ttft_warm_ms": 85.0,
+      "speedup": 1.03,
+      "saved_ms": 2.2
+    },
+    {
+      "prefix_length_tokens": 1051,
+      "ttft_cold_ms": 88.5,
+      "ttft_warm_ms": 86.3,
+      "speedup": 1.03,
+      "saved_ms": 2.3
+    }
+  ],
+  "experiment3_eviction": [
+    {
+      "doc_idx": 0,
+      "cold_ms": 113.5,
+      "warm_ms": 86.6,
+      "after_eviction_ms": 86.5,
+      "warm_speedup": 1.31,
+      "eviction_penalty": 1.0
+    },
+    {
+      "doc_idx": 1,
+      "cold_ms": 100.6,
+      "warm_ms": 86.8,
+      "after_eviction_ms": 86.6,
+      "warm_speedup": 1.16,
+      "eviction_penalty": 1.0
+    },
+    {
+      "doc_idx": 2,
+      "cold_ms": 100.1,
+      "warm_ms": 86.3,
+      "after_eviction_ms": 85.7,
+      "warm_speedup": 1.16,
+      "eviction_penalty": 0.99
+    }
+  ],
+  "experiment4_batch": [
+    {
+      "batch_size": 1,
+      "total_time_ms": 101.6,
+      "per_request_ms": 101.6,
+      "total_tokens": 16,
+      "tokens_per_s": 158.0
+    },
+    {
+      "batch_size": 2,
+      "total_time_ms": 267.2,
+      "per_request_ms": 133.6,
+      "total_tokens": 32,
+      "tokens_per_s": 120.0
+    },
+    {
+      "batch_size": 4,
+      "total_time_ms": 104.5,
+      "per_request_ms": 26.1,
+      "total_tokens": 64,
+      "tokens_per_s": 612.0
+    },
+    {
+      "batch_size": 8,
+      "total_time_ms": 109.1,
+      "per_request_ms": 13.6,
+      "total_tokens": 128,
+      "tokens_per_s": 1173.0
+    }
+  ],
+  "metadata": {
+    "gpu": "NVIDIA L4",
+    "model": "Qwen2.5-0.5B-Instruct",
+    "vllm_version": "0.19.1"
+  }
+}

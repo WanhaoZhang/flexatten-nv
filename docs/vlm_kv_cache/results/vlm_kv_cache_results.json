@@ -1,0 +1,388 @@
+{
+  "experiment1_visual_tokens": [
+    {
+      "resolution": "224x224",
+      "pixels": [
+        224,
+        224
+      ],
+      "patch_size": 14,
+      "num_visual_tokens": 256,
+      "kv_cache_mb": 4.0
+    },
+    {
+      "resolution": "224x224",
+      "pixels": [
+        224,
+        224
+      ],
+      "patch_size": 16,
+      "num_visual_tokens": 196,
+      "kv_cache_mb": 3.06
+    },
+    {
+      "resolution": "224x224",
+      "pixels": [
+        224,
+        224
+      ],
+      "patch_size": 32,
+      "num_visual_tokens": 49,
+      "kv_cache_mb": 0.77
+    },
+    {
+      "resolution": "512x512",
+      "pixels": [
+        512,
+        512
+      ],
+      "patch_size": 14,
+      "num_visual_tokens": 1369,
+      "kv_cache_mb": 21.39
+    },
+    {
+      "resolution": "512x512",
+      "pixels": [
+        512,
+        512
+      ],
+      "patch_size": 16,
+      "num_visual_tokens": 1024,
+      "kv_cache_mb": 16.0
+    },
+    {
+      "resolution": "512x512",
+      "pixels": [
+        512,
+        512
+      ],
+      "patch_size": 32,
+      "num_visual_tokens": 256,
+      "kv_cache_mb": 4.0
+    },
+    {
+      "resolution": "1080p",
+      "pixels": [
+        1080,
+        720
+      ],
+      "patch_size": 14,
+      "num_visual_tokens": 4056,
+      "kv_cache_mb": 63.38
+    },
+    {
+      "resolution": "1080p",
+      "pixels": [
+        1080,
+        720
+      ],
+      "patch_size": 16,
+      "num_visual_tokens": 3060,
+      "kv_cache_mb": 47.81
+    },
+    {
+      "resolution": "1080p",
+      "pixels": [
+        1080,
+        720
+      ],
+      "patch_size": 32,
+      "num_visual_tokens": 782,
+      "kv_cache_mb": 12.22
+    },
+    {
+      "resolution": "1080p_FHD",
+      "pixels": [
+        1920,
+        1080
+      ],
+      "patch_size": 14,
+      "num_visual_tokens": 10764,
+      "kv_cache_mb": 168.19
+    },
+    {
+      "resolution": "1080p_FHD",
+      "pixels": [
+        1920,
+        1080
+      ],
+      "patch_size": 16,
+      "num_visual_tokens": 8160,
+      "kv_cache_mb": 127.5
+    },
+    {
+      "resolution": "1080p_FHD",
+      "pixels": [
+        1920,
+        1080
+      ],
+      "patch_size": 32,
+      "num_visual_tokens": 2040,
+      "kv_cache_mb": 31.88
+    },
+    {
+      "resolution": "1440p_QHD",
+      "pixels": [
+        2560,
+        1440
+      ],
+      "patch_size": 14,
+      "num_visual_tokens": 18849,
+      "kv_cache_mb": 294.52
+    },
+    {
+      "resolution": "1440p_QHD",
+      "pixels": [
+        2560,
+        1440
+      ],
+      "patch_size": 16,
+      "num_visual_tokens": 14400,
+      "kv_cache_mb": 225.0
+    },
+    {
+      "resolution": "1440p_QHD",
+      "pixels": [
+        2560,
+        1440
+      ],
+      "patch_size": 32,
+      "num_visual_tokens": 3600,
+      "kv_cache_mb": 56.25
+    },
+    {
+      "resolution": "4K_UHD",
+      "pixels": [
+        3840,
+        2160
+      ],
+      "patch_size": 14,
+      "num_visual_tokens": 42625,
+      "kv_cache_mb": 666.02
+    },
+    {
+      "resolution": "4K_UHD",
+      "pixels": [
+        3840,
+        2160
+      ],
+      "patch_size": 16,
+      "num_visual_tokens": 32400,
+      "kv_cache_mb": 506.25
+    },
+    {
+      "resolution": "4K_UHD",
+      "pixels": [
+        3840,
+        2160
+      ],
+      "patch_size": 32,
+      "num_visual_tokens": 8160,
+      "kv_cache_mb": 127.5
+    }
+  ],
+  "experiment2_kv_comparison": [
+    {
+      "name": "Short text (128 tok)",
+      "text_tokens": 128,
+      "num_images": 0,
+      "visual_per_image": 0,
+      "total_tokens": 128,
+      "visual_token_pct": 0.0,
+      "kv_cache_mb": 64.0,
+      "kv_cache_gb": 0.062,
+      "l4_usage_pct": 0.3
+    },
+    {
+      "name": "Long text (4096 tok)",
+      "text_tokens": 4096,
+      "num_images": 0,
+      "visual_per_image": 0,
+      "total_tokens": 4096,
+      "visual_token_pct": 0.0,
+      "kv_cache_mb": 2048.0,
+      "kv_cache_gb": 2.0,
+      "l4_usage_pct": 8.3
+    },
+    {
+      "name": "Text + 1 image (576 vis tok)",
+      "text_tokens": 256,
+      "num_images": 1,
+      "visual_per_image": 576,
+      "total_tokens": 832,
+      "visual_token_pct": 69.2,
+      "kv_cache_mb": 416.0,
+      "kv_cache_gb": 0.406,
+      "l4_usage_pct": 1.7
+    },
+    {
+      "name": "Text + 1 1080p image",
+      "text_tokens": 256,
+      "num_images": 1,
+      "visual_per_image": 3528,
+      "total_tokens": 3784,
+      "visual_token_pct": 93.2,
+      "kv_cache_mb": 1892.0,
+      "kv_cache_gb": 1.848,
+      "l4_usage_pct": 7.7
+    },
+    {
+      "name": "Text + 1 4K image",
+      "text_tokens": 256,
+      "num_images": 1,
+      "visual_per_image": 18900,
+      "total_tokens": 19156,
+      "visual_token_pct": 98.7,
+      "kv_cache_mb": 9578.0,
+      "kv_cache_gb": 9.354,
+      "l4_usage_pct": 39.0
+    },
+    {
+      "name": "Text + 5 images (1080p)",
+      "text_tokens": 256,
+      "num_images": 5,
+      "visual_per_image": 3528,
+      "total_tokens": 17896,
+      "visual_token_pct": 98.6,
+      "kv_cache_mb": 8948.0,
+      "kv_cache_gb": 8.738,
+      "l4_usage_pct": 36.4
+    },
+    {
+      "name": "Text + 10 images (1080p)",
+      "text_tokens": 256,
+      "num_images": 10,
+      "visual_per_image": 3528,
+      "total_tokens": 35536,
+      "visual_token_pct": 99.3,
+      "kv_cache_mb": 17768.0,
+      "kv_cache_gb": 17.352,
+      "l4_usage_pct": 72.3
+    },
+    {
+      "name": "Video (100 frames)",
+      "text_tokens": 128,
+      "num_images": 100,
+      "visual_per_image": 576,
+      "total_tokens": 57728,
+      "visual_token_pct": 99.8,
+      "kv_cache_mb": 28864.0,
+      "kv_cache_gb": 28.188,
+      "l4_usage_pct": 117.4
+    }
+  ],
+  "experiment3_prefill_simulation": [
+    {
+      "name": "128 text tokens",
+      "tokens": 128,
+      "attn_flops_T": 0.0,
+      "total_flops_T": 0.55,
+      "compute_limited_ms": 9.2,
+      "memory_limited_ms": 50.1,
+      "estimated_ms": 50.1,
+      "bottleneck": "memory"
+    },
+    {
+      "name": "1024 text tokens",
+      "tokens": 1024,
+      "attn_flops_T": 0.27,
+      "total_flops_T": 4.67,
+      "compute_limited_ms": 77.9,
+      "memory_limited_ms": 50.1,
+      "estimated_ms": 77.9,
+      "bottleneck": "compute"
+    },
+    {
+      "name": "1 image (576 tok)",
+      "tokens": 576,
+      "attn_flops_T": 0.09,
+      "total_flops_T": 2.56,
+      "compute_limited_ms": 42.7,
+      "memory_limited_ms": 50.1,
+      "estimated_ms": 50.1,
+      "bottleneck": "memory"
+    },
+    {
+      "name": "1 1080p image (3528 tok)",
+      "tokens": 3528,
+      "attn_flops_T": 3.26,
+      "total_flops_T": 18.42,
+      "compute_limited_ms": 306.9,
+      "memory_limited_ms": 50.2,
+      "estimated_ms": 306.9,
+      "bottleneck": "compute"
+    },
+    {
+      "name": "1 4K image (18900 tok)",
+      "tokens": 18900,
+      "attn_flops_T": 93.64,
+      "total_flops_T": 174.82,
+      "compute_limited_ms": 2913.6,
+      "memory_limited_ms": 50.6,
+      "estimated_ms": 2913.6,
+      "bottleneck": "compute"
+    },
+    {
+      "name": "Text + 1 img (3784 tok)",
+      "tokens": 3784,
+      "attn_flops_T": 3.75,
+      "total_flops_T": 20.01,
+      "compute_limited_ms": 333.4,
+      "memory_limited_ms": 50.2,
+      "estimated_ms": 333.4,
+      "bottleneck": "compute"
+    },
+    {
+      "name": "Text + 5 imgs (17920 tok)",
+      "tokens": 17920,
+      "attn_flops_T": 84.18,
+      "total_flops_T": 161.15,
+      "compute_limited_ms": 2685.8,
+      "memory_limited_ms": 50.6,
+      "estimated_ms": 2685.8,
+      "bottleneck": "compute"
+    }
+  ],
+  "experiment4_cache_strategies": [
+    {
+      "strategy": "No caching",
+      "description": "Each request recomputes all tokens",
+      "cache_hit_tokens": 0,
+      "cache_miss_tokens": 640,
+      "compute_saving_pct": 0.0,
+      "per_request_cache_mb": 0.0,
+      "total_10_requests_gb": 0.31
+    },
+    {
+      "strategy": "Prefix cache (system prompt)",
+      "description": "Cache shared system prompt only",
+      "cache_hit_tokens": 32,
+      "cache_miss_tokens": 608,
+      "compute_saving_pct": 5.0,
+      "per_request_cache_mb": 16.0,
+      "total_10_requests_gb": 0.45
+    },
+    {
+      "strategy": "Image cache",
+      "description": "Cache visual tokens (images often reused)",
+      "cache_hit_tokens": 576,
+      "cache_miss_tokens": 64,
+      "compute_saving_pct": 90.0,
+      "per_request_cache_mb": 288.0,
+      "total_10_requests_gb": 2.84
+    },
+    {
+      "strategy": "Full multimodal prefix",
+      "description": "Cache system prompt + image tokens",
+      "cache_hit_tokens": 608,
+      "cache_miss_tokens": 32,
+      "compute_saving_pct": 95.0,
+      "per_request_cache_mb": 304.0,
+      "total_10_requests_gb": 2.98
+    }
+  ],
+  "metadata": {
+    "gpu": "NVIDIA L4",
+    "analysis_type": "mathematical_modeling + tensor_simulation"
+  }
+}

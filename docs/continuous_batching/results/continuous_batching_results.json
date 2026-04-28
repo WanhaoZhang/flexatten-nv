@@ -1,0 +1,235 @@
+{
+  "experiment1_variable_output": [
+    {
+      "request_idx": 0,
+      "max_tokens": 10,
+      "generated_tokens": 10
+    },
+    {
+      "request_idx": 1,
+      "max_tokens": 30,
+      "generated_tokens": 18
+    },
+    {
+      "request_idx": 2,
+      "max_tokens": 60,
+      "generated_tokens": 18
+    },
+    {
+      "request_idx": 3,
+      "max_tokens": 120,
+      "generated_tokens": 18
+    },
+    {
+      "request_idx": 4,
+      "max_tokens": 200,
+      "generated_tokens": 18
+    },
+    {
+      "total_time_ms": 138.2
+    }
+  ],
+  "experiment2_throughput": [
+    {
+      "batch_size": 1,
+      "total_time_ms": 335.7,
+      "total_tokens": 64,
+      "tokens_per_s": 191.0,
+      "per_request_ms": 335.7
+    },
+    {
+      "batch_size": 2,
+      "total_time_ms": 334.2,
+      "total_tokens": 128,
+      "tokens_per_s": 383.0,
+      "per_request_ms": 167.1
+    },
+    {
+      "batch_size": 4,
+      "total_time_ms": 325.1,
+      "total_tokens": 256,
+      "tokens_per_s": 788.0,
+      "per_request_ms": 81.3
+    },
+    {
+      "batch_size": 8,
+      "total_time_ms": 327.5,
+      "total_tokens": 512,
+      "tokens_per_s": 1563.0,
+      "per_request_ms": 40.9
+    },
+    {
+      "batch_size": 16,
+      "total_time_ms": 343.8,
+      "total_tokens": 1024,
+      "tokens_per_s": 2978.0,
+      "per_request_ms": 21.5
+    },
+    {
+      "batch_size": 32,
+      "total_time_ms": 372.4,
+      "total_tokens": 2048,
+      "tokens_per_s": 5499.0,
+      "per_request_ms": 11.6
+    }
+  ],
+  "experiment3_mixed_lengths": [
+    {
+      "label": "all_short",
+      "total_time_ms": 112.7,
+      "total_tokens": 128,
+      "tokens_per_s": 1136.0,
+      "gen_lengths": [
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16
+      ]
+    },
+    {
+      "label": "all_long",
+      "total_time_ms": 638.3,
+      "total_tokens": 1024,
+      "tokens_per_s": 1604.0,
+      "gen_lengths": [
+        128,
+        128,
+        128,
+        128,
+        128,
+        128,
+        128,
+        128
+      ]
+    },
+    {
+      "label": "mixed",
+      "total_time_ms": 637.4,
+      "total_tokens": 576,
+      "tokens_per_s": 904.0,
+      "gen_lengths": [
+        16,
+        128,
+        16,
+        128,
+        16,
+        128,
+        16,
+        128
+      ]
+    }
+  ],
+  "experiment4_concurrent": [
+    {
+      "request_idx": 0,
+      "max_tokens": 10,
+      "generated_tokens": 10,
+      "throughput_tok_per_s": 14.9
+    },
+    {
+      "request_idx": 1,
+      "max_tokens": 10,
+      "generated_tokens": 10,
+      "throughput_tok_per_s": 14.9
+    },
+    {
+      "request_idx": 2,
+      "max_tokens": 32,
+      "generated_tokens": 32,
+      "throughput_tok_per_s": 47.6
+    },
+    {
+      "request_idx": 3,
+      "max_tokens": 32,
+      "generated_tokens": 32,
+      "throughput_tok_per_s": 47.6
+    },
+    {
+      "request_idx": 4,
+      "max_tokens": 64,
+      "generated_tokens": 64,
+      "throughput_tok_per_s": 95.2
+    },
+    {
+      "request_idx": 5,
+      "max_tokens": 64,
+      "generated_tokens": 64,
+      "throughput_tok_per_s": 95.2
+    },
+    {
+      "request_idx": 6,
+      "max_tokens": 128,
+      "generated_tokens": 128,
+      "throughput_tok_per_s": 190.4
+    },
+    {
+      "request_idx": 7,
+      "max_tokens": 128,
+      "generated_tokens": 128,
+      "throughput_tok_per_s": 190.4
+    },
+    {
+      "request_idx": 8,
+      "max_tokens": 10,
+      "generated_tokens": 10,
+      "throughput_tok_per_s": 14.9
+    },
+    {
+      "request_idx": 9,
+      "max_tokens": 10,
+      "generated_tokens": 10,
+      "throughput_tok_per_s": 14.9
+    },
+    {
+      "request_idx": 10,
+      "max_tokens": 32,
+      "generated_tokens": 32,
+      "throughput_tok_per_s": 47.6
+    },
+    {
+      "request_idx": 11,
+      "max_tokens": 32,
+      "generated_tokens": 32,
+      "throughput_tok_per_s": 47.6
+    },
+    {
+      "request_idx": 12,
+      "max_tokens": 64,
+      "generated_tokens": 64,
+      "throughput_tok_per_s": 95.2
+    },
+    {
+      "request_idx": 13,
+      "max_tokens": 64,
+      "generated_tokens": 64,
+      "throughput_tok_per_s": 95.2
+    },
+    {
+      "request_idx": 14,
+      "max_tokens": 128,
+      "generated_tokens": 128,
+      "throughput_tok_per_s": 190.4
+    },
+    {
+      "request_idx": 15,
+      "max_tokens": 128,
+      "generated_tokens": 128,
+      "throughput_tok_per_s": 190.4
+    },
+    {
+      "total_requests": 16,
+      "total_time_ms": 672.2,
+      "total_tokens": 936,
+      "aggregate_tps": 1392.0
+    }
+  ],
+  "metadata": {
+    "gpu": "NVIDIA L4",
+    "model": "Qwen2.5-0.5B-Instruct",
+    "vllm_version": "0.19.1"
+  }
+}
