@@ -48,12 +48,10 @@ def experiment1_variable_output():
 
     for i, (mt, out) in enumerate(zip(max_tokens_list, outputs)):
         gen_tokens = len(out.outputs[0].token_ids)
-        latency = out.metrics.finish_time - out.metrics.arrival_time if hasattr(out, 'metrics') else total_time
         results.append({
             "request_idx": i,
             "max_tokens": mt,
             "generated_tokens": gen_tokens,
-            "finish_time_s": round(total_time, 3),
         })
         print(f"  Request {i}: max={mt}, gen={gen_tokens} tokens")
 
