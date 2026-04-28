@@ -371,7 +371,7 @@ if __name__ == "__main__":
     print("=" * 60)
     print("Project 11: GaLore vs DoRA vs LoRA Comparison")
     print(f"GPU: {torch.cuda.get_device_name()}")
-    print(f"GPU Memory: {torch.cuda.get_device_properties(0).total_mem / 1e9:.1f} GB")
+    print(f"GPU Memory: {torch.cuda.get_device_properties(0).total_memory / 1e9:.1f} GB")
     print("=" * 60)
 
     all_results = {}
