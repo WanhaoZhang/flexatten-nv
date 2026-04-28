@@ -1,0 +1,461 @@
+{
+  "experiment1_fp16_kv": [
+    {
+      "method": "FP16 KV Cache",
+      "batch_size": 1,
+      "total_time_ms": 323.5,
+      "tokens_per_s": 198.0,
+      "total_tokens": 64
+    },
+    {
+      "method": "FP16 KV Cache",
+      "batch_size": 4,
+      "total_time_ms": 331.8,
+      "tokens_per_s": 771.0,
+      "total_tokens": 256
+    },
+    {
+      "method": "FP16 KV Cache",
+      "batch_size": 8,
+      "total_time_ms": 327.2,
+      "tokens_per_s": 1565.0,
+      "total_tokens": 512
+    },
+    {
+      "method": "FP16 KV Cache",
+      "batch_size": 16,
+      "total_time_ms": 341.0,
+      "tokens_per_s": 3003.0,
+      "total_tokens": 1024
+    },
+    {
+      "method": "FP16 KV Cache",
+      "batch_size": 32,
+      "total_time_ms": 369.4,
+      "tokens_per_s": 5543.0,
+      "total_tokens": 2048
+    },
+    {
+      "method": "FP16 KV Cache",
+      "test": "long_sequence",
+      "prompt_tokens": 221,
+      "generated_tokens": 128,
+      "total_time_ms": 638.6,
+      "prefill_tps": 346.0
+    }
+  ],
+  "experiment2_fp8_kv": [
+    {
+      "method": "FP8 KV Cache",
+      "batch_size": 1,
+      "total_time_ms": 312.9,
+      "tokens_per_s": 205.0,
+      "total_tokens": 64
+    },
+    {
+      "method": "FP8 KV Cache",
+      "batch_size": 4,
+      "total_time_ms": 324.6,
+      "tokens_per_s": 789.0,
+      "total_tokens": 256
+    },
+    {
+      "method": "FP8 KV Cache",
+      "batch_size": 8,
+      "total_time_ms": 322.6,
+      "tokens_per_s": 1587.0,
+      "total_tokens": 512
+    },
+    {
+      "method": "FP8 KV Cache",
+      "batch_size": 16,
+      "total_time_ms": 334.7,
+      "tokens_per_s": 3060.0,
+      "total_tokens": 1024
+    },
+    {
+      "method": "FP8 KV Cache",
+      "batch_size": 32,
+      "total_time_ms": 358.2,
+      "tokens_per_s": 5717.0,
+      "total_tokens": 2048
+    },
+    {
+      "method": "FP8 KV Cache",
+      "test": "long_sequence",
+      "prompt_tokens": 221,
+      "generated_tokens": 128,
+      "total_time_ms": 624.5,
+      "prefill_tps": 354.0
+    }
+  ],
+  "experiment3_capacity": [
+    {
+      "method": "KV Cache (FP16)",
+      "bytes_per_element": 2,
+      "cost_per_token_bytes": 86016,
+      "max_single_request_tokens": 199728,
+      "max_single_request_tokens_k": 195.0
+    },
+    {
+      "method": "KV Cache (FP8)",
+      "bytes_per_element": 1,
+      "cost_per_token_bytes": 43008,
+      "max_single_request_tokens": 399457,
+      "max_single_request_tokens_k": 390.0
+    },
+    {
+      "method": "KV Cache (INT4)",
+      "bytes_per_element": 0.5,
+      "cost_per_token_bytes": 21504.0,
+      "max_single_request_tokens": 798915,
+      "max_single_request_tokens_k": 780.0
+    },
+    {
+      "method": "KV Capacity (FP16)",
+      "seq_len": 512,
+      "max_concurrent_requests": 390,
+      "kv_per_request_mb": 42.0
+    },
+    {
+      "method": "KV Capacity (FP16)",
+      "seq_len": 1024,
+      "max_concurrent_requests": 195,
+      "kv_per_request_mb": 84.0
+    },
+    {
+      "method": "KV Capacity (FP16)",
+      "seq_len": 2048,
+      "max_concurrent_requests": 97,
+      "kv_per_request_mb": 168.0
+    },
+    {
+      "method": "KV Capacity (FP16)",
+      "seq_len": 4096,
+      "max_concurrent_requests": 48,
+      "kv_per_request_mb": 336.0
+    },
+    {
+      "method": "KV Capacity (FP16)",
+      "seq_len": 8192,
+      "max_concurrent_requests": 24,
+      "kv_per_request_mb": 672.0
+    },
+    {
+      "method": "KV Capacity (FP16)",
+      "seq_len": 16384,
+      "max_concurrent_requests": 12,
+      "kv_per_request_mb": 1344.0
+    },
+    {
+      "method": "KV Capacity (FP16)",
+      "seq_len": 32768,
+      "max_concurrent_requests": 6,
+      "kv_per_request_mb": 2688.0
+    },
+    {
+      "method": "KV Capacity (FP8)",
+      "seq_len": 512,
+      "max_concurrent_requests": 780,
+      "kv_per_request_mb": 21.0
+    },
+    {
+      "method": "KV Capacity (FP8)",
+      "seq_len": 1024,
+      "max_concurrent_requests": 390,
+      "kv_per_request_mb": 42.0
+    },
+    {
+      "method": "KV Capacity (FP8)",
+      "seq_len": 2048,
+      "max_concurrent_requests": 195,
+      "kv_per_request_mb": 84.0
+    },
+    {
+      "method": "KV Capacity (FP8)",
+      "seq_len": 4096,
+      "max_concurrent_requests": 97,
+      "kv_per_request_mb": 168.0
+    },
+    {
+      "method": "KV Capacity (FP8)",
+      "seq_len": 8192,
+      "max_concurrent_requests": 48,
+      "kv_per_request_mb": 336.0
+    },
+    {
+      "method": "KV Capacity (FP8)",
+      "seq_len": 16384,
+      "max_concurrent_requests": 24,
+      "kv_per_request_mb": 672.0
+    },
+    {
+      "method": "KV Capacity (FP8)",
+      "seq_len": 32768,
+      "max_concurrent_requests": 12,
+      "kv_per_request_mb": 1344.0
+    },
+    {
+      "method": "KV Capacity (INT4)",
+      "seq_len": 512,
+      "max_concurrent_requests": 1560,
+      "kv_per_request_mb": 10.5
+    },
+    {
+      "method": "KV Capacity (INT4)",
+      "seq_len": 1024,
+      "max_concurrent_requests": 780,
+      "kv_per_request_mb": 21.0
+    },
+    {
+      "method": "KV Capacity (INT4)",
+      "seq_len": 2048,
+      "max_concurrent_requests": 390,
+      "kv_per_request_mb": 42.0
+    },
+    {
+      "method": "KV Capacity (INT4)",
+      "seq_len": 4096,
+      "max_concurrent_requests": 195,
+      "kv_per_request_mb": 84.0
+    },
+    {
+      "method": "KV Capacity (INT4)",
+      "seq_len": 8192,
+      "max_concurrent_requests": 97,
+      "kv_per_request_mb": 168.0
+    },
+    {
+      "method": "KV Capacity (INT4)",
+      "seq_len": 16384,
+      "max_concurrent_requests": 48,
+      "kv_per_request_mb": 336.0
+    },
+    {
+      "method": "KV Capacity (INT4)",
+      "seq_len": 32768,
+      "max_concurrent_requests": 24,
+      "kv_per_request_mb": 672.0
+    },
+    {
+      "method": "KV Usage (FP16)",
+      "batch_size": 1,
+      "seq_len": 2048,
+      "total_kv_mb": 168.0,
+      "kv_cache_utilization_pct": 1.0
+    },
+    {
+      "method": "KV Usage (FP16)",
+      "batch_size": 1,
+      "seq_len": 8192,
+      "total_kv_mb": 672.0,
+      "kv_cache_utilization_pct": 4.1
+    },
+    {
+      "method": "KV Usage (FP16)",
+      "batch_size": 1,
+      "seq_len": 32768,
+      "total_kv_mb": 2688.0,
+      "kv_cache_utilization_pct": 16.4
+    },
+    {
+      "method": "KV Usage (FP16)",
+      "batch_size": 8,
+      "seq_len": 2048,
+      "total_kv_mb": 1344.0,
+      "kv_cache_utilization_pct": 8.2
+    },
+    {
+      "method": "KV Usage (FP16)",
+      "batch_size": 8,
+      "seq_len": 8192,
+      "total_kv_mb": 5376.0,
+      "kv_cache_utilization_pct": 32.8
+    },
+    {
+      "method": "KV Usage (FP16)",
+      "batch_size": 8,
+      "seq_len": 32768,
+      "total_kv_mb": 21504.0,
+      "kv_cache_utilization_pct": 131.2
+    },
+    {
+      "method": "KV Usage (FP16)",
+      "batch_size": 32,
+      "seq_len": 2048,
+      "total_kv_mb": 5376.0,
+      "kv_cache_utilization_pct": 32.8
+    },
+    {
+      "method": "KV Usage (FP16)",
+      "batch_size": 32,
+      "seq_len": 8192,
+      "total_kv_mb": 21504.0,
+      "kv_cache_utilization_pct": 131.2
+    },
+    {
+      "method": "KV Usage (FP16)",
+      "batch_size": 32,
+      "seq_len": 32768,
+      "total_kv_mb": 86016.0,
+      "kv_cache_utilization_pct": 525.0
+    },
+    {
+      "method": "KV Usage (FP8)",
+      "batch_size": 1,
+      "seq_len": 2048,
+      "total_kv_mb": 84.0,
+      "kv_cache_utilization_pct": 0.5
+    },
+    {
+      "method": "KV Usage (FP8)",
+      "batch_size": 1,
+      "seq_len": 8192,
+      "total_kv_mb": 336.0,
+      "kv_cache_utilization_pct": 2.1
+    },
+    {
+      "method": "KV Usage (FP8)",
+      "batch_size": 1,
+      "seq_len": 32768,
+      "total_kv_mb": 1344.0,
+      "kv_cache_utilization_pct": 8.2
+    },
+    {
+      "method": "KV Usage (FP8)",
+      "batch_size": 8,
+      "seq_len": 2048,
+      "total_kv_mb": 672.0,
+      "kv_cache_utilization_pct": 4.1
+    },
+    {
+      "method": "KV Usage (FP8)",
+      "batch_size": 8,
+      "seq_len": 8192,
+      "total_kv_mb": 2688.0,
+      "kv_cache_utilization_pct": 16.4
+    },
+    {
+      "method": "KV Usage (FP8)",
+      "batch_size": 8,
+      "seq_len": 32768,
+      "total_kv_mb": 10752.0,
+      "kv_cache_utilization_pct": 65.6
+    },
+    {
+      "method": "KV Usage (FP8)",
+      "batch_size": 32,
+      "seq_len": 2048,
+      "total_kv_mb": 2688.0,
+      "kv_cache_utilization_pct": 16.4
+    },
+    {
+      "method": "KV Usage (FP8)",
+      "batch_size": 32,
+      "seq_len": 8192,
+      "total_kv_mb": 10752.0,
+      "kv_cache_utilization_pct": 65.6
+    },
+    {
+      "method": "KV Usage (FP8)",
+      "batch_size": 32,
+      "seq_len": 32768,
+      "total_kv_mb": 43008.0,
+      "kv_cache_utilization_pct": 262.5
+    },
+    {
+      "method": "KV Usage (INT4)",
+      "batch_size": 1,
+      "seq_len": 2048,
+      "total_kv_mb": 42.0,
+      "kv_cache_utilization_pct": 0.3
+    },
+    {
+      "method": "KV Usage (INT4)",
+      "batch_size": 1,
+      "seq_len": 8192,
+      "total_kv_mb": 168.0,
+      "kv_cache_utilization_pct": 1.0
+    },
+    {
+      "method": "KV Usage (INT4)",
+      "batch_size": 1,
+      "seq_len": 32768,
+      "total_kv_mb": 672.0,
+      "kv_cache_utilization_pct": 4.1
+    },
+    {
+      "method": "KV Usage (INT4)",
+      "batch_size": 8,
+      "seq_len": 2048,
+      "total_kv_mb": 336.0,
+      "kv_cache_utilization_pct": 2.1
+    },
+    {
+      "method": "KV Usage (INT4)",
+      "batch_size": 8,
+      "seq_len": 8192,
+      "total_kv_mb": 1344.0,
+      "kv_cache_utilization_pct": 8.2
+    },
+    {
+      "method": "KV Usage (INT4)",
+      "batch_size": 8,
+      "seq_len": 32768,
+      "total_kv_mb": 5376.0,
+      "kv_cache_utilization_pct": 32.8
+    },
+    {
+      "method": "KV Usage (INT4)",
+      "batch_size": 32,
+      "seq_len": 2048,
+      "total_kv_mb": 1344.0,
+      "kv_cache_utilization_pct": 8.2
+    },
+    {
+      "method": "KV Usage (INT4)",
+      "batch_size": 32,
+      "seq_len": 8192,
+      "total_kv_mb": 5376.0,
+      "kv_cache_utilization_pct": 32.8
+    },
+    {
+      "method": "KV Usage (INT4)",
+      "batch_size": 32,
+      "seq_len": 32768,
+      "total_kv_mb": 21504.0,
+      "kv_cache_utilization_pct": 131.2
+    }
+  ],
+  "experiment4_quality": [
+    {
+      "method": "FP16",
+      "avg_mse": 0.0,
+      "avg_cosine_similarity": 1.0,
+      "total_kv_mb": 84.0,
+      "vs_fp16_ratio": 1.0
+    },
+    {
+      "method": "FP8_E4M3",
+      "avg_mse": 1.1e-05,
+      "avg_cosine_similarity": 0.999995,
+      "total_kv_mb": 42.0,
+      "vs_fp16_ratio": 0.5
+    },
+    {
+      "method": "INT4_sim",
+      "avg_mse": 0.009944,
+      "avg_cosine_similarity": 0.995069,
+      "total_kv_mb": 21.0,
+      "vs_fp16_ratio": 0.25
+    }
+  ],
+  "metadata": {
+    "gpu": "NVIDIA L4",
+    "model": "Qwen2.5-0.5B-Instruct",
+    "vllm_version": "0.19.1",
+    "num_layers": 24,
+    "num_heads": 14,
+    "head_dim": 64
+  }
+}
