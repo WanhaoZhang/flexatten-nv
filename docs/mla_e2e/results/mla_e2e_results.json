@@ -1,0 +1,496 @@
+{
+  "experiment1_kv_compression": [
+    {
+      "method": "MHA (Qwen2.5-0.5B)",
+      "type": "MHA",
+      "num_layers": 24,
+      "num_kv_heads": 14,
+      "head_dim": 64,
+      "latent_dim": null,
+      "kv_per_token_per_layer_bytes": 3584,
+      "total_kv_mb": 336.0,
+      "compression_vs_mha": 1.0
+    },
+    {
+      "method": "GQA (4 KV heads)",
+      "type": "GQA",
+      "num_layers": 24,
+      "num_kv_heads": 4,
+      "head_dim": 64,
+      "latent_dim": null,
+      "kv_per_token_per_layer_bytes": 1024,
+      "total_kv_mb": 96.0,
+      "compression_vs_mha": 3.5
+    },
+    {
+      "method": "GQA (2 KV heads)",
+      "type": "GQA",
+      "num_layers": 24,
+      "num_kv_heads": 2,
+      "head_dim": 64,
+      "latent_dim": null,
+      "kv_per_token_per_layer_bytes": 512,
+      "total_kv_mb": 48.0,
+      "compression_vs_mha": 7.0
+    },
+    {
+      "method": "GQA (1 KV head=MQA)",
+      "type": "MQA",
+      "num_layers": 24,
+      "num_kv_heads": 1,
+      "head_dim": 64,
+      "latent_dim": null,
+      "kv_per_token_per_layer_bytes": 256,
+      "total_kv_mb": 24.0,
+      "compression_vs_mha": 14.0
+    },
+    {
+      "method": "MLA (latent=256)",
+      "type": "MLA",
+      "num_layers": 24,
+      "num_kv_heads": 14,
+      "head_dim": 64,
+      "latent_dim": 256,
+      "kv_per_token_per_layer_bytes": 1024,
+      "total_kv_mb": 96.0,
+      "compression_vs_mha": 3.5
+    },
+    {
+      "method": "MLA (latent=128)",
+      "type": "MLA",
+      "num_layers": 24,
+      "num_kv_heads": 14,
+      "head_dim": 64,
+      "latent_dim": 128,
+      "kv_per_token_per_layer_bytes": 512,
+      "total_kv_mb": 48.0,
+      "compression_vs_mha": 7.0
+    },
+    {
+      "method": "MLA (latent=64)",
+      "type": "MLA",
+      "num_layers": 24,
+      "num_kv_heads": 14,
+      "head_dim": 64,
+      "latent_dim": 64,
+      "kv_per_token_per_layer_bytes": 256,
+      "total_kv_mb": 24.0,
+      "compression_vs_mha": 14.0
+    },
+    {
+      "method": "DeepSeek-V2 MLA",
+      "type": "MLA",
+      "num_layers": 60,
+      "num_kv_heads": 128,
+      "head_dim": 128,
+      "latent_dim": 512,
+      "kv_per_token_per_layer_bytes": 2048,
+      "total_kv_mb": 480.0,
+      "compression_vs_mha": 0.7
+    },
+    {
+      "method": "Llama-3 70B GQA",
+      "type": "GQA",
+      "num_layers": 80,
+      "num_kv_heads": 8,
+      "head_dim": 128,
+      "latent_dim": null,
+      "kv_per_token_per_layer_bytes": 4096,
+      "total_kv_mb": 1280.0,
+      "compression_vs_mha": 0.26
+    }
+  ],
+  "experiment2_projection_latency": [
+    {
+      "method": "MHA KV Read",
+      "seq_len": 64,
+      "latency_ms": 0.028,
+      "kv_size_mb": 5.2
+    },
+    {
+      "method": "MLA (latent=64)",
+      "seq_len": 64,
+      "latent_dim": 64,
+      "latency_ms": 2.7,
+      "latent_size_mb": 0.0,
+      "vs_mha_latency": 97.43,
+      "compression_ratio": 28.0
+    },
+    {
+      "method": "MLA (latent=128)",
+      "seq_len": 64,
+      "latent_dim": 128,
+      "latency_ms": 0.274,
+      "latent_size_mb": 0.0,
+      "vs_mha_latency": 9.9,
+      "compression_ratio": 14.0
+    },
+    {
+      "method": "MLA (latent=256)",
+      "seq_len": 64,
+      "latent_dim": 256,
+      "latency_ms": 0.272,
+      "latent_size_mb": 0.0,
+      "vs_mha_latency": 9.81,
+      "compression_ratio": 7.0
+    },
+    {
+      "method": "MHA KV Read",
+      "seq_len": 256,
+      "latency_ms": 0.043,
+      "kv_size_mb": 21.0
+    },
+    {
+      "method": "MLA (latent=64)",
+      "seq_len": 256,
+      "latent_dim": 64,
+      "latency_ms": 0.271,
+      "latent_size_mb": 0.0,
+      "vs_mha_latency": 6.34,
+      "compression_ratio": 28.0
+    },
+    {
+      "method": "MLA (latent=128)",
+      "seq_len": 256,
+      "latent_dim": 128,
+      "latency_ms": 0.262,
+      "latent_size_mb": 0.1,
+      "vs_mha_latency": 6.11,
+      "compression_ratio": 14.0
+    },
+    {
+      "method": "MLA (latent=256)",
+      "seq_len": 256,
+      "latent_dim": 256,
+      "latency_ms": 0.277,
+      "latent_size_mb": 0.1,
+      "vs_mha_latency": 6.47,
+      "compression_ratio": 7.0
+    },
+    {
+      "method": "MHA KV Read",
+      "seq_len": 1024,
+      "latency_ms": 0.777,
+      "kv_size_mb": 84.0
+    },
+    {
+      "method": "MLA (latent=64)",
+      "seq_len": 1024,
+      "latent_dim": 64,
+      "latency_ms": 0.266,
+      "latent_size_mb": 0.1,
+      "vs_mha_latency": 0.34,
+      "compression_ratio": 28.0
+    },
+    {
+      "method": "MLA (latent=128)",
+      "seq_len": 1024,
+      "latent_dim": 128,
+      "latency_ms": 0.26,
+      "latent_size_mb": 0.2,
+      "vs_mha_latency": 0.33,
+      "compression_ratio": 14.0
+    },
+    {
+      "method": "MLA (latent=256)",
+      "seq_len": 1024,
+      "latent_dim": 256,
+      "latency_ms": 0.266,
+      "latent_size_mb": 0.5,
+      "vs_mha_latency": 0.34,
+      "compression_ratio": 7.0
+    },
+    {
+      "method": "MHA KV Read",
+      "seq_len": 4096,
+      "latency_ms": 3.004,
+      "kv_size_mb": 336.0
+    },
+    {
+      "method": "MLA (latent=64)",
+      "seq_len": 4096,
+      "latent_dim": 64,
+      "latency_ms": 0.3,
+      "latent_size_mb": 0.5,
+      "vs_mha_latency": 0.1,
+      "compression_ratio": 28.0
+    },
+    {
+      "method": "MLA (latent=128)",
+      "seq_len": 4096,
+      "latent_dim": 128,
+      "latency_ms": 0.357,
+      "latent_size_mb": 1.0,
+      "vs_mha_latency": 0.12,
+      "compression_ratio": 14.0
+    },
+    {
+      "method": "MLA (latent=256)",
+      "seq_len": 4096,
+      "latent_dim": 256,
+      "latency_ms": 0.502,
+      "latent_size_mb": 2.0,
+      "vs_mha_latency": 0.17,
+      "compression_ratio": 7.0
+    }
+  ],
+  "experiment3_memory_breakdown": [
+    {
+      "method": "Memory Breakdown",
+      "seq_len": 512,
+      "model_weights_mb": 942.0,
+      "kv_fp16_mb": 42.0,
+      "kv_mla_128_mb": 3.0,
+      "kv_mla_256_mb": 6.0,
+      "total_mha_mb": 984.3,
+      "total_mla_128_mb": 945.3,
+      "mla_kv_saving_pct": 92.9
+    },
+    {
+      "method": "Memory Breakdown",
+      "seq_len": 2048,
+      "model_weights_mb": 942.0,
+      "kv_fp16_mb": 168.0,
+      "kv_mla_128_mb": 12.0,
+      "kv_mla_256_mb": 24.0,
+      "total_mha_mb": 1110.3,
+      "total_mla_128_mb": 954.3,
+      "mla_kv_saving_pct": 92.9
+    },
+    {
+      "method": "Memory Breakdown",
+      "seq_len": 8192,
+      "model_weights_mb": 942.0,
+      "kv_fp16_mb": 672.0,
+      "kv_mla_128_mb": 48.0,
+      "kv_mla_256_mb": 96.0,
+      "total_mha_mb": 1614.3,
+      "total_mla_128_mb": 990.3,
+      "mla_kv_saving_pct": 92.9
+    },
+    {
+      "method": "Memory Breakdown",
+      "seq_len": 32768,
+      "model_weights_mb": 942.0,
+      "kv_fp16_mb": 2688.0,
+      "kv_mla_128_mb": 192.0,
+      "kv_mla_256_mb": 384.0,
+      "total_mha_mb": 3630.3,
+      "total_mla_128_mb": 1134.3,
+      "mla_kv_saving_pct": 92.9
+    },
+    {
+      "method": "Parameter Breakdown",
+      "total_params_M": 494.0,
+      "attn_params_M": 44.1,
+      "ffn_params_M": 313.8,
+      "embed_params_M": 136.1,
+      "model_size_mb": 942.0
+    }
+  ],
+  "experiment4_e2e_decode": [
+    {
+      "method": "MHA",
+      "seq_len": 128,
+      "kv_dim": 896,
+      "kv_read_ms": 0.055,
+      "kv_size_mb": 10.5
+    },
+    {
+      "method": "GQA-4",
+      "seq_len": 128,
+      "kv_dim": 256,
+      "kv_read_ms": 0.022,
+      "kv_size_mb": 3.0
+    },
+    {
+      "method": "GQA-2",
+      "seq_len": 128,
+      "kv_dim": 128,
+      "kv_read_ms": 0.022,
+      "kv_size_mb": 1.5
+    },
+    {
+      "method": "MQA",
+      "seq_len": 128,
+      "kv_dim": 64,
+      "kv_read_ms": 0.023,
+      "kv_size_mb": 0.8
+    },
+    {
+      "method": "MLA-256",
+      "seq_len": 128,
+      "kv_dim": 256,
+      "kv_read_ms": 0.023,
+      "kv_size_mb": 3.0
+    },
+    {
+      "method": "MLA-128",
+      "seq_len": 128,
+      "kv_dim": 128,
+      "kv_read_ms": 0.022,
+      "kv_size_mb": 1.5
+    },
+    {
+      "method": "MLA-64",
+      "seq_len": 128,
+      "kv_dim": 64,
+      "kv_read_ms": 0.023,
+      "kv_size_mb": 0.8
+    },
+    {
+      "method": "MHA",
+      "seq_len": 512,
+      "kv_dim": 896,
+      "kv_read_ms": 0.397,
+      "kv_size_mb": 42.0
+    },
+    {
+      "method": "GQA-4",
+      "seq_len": 512,
+      "kv_dim": 256,
+      "kv_read_ms": 0.03,
+      "kv_size_mb": 12.0
+    },
+    {
+      "method": "GQA-2",
+      "seq_len": 512,
+      "kv_dim": 128,
+      "kv_read_ms": 0.023,
+      "kv_size_mb": 6.0
+    },
+    {
+      "method": "MQA",
+      "seq_len": 512,
+      "kv_dim": 64,
+      "kv_read_ms": 0.021,
+      "kv_size_mb": 3.0
+    },
+    {
+      "method": "MLA-256",
+      "seq_len": 512,
+      "kv_dim": 256,
+      "kv_read_ms": 0.028,
+      "kv_size_mb": 12.0
+    },
+    {
+      "method": "MLA-128",
+      "seq_len": 512,
+      "kv_dim": 128,
+      "kv_read_ms": 0.022,
+      "kv_size_mb": 6.0
+    },
+    {
+      "method": "MLA-64",
+      "seq_len": 512,
+      "kv_dim": 64,
+      "kv_read_ms": 0.022,
+      "kv_size_mb": 3.0
+    },
+    {
+      "method": "MHA",
+      "seq_len": 2048,
+      "kv_dim": 896,
+      "kv_read_ms": 1.513,
+      "kv_size_mb": 168.0
+    },
+    {
+      "method": "GQA-4",
+      "seq_len": 2048,
+      "kv_dim": 256,
+      "kv_read_ms": 0.444,
+      "kv_size_mb": 48.0
+    },
+    {
+      "method": "GQA-2",
+      "seq_len": 2048,
+      "kv_dim": 128,
+      "kv_read_ms": 0.088,
+      "kv_size_mb": 24.0
+    },
+    {
+      "method": "MQA",
+      "seq_len": 2048,
+      "kv_dim": 64,
+      "kv_read_ms": 0.03,
+      "kv_size_mb": 12.0
+    },
+    {
+      "method": "MLA-256",
+      "seq_len": 2048,
+      "kv_dim": 256,
+      "kv_read_ms": 0.444,
+      "kv_size_mb": 48.0
+    },
+    {
+      "method": "MLA-128",
+      "seq_len": 2048,
+      "kv_dim": 128,
+      "kv_read_ms": 0.087,
+      "kv_size_mb": 24.0
+    },
+    {
+      "method": "MLA-64",
+      "seq_len": 2048,
+      "kv_dim": 64,
+      "kv_read_ms": 0.029,
+      "kv_size_mb": 12.0
+    },
+    {
+      "method": "MHA",
+      "seq_len": 8192,
+      "kv_dim": 896,
+      "kv_read_ms": 5.988,
+      "kv_size_mb": 672.0
+    },
+    {
+      "method": "GQA-4",
+      "seq_len": 8192,
+      "kv_dim": 256,
+      "kv_read_ms": 1.728,
+      "kv_size_mb": 192.0
+    },
+    {
+      "method": "GQA-2",
+      "seq_len": 8192,
+      "kv_dim": 128,
+      "kv_read_ms": 0.877,
+      "kv_size_mb": 96.0
+    },
+    {
+      "method": "MQA",
+      "seq_len": 8192,
+      "kv_dim": 64,
+      "kv_read_ms": 0.445,
+      "kv_size_mb": 48.0
+    },
+    {
+      "method": "MLA-256",
+      "seq_len": 8192,
+      "kv_dim": 256,
+      "kv_read_ms": 1.721,
+      "kv_size_mb": 192.0
+    },
+    {
+      "method": "MLA-128",
+      "seq_len": 8192,
+      "kv_dim": 128,
+      "kv_read_ms": 0.874,
+      "kv_size_mb": 96.0
+    },
+    {
+      "method": "MLA-64",
+      "seq_len": 8192,
+      "kv_dim": 64,
+      "kv_read_ms": 0.445,
+      "kv_size_mb": 48.0
+    }
+  ],
+  "metadata": {
+    "gpu": "NVIDIA L4",
+    "model": "Qwen2.5-0.5B-Instruct",
+    "num_layers": 24,
+    "num_heads": 14,
+    "head_dim": 64
+  }
+}
